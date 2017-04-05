@@ -1,9 +1,16 @@
 import React, { Component, PropTypes } from 'react';
 import { fieldShape } from './shapes';
 
-const getComponent = field => {
+import Text from './fields/Text';
+
+
+const update = (id, value) => console.log('update', id, value)
+const validate = id => console.log('validate', id)
+
+
+const getComponent = (field) => {
   switch (field.type) {
-    case 'text': return 'textField';
+    case 'text': return <Text {...field} update={update} validate={validate} />;
     case 'button': return 'buttonField';
     case 'submit': return 'submitField';
     default:
