@@ -3,27 +3,25 @@ import { fieldShape } from './shapes';
 
 import Text from './fields/Text';
 
-
-const update = (id, value) => console.log('update', id, value)
-const validate = id => console.log('validate', id)
-
-
-const getComponent = (field) => {
-  switch (field.type) {
-    case 'text': return <Text {...field} update={update} validate={validate} />;
-    case 'button': return 'buttonField';
-    case 'submit': return 'submitField';
-    default:
-      return null;
-  }
-};
-
-
 class Form extends Component {
 
   constructor(props) {
     super(props);
-    this.onSubmit  =this.onSubmit.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+    this.update = this.update.bind(this);
+    this.validate = this.validate.bind(this);
+    this.state = {}
+  }
+
+  update(id, value) {
+    this.setState({
+      [id]: value
+    })
+
+  }
+
+  validate(id) {
+    console.log('validate', id)
   }
 
   onSubmit(event) {
@@ -31,11 +29,25 @@ class Form extends Component {
     console.log('submitted')
   }
 
+  getComponent(field) {
+    switch (field.type) {
+      case 'text':
+      case 'password':
+        return <Text {...field} update={this.update} validate={this.validate} value={this.state[field.id] || field.value} />;
+      case 'button':
+        return 'buttonField';
+      case 'submit':
+        return 'submitField';
+      default:
+        return null;
+    }
+  };
+
 
   render() {
     return (
         <form id={this.props.id} onSubmit={this.onSubmit}>
-          {this.props.fields.map(getComponent)}
+          {this.props.fields.map(this.getComponent)}
         </form>
     );
   }
