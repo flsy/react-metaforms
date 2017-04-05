@@ -59,6 +59,20 @@ export const form = [
     label: 'Save',
     tooltip: '', // optional
     type: 'submit'
+  },
+  {
+    id: 'InlineGroup',
+    type: 'inlineGroup',
+    legend: 'Inline group', // optional
+    fields: [
+      {
+        id: 'submitBtn',
+        label: 'Save',
+        tooltip: '', // optional
+        type: 'submit'
+      },
+      {}
+    ]
   }
 ];
 
