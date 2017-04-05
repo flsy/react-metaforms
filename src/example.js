@@ -8,7 +8,7 @@ inlineGroup
 
 */
 
-const form = [
+export const form = [
   {
     id: 'textInput',
     name: 'text-input',     // name of the rendered input field
