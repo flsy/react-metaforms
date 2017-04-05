@@ -16,6 +16,7 @@ export const form = [
     size: 'L',              // optional sizes as S/M/L/XL
     type: 'text',
     value: 'some value',     // optional string as a value
+    disabled: false,
     placeholder: '',
     tooltip: '', // optional
     errorMessage: '',

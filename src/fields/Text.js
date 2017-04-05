@@ -1,29 +1,21 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
+import ErrorMessage from './ErrorMessage';
+import Label from './Label';
 
+const Text = ({id, label, type, placeholder, value, disabled, update, validate, errorMessage}) => (
+    <div>
+        <Label fieldId={id} label={label} isRequired={true} />
+        <input
+            id={id}
+            type={type}
+            placeholder={placeholder}
+            value={value}
+            disabled={disabled}
+            onChange={e => update(id, e.target.value)}
+            onBlur={() => validate(id)}
+        />
+        <ErrorMessage message={errorMessage}/>
+    </div>
+);
 
-class Text extends Component {
-
-    componentDidMount() {
-
-    }
-
-    render() {
-        const { field, formId } = this.props;
-        const hasError = !!field.errorMessage;
-        return (
-            <div className={classNames('Field', { 'has-error': hasError })}>
-                <Label fieldId={field.id} label={field.label} isRequired={isRequired(field)} />
-                <input
-                    id={field.id}
-                    type={field.type}
-                    placeholder={field.placeholder}
-                    value={this.props.value}
-                    disabled={field.disabled || this.props.isWaiting}
-                    onChange={e => this.props.updateFieldAction(formId, field.id, e.target.value)}
-                    onBlur={() => this.props.validateFieldAction(formId, field)}
-                />
-                {hasError && <div className="error-message">{this.props.errorMessage}</div>}
-            </div>
-        );
-    }
-}
+export default Text;
