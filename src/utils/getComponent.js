@@ -3,6 +3,7 @@ import React from 'react';
 import Text from '../fields/Text';
 import Button from '../fields/Button';
 import InlineGroup from '../groups/InlineGroup';
+import CollapsingGroup from '../groups/CollapsingGroup';
 
 export default (props) => {
   switch (props.type) {
@@ -14,6 +15,8 @@ export default (props) => {
       return <Button {...props} />;
     case 'inlineGroup':
         return <InlineGroup {...props} />;
+    case 'collapsingGroup':
+      return <CollapsingGroup {...props} />;
     default:
       return null;
   }

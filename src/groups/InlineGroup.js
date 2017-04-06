@@ -1,12 +1,11 @@
 import React, { PropTypes } from 'react';
 import Label from '../fields/Label';
+import GroupFields from './GroupFields';
 
 const InlineGroup = ({ id, legend, components }) => (
   <div>
     <Label fieldId={id} label={legend} />
-    <div className="inline-group-fields">
-        {components.map(component => <span key={component.key}>{component}</span>)}
-    </div>
+    <GroupFields components={components} className="inline-group-fields" />
   </div>
 );
 

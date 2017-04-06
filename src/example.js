@@ -103,6 +103,35 @@ export const form = [
         ]
       }
     ]
+  },
+  {
+    id: 'CollapsingGroup',
+    type: 'collapsingGroup',
+    isCollapsed: false,
+    legend: 'Collapsing group', // optional
+    fields: [
+      {
+        id: 'collapsing-button',
+        label: 'Collapsing Button',
+        type: 'button'
+      },
+      {
+        id: 'collapsing-input',
+        type: 'text',
+        name: 'collapsing-input',
+        label: 'Collapsing Input',
+        validation: [
+          {
+            type: "required",
+            rules: [
+              {
+                message: "Please choose a inline text value"
+              }
+            ]
+          },
+        ]
+      }
+    ]
   }
 ];
 
