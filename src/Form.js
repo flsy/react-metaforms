@@ -13,6 +13,7 @@ class Form extends Component {
     this.update = this.update.bind(this);
     this.validate = this.validate.bind(this);
     this.getValue = this.getValue.bind(this);
+    this.getComponent = this.getComponent.bind(this);
     this.state = {} // value, errorMessage
   }
 
@@ -35,8 +36,16 @@ class Form extends Component {
     return field ? field.errorMessage : ''
   }
 
-  validate(id) {
-    const field = this.props.fields.find(f => f.id === id)
+  validate(id, groupId = null) {
+    let field;
+    if (groupId) {
+      const group = this.props.fields.find(f => f.id === groupId);
+      field = group.fields.find(f => f.id === id)
+    } else {
+      field = this.props.fields.find(f => f.id === id);
+    }
+
+
     const errorMessage = validate(this.getValue(id), field.validation, this.state);
     this.setState({
       [id]: { ...this.state[id], errorMessage }
@@ -66,19 +75,28 @@ class Form extends Component {
       });
       this.props.onSubmit(formData);
     }
+  }
 
+  getComponent(fields, groupId) {
+    return fields.map(field => {
+      if (field.fields) {
+        return getComponent({ ...field, key: field.id, components: this.getComponent(field.fields, field.id) });
+      }
+      return getComponent({...field,
+        key: field.id,
+        groupId,
+        value: this.getValue(field.id),
+        update: this.update,
+        validate: this.validate,
+        errorMessage: this.getErrorMessage(field.id)
+      })
+    })
   }
 
   render() {
     return (
         <form id={this.props.id} onSubmit={this.onSubmit}>
-          {this.props.fields.map(field => getComponent({...field,
-            key: field.id,
-            value: this.getValue(field.id),
-            update: this.update,
-            validate: this.validate,
-            errorMessage: this.getErrorMessage(field.id)
-          }))}
+          {this.getComponent(this.props.fields)}
         </form>
     );
   }

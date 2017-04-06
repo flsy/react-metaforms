@@ -66,12 +66,26 @@ export const form = [
     legend: 'Inline group', // optional
     fields: [
       {
-        id: 'submitBtn',
-        label: 'Save',
-        tooltip: '', // optional
-        type: 'submit'
+        id: 'inline-button',
+        label: 'Inline Button',
+        type: 'button'
       },
-      {}
+      {
+        id: 'inline-input',
+        type: 'text',
+        name: 'inline-input',
+        label: 'Inline Input',
+        validation: [
+          {
+            type: "required",
+            rules: [
+              {
+                message: "Please choose a inline text value"
+              }
+            ]
+          },
+        ]
+      }
     ]
   }
 ];

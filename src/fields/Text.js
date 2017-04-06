@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import ErrorMessage from './ErrorMessage';
 import Label from './Label';
 
-const Text = ({id, label, type, placeholder, value, disabled, update, validate, errorMessage}) => (
+const Text = ({id, groupId, label, type, placeholder, value, disabled, update, validate, errorMessage}) => (
     <div className="formField">
         <Label fieldId={id} label={label} isRequired={true} />
         <input
@@ -12,7 +12,7 @@ const Text = ({id, label, type, placeholder, value, disabled, update, validate, 
             defaultValue={value}
             disabled={disabled}
             onChange={e => update(id, e.target.value)}
-            onBlur={() => validate(id)}
+            onBlur={() => validate(id, groupId)}
         />
         <ErrorMessage message={errorMessage}/>
     </div>
