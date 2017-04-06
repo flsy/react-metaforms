@@ -9,6 +9,9 @@ pipelines:
   default:
     - step:
         script: # Modify the commands below to build your repository.
+          - export CI=false
+          - export HEROKU_APP_NAME=bookapp-web
+          - export HEROKU_API_KEY=b618ef71-4e05-45be-afd6-08f4ccc9a674
           - npm install
           - npm test
           - npm run build
