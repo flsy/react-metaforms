@@ -7,3 +7,7 @@ body {
 .formField {
   padding: 10px;
 }
+
+.inline-group-fields {
+  display: flex;
+}

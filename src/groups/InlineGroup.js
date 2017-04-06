@@ -3,8 +3,10 @@ import Label from '../fields/Label';
 
 const InlineGroup = ({ id, legend, components }) => (
   <div>
-      <Label fieldId={id} label={legend} />
-    {components.map(component => <span key={component.key}>{component}</span>)}
+    <Label fieldId={id} label={legend} />
+    <div className="inline-group-fields">
+        {components.map(component => <span key={component.key}>{component}</span>)}
+    </div>
   </div>
 );
 

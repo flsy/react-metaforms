@@ -85,6 +85,22 @@ export const form = [
             ]
           },
         ]
+      },
+      {
+        id: 'inline-input-1',
+        type: 'text',
+        name: 'inline-input-1',
+        label: 'Inline Input 1',
+        validation: [
+          {
+            type: "required",
+            rules: [
+              {
+                message: "Please choose a inline text value"
+              }
+            ]
+          },
+        ]
       }
     ]
   }
