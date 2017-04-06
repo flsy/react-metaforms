@@ -107,36 +107,36 @@ export const form = [
 ];
 
 
-const formWithGroup = [
-  {
-    type: 'inlineGroup',
-    legend: 'Inline group', // optional
-    fields: [
-      {},
-      {}
-      ]
-  }
-];
-
-
-const formWithCollapsingGroup = [
-  {
-    type: 'collapsingGroup',
-    legend: 'Collapsing group', // optional
-    isCollapsed: false,
-    fields: [
-
-    ]
-  }
-];
-
-const gridGroup = [
-  {
-    type: 'gridGroup',
-    legend: 'Grid', // optional
-    fields: [
-      [{}, {}],
-      [{}, {}],
-    ]
-  }
-];
+// const formWithGroup = [
+//   {
+//     type: 'inlineGroup',
+//     legend: 'Inline group', // optional
+//     fields: [
+//       {},
+//       {}
+//       ]
+//   }
+// ];
+//
+//
+// const formWithCollapsingGroup = [
+//   {
+//     type: 'collapsingGroup',
+//     legend: 'Collapsing group', // optional
+//     isCollapsed: false,
+//     fields: [
+//
+//     ]
+//   }
+// ];
+//
+// const gridGroup = [
+//   {
+//     type: 'gridGroup',
+//     legend: 'Grid', // optional
+//     fields: [
+//       [{}, {}],
+//       [{}, {}],
+//     ]
+//   }
+// ];

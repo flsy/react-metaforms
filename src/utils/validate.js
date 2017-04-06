@@ -11,7 +11,8 @@ export default (fieldValue = '', validation = [], formData) => {
       case 'required':
         hasError = isEmpty(fieldValue);
         break;
-
+      default:
+        hasError = false;
     }
 
     if (hasError) {
