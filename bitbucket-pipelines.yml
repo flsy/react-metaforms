@@ -11,3 +11,5 @@ pipelines:
         script: # Modify the commands below to build your repository.
           - npm install
           - npm test
+          - npm run build
+          - ./heroku-deploy.sh
