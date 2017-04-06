@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react';
-import Label from '../fields/Label';
 import GroupFields from './GroupFields';
+import GroupHeader from './GroupHeader';
 
 const InlineGroup = ({ id, legend, components }) => (
   <div>
-    <Label fieldId={id} label={legend} />
+    <GroupHeader id={id} legend={legend} />
     <GroupFields components={components} className="inline-group-fields" />
   </div>
 );

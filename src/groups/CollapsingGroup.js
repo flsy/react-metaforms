@@ -1,15 +1,35 @@
-import React, { PropTypes } from 'react';
-import Label from '../fields/Label';
+import React, { Component, PropTypes } from 'react';
 import GroupFields from './GroupFields';
+import GroupHeader from './GroupHeader';
 
-const CollapsingGroup = ({ id, legend, isCollapsed, components }) => {
-  return (
-    <div>
-      <Label fieldId={id} label={legend}/>
-      <GroupFields components={components} rendered={!isCollapsed} className="collapsing-group-fields" />
-    </div>
-  );
-};
+
+class CollapsingGroup extends Component {
+
+  constructor(props){
+    super(props);
+    this.onToggle = this.onToggle.bind(this);
+    this.state = {isCollapsed: this.props.isCollapsed}
+  }
+
+  onToggle() {
+    this.setState({isCollapsed: !this.state.isCollapsed});
+  }
+
+  render() {
+    return (
+      <div>
+        <GroupHeader id={this.props.id}
+                     legend={this.props.legend}
+                     action={this.onToggle}
+                     buttonLabel={this.state.isCollapsed ? 'open' : 'close'}
+        />
+        <GroupFields components={this.props.components}
+                     rendered={!this.state.isCollapsed}
+                     className="collapsing-group-fields" />
+      </div>
+    );
+  }
+}
 
 CollapsingGroup.propTypes = {
   id: PropTypes.string.isRequired,
