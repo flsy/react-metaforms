@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Text from '../fields/Text';
+import Textarea from '../fields/Textarea';
 import Button from '../fields/Button';
 import InlineGroup from '../groups/InlineGroup';
 import CollapsingGroup from '../groups/CollapsingGroup';
@@ -10,6 +11,8 @@ export default (props) => {
     case 'text':
     case 'password':
       return <Text {...props} />;
+    case 'textarea':
+      return <Textarea {...props} />
     case 'button':
     case 'submit':
       return <Button {...props} />;

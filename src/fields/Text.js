@@ -19,11 +19,24 @@ const Text = ({id, groupId, label, type, placeholder, value, disabled, update, v
 );
 
 Text.propTypes = {
-  value: PropTypes.string
+  id: PropTypes.string.isRequired,
+  groupId: PropTypes.string,
+  label: PropTypes.string,
+  type: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
+  value: PropTypes.string,
+  disabled: PropTypes.bool,
+  update: PropTypes.func.isRequired,
+  validate: PropTypes.func.isRequired,
+  errorMessage: PropTypes.string
 };
 
 Text.defaultProps= {
-  value: ''
+  groupId: null,
+  label: '',
+  placeholder: '',
+  value: '',
+  disabled: false
 };
 
 export default Text;
