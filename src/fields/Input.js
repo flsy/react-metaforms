@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import ErrorMessage from './ErrorMessage';
 import Label from './Label';
+import { validationShape } from '../shapes';
 import { isRequired } from '../utils/utils';
 
 const Input = ({id, groupId, label, type, placeholder, value, disabled, update, validate, errorMessage, validation }) => (
@@ -32,7 +33,7 @@ Input.propTypes = {
   update: PropTypes.func.isRequired,
   validate: PropTypes.func.isRequired,
   errorMessage: PropTypes.string,
-  validation: PropTypes.array
+  validation: PropTypes.arrayOf(validationShape)
 };
 
 Input.defaultProps = {
@@ -40,7 +41,8 @@ Input.defaultProps = {
   label: null,
   placeholder: '',
   value: '',
-  disabled: false
+  disabled: false,
+  validation: []
 };
 
 export default Input;

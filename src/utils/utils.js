@@ -1,1 +1,1 @@
-export const isRequired = (validationRules) => {};
+export const isRequired = validationRules => !!validationRules.find(rule => rule.type === 'required');

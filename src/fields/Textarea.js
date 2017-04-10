@@ -1,10 +1,12 @@
 import React, { PropTypes } from 'react';
 import ErrorMessage from './ErrorMessage';
+import { validationShape } from '../shapes';
 import Label from './Label';
+import { isRequired } from '../utils/utils';
 
-const Textarea = ({id, groupId, label, type, placeholder, value, disabled, update, validate, errorMessage}) => (
+const Textarea = ({id, groupId, label, type, placeholder, value, disabled, update, validate, errorMessage, validation}) => (
   <div className="formField">
-    <Label fieldId={id} label={label} isRequired={true} />
+    <Label fieldId={id} label={label} isRequired={isRequired(validation)} />
     <textarea
       id={id}
       type={type}
@@ -28,7 +30,8 @@ Textarea.propTypes = {
   disabled: PropTypes.bool,
   update: PropTypes.func.isRequired,
   validate: PropTypes.func.isRequired,
-  errorMessage: PropTypes.string
+  errorMessage: PropTypes.string,
+  validation: PropTypes.arrayOf(validationShape)
 };
 
 Textarea.defaultProps= {
@@ -36,7 +39,8 @@ Textarea.defaultProps= {
   label: '',
   placeholder: '',
   value: '',
-  disabled: false
+  disabled: false,
+  validation: []
 };
 
 
