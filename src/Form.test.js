@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { spy } from 'sinon';
 import Form from './Form';
-import Text from './fields/Text';
+import Input from './fields/Input';
 
 describe('<Form />', () => {
   it('should render and update a field', () => {
@@ -17,7 +17,7 @@ describe('<Form />', () => {
     const newValue = 'My new value';
     wrapper.find('input').simulate('change', {target: {value: newValue }});
 
-    expect(wrapper.find(Text).props().value).toEqual(newValue)
+    expect(wrapper.find(Input).props().value).toEqual(newValue)
   });
 
   it('should update default value to empty string', () => {
@@ -56,7 +56,7 @@ describe('<Form />', () => {
     const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={() => {}} />);
     wrapper.find('input').simulate('blur');
 
-    expect(wrapper.find(Text).props().errorMessage).toEqual('Please choose a username')
+    expect(wrapper.find(Input).props().errorMessage).toEqual('Please choose a username')
   })
 
   it('should not submit the form with invalid values', () => {
@@ -81,7 +81,7 @@ describe('<Form />', () => {
     const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={onSubmit} />);
     wrapper.find('form').simulate('submit');
 
-    expect(wrapper.find(Text).props().errorMessage).toEqual('Please choose a username')
+    expect(wrapper.find(Input).props().errorMessage).toEqual('Please choose a username')
   })
 
   it('should submit the form with all values valid', () => {

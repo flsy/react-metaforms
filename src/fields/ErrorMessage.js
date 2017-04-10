@@ -1,15 +1,9 @@
 import React, { PropTypes } from 'react';
 
-const ErrorMessage = ({ message }) => (
-    !!message ? <div className="error-message">{message}</div> : null
-);
+const ErrorMessage = ({ message }) => (<div className="error-message">{message}</div>);
 
 ErrorMessage.propTypes = {
-    message: PropTypes.string,
-};
-
-ErrorMessage.defaultProps = {
-    message: null,
+    message: PropTypes.string.isRequired,
 };
 
 export default ErrorMessage;
