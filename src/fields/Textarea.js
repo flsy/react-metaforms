@@ -40,8 +40,8 @@ Textarea.defaultProps= {
   placeholder: '',
   value: '',
   disabled: false,
+  errorMessage: null,
   validation: []
 };
-
 
 export default Textarea;
