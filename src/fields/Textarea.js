@@ -4,19 +4,18 @@ import { validationShape } from '../shapes';
 import Label from './Label';
 import { isRequired } from '../utils/utils';
 
-const Textarea = ({id, groupId, label, type, placeholder, value, disabled, update, validate, errorMessage, validation}) => (
+const Textarea = ({id, groupId, label, placeholder, value, disabled, update, validate, errorMessage, validation}) => (
   <div className="formField">
     <Label fieldId={id} label={label} isRequired={isRequired(validation)} />
     <textarea
       id={id}
-      type={type}
       placeholder={placeholder}
       defaultValue={value}
       disabled={disabled}
       onChange={e => update(id, e.target.value)}
       onBlur={() => validate(id, groupId)}
     />
-    <ErrorMessage message={errorMessage}/>
+    {errorMessage ? <ErrorMessage message={errorMessage}/> : null}
   </div>
 );
 
@@ -24,7 +23,6 @@ Textarea.propTypes = {
   id: PropTypes.string.isRequired,
   groupId: PropTypes.string,
   label: PropTypes.string,
-  type: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   value: PropTypes.string,
   disabled: PropTypes.bool,

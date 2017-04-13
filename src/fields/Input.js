@@ -6,7 +6,7 @@ import { isRequired } from '../utils/utils';
 
 const Input = ({id, groupId, label, type, placeholder, value, disabled, update, validate, errorMessage, validation }) => (
   <div>
-    {label != null ? <Label fieldId={id} label={label} isRequired={isRequired(validation)} /> : null }
+    {label ? <Label fieldId={id} label={label} isRequired={isRequired(validation)} /> : null }
     <input
       id={id}
       type={type}
@@ -16,7 +16,7 @@ const Input = ({id, groupId, label, type, placeholder, value, disabled, update, 
       onChange={e => update(id, e.target.value)}
       onBlur={() => validate(id, groupId)}
     />
-    {errorMessage != null ? <ErrorMessage message={errorMessage} /> : null}
+    {errorMessage ? <ErrorMessage message={errorMessage} /> : null}
   </div>
 );
 
