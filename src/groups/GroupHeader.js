@@ -1,4 +1,6 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+
 import Label from '../fields/Label';
 
 const GroupHeader = ({ id, legend, action, buttonLabel }) => (

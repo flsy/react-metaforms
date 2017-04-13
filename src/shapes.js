@@ -1,4 +1,5 @@
-import { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import 'react';
 
 export const fieldShape = PropTypes.shape({
   id: PropTypes.string.isRequired

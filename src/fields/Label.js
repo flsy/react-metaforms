@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const Asterisk = () => (<abbr title="This field is required" aria-hidden="true"> *</abbr>);
 
