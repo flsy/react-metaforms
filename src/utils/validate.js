@@ -45,38 +45,33 @@ export default (fieldValue = '', validation = [], formData = {}) => {
       switch (type) {
         case 'required':
           return isEmpty(fieldValue) ? errorMessage : null;
-          break;
+
         case 'minlength':
           return isLessThanMinLength(fieldValue, ruleValue) ? errorMessage : null;
-          break;
 
         case 'maxlength':
           return isGreaterThanMaxLength(fieldValue, ruleValue) ? errorMessage : null;
-          break;
 
         case 'mustbeequal':
           return isNotEqualToExpectedValue(fieldValue, ruleValue) ? errorMessage : null;
-          break;
 
         case 'inlist':
           return !isInList(fieldValue, ruleValue) ? errorMessage : null;
-          break;
 
         case 'pattern':
-            return getErrorIfDoesNotMatchRegEx(fieldValue, rules);
-          break;
+          return getErrorIfDoesNotMatchRegEx(fieldValue, rules);
 
         case 'notpattern':
-            return getErrorIfMatchesRegEx(fieldValue, rules);
-          break;
+          return getErrorIfMatchesRegEx(fieldValue, rules);
 
         case 'mustmatch':
           return doesNotMatch(fieldValue, ruleValue, formData) ? errorMessage : null;
-          break;
 
         case 'mustmatchcaseinsensitive':
           return isNotEqualCaseInsensitive(fieldValue, ruleValue, formData) ? errorMessage : null;
-          break;
+
+        default:
+          return null
       }
     })
     .filter(error => error !== null);
