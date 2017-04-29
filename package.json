@@ -1,6 +1,6 @@
 {
   "name": "@falsy/forms",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "private": false,
   "main": "lib/export.js",
   "jsnext:main": "src/export.js",
