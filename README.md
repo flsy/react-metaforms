@@ -132,3 +132,11 @@ import { Form } from 'forms';
 }
 ```
 
+## Publishing
+
+make sure you have everything pushed and run
+
+`npm version patch` (major | minor | patch)
+
+and then `npm publish`
+

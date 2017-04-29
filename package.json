@@ -31,7 +31,7 @@
     "prepublish": "rm -rf build && npm run build",
     "start": "react-scripts start",
     "transpile": "babel src -d build --presets es2015,react,stage-0",
-    "build": "rm -rf build && npm run transpile && rm build/index.js && mv build/Form.js build/index.js && find build -name '*.test.js' -type f -delete",
+    "build": "rm -rf build && npm run transpile && rm build/index.js && mv build/export.js build/index.js && find build -name '*.test.js' -type f -delete",
     "test": "react-scripts test --env=jsdom",
     "coverage": "npm test -- --coverage"
   }

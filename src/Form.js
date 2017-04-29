@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { fieldShape } from './shapes';
 
+import { hasError } from './utils/utils';
 import validate from './utils/validate';
 import getComponent from './utils/getComponent';
 
@@ -15,7 +16,7 @@ class Form extends Component {
     this.validate = this.validate.bind(this);
     this.getValue = this.getValue.bind(this);
     this.getComponent = this.getComponent.bind(this);
-    this.state = {} // value, errorMessage
+    this.state = {}; // value, errorMessage
   }
 
   update(id, value) {
@@ -83,8 +84,7 @@ class Form extends Component {
       .filter(field => field.validation)
       .map(field => ({ id: field.id, value: this.getValue(field.id), errorMessage: validate(this.getValue(field.id), field.validation, formData) }));
 
-    const hasError = validated.find(field => field.errorMessage !== "");
-    if (hasError) {
+    if (hasError(validated)) {
 
       const x = {};
       validated.forEach(s => {

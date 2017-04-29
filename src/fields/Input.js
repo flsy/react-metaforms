@@ -22,7 +22,7 @@ const Input = ({id, groupId, label, type, placeholder, value, disabled, update, 
   </div>
 );
 
-const types = ['text', 'password'];
+const types = ['text', 'password', 'email'];
 
 Input.propTypes = {
   id: PropTypes.string.isRequired,

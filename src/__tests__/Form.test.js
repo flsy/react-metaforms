@@ -1,8 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { spy } from 'sinon';
-import Form from './Form';
-import Input from './fields/Input';
+import Form from '../Form';
+import Input from '../fields/Input';
 
 describe('<Form />', () => {
   it('should render and update a field', () => {
