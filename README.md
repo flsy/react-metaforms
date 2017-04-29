@@ -140,3 +140,6 @@ make sure you have everything pushed and run
 
 and then `npm publish`
 
+
+don't forget to push everything
+

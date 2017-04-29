@@ -9,6 +9,7 @@ import CollapsingGroup from '../groups/CollapsingGroup';
 export default (props) => {
   switch (props.type) {// todo: use the 'types' constant in <Input />
     case 'text':
+    case 'email':
     case 'password':
       return <Input {...props} />;
     case 'textarea':
