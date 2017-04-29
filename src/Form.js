@@ -34,8 +34,11 @@ class Form extends Component {
   }
 
   getErrorMessage(id) {
-    const field = this.state[id];
-    return field ? field.errorMessage : ''
+    if (this.state[id] && this.state[id].errorMessage !== null) {
+      return this.state[id].errorMessage
+    }
+    const field = this.props.fields.find(f => f.id === id);
+    return field ? field.errorMessage : '';
   }
 
   validate(id, groupId = null) {

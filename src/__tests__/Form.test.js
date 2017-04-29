@@ -77,7 +77,26 @@ describe('<Form />', () => {
     wrapper.find('input').simulate('blur');
 
     expect(wrapper.find(Input).props().errorMessage).toEqual('Please choose a username')
-  })
+  });
+
+  it('should show the default error message when there is some', () => {
+    const fields = [
+      {
+        id: 'name',
+        type: 'text',
+        label: 'Name',
+        errorMessage: 'some error message',
+      }
+    ];
+    const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={() => {}} />);
+
+    expect(wrapper.find(Input).props().errorMessage).toEqual(fields[0].errorMessage);
+
+    wrapper.find('form').simulate('submit');
+
+    expect(wrapper.find(Input).props().errorMessage).toEqual(fields[0].errorMessage)
+
+  });
 
   it('should not submit the form with invalid values', () => {
     const fields = [

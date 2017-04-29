@@ -19,7 +19,7 @@ export const form = [
     disabled: false,
     placeholder: '',
     tooltip: '', // optional
-    errorMessage: '',
+    errorMessage: 'some arrnuin',
     validation: [
       {
         type: "required",
