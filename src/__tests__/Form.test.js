@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { mount } from 'enzyme';
 import { spy } from 'sinon';
 import Form from '../Form';
@@ -95,7 +95,38 @@ describe('<Form />', () => {
     wrapper.find('form').simulate('submit');
 
     expect(wrapper.find(Input).props().errorMessage).toEqual(fields[0].errorMessage)
+  });
 
+  it('should set the error message after submission', () => {
+    class App extends Component {
+      constructor(props){
+        super(props);
+        this.setErrorMessage = this.setErrorMessage.bind(this);
+        this.state = {
+          fields: [
+            {
+              id: 'name',
+              type: 'text',
+              label: 'Name',
+              errorMessage: 'error 1'
+            }
+          ]
+        };
+      }
+
+      setErrorMessage() {
+        this.setState({ fields: this.state.fields.map(x => x.id === 'name' ?  {...x, errorMessage: 'error 2' } : x) })
+      }
+
+      render () {
+        return (<Form id="testFormId" fields={this.state.fields} onSubmit={this.setErrorMessage} />);
+      }
+    }
+
+    const wrapper = mount(<App />);
+    expect(wrapper.find(Input).props().errorMessage).toEqual('error 1');
+    wrapper.find('form').simulate('submit');
+    expect(wrapper.find(Input).props().errorMessage).toEqual('error 2');
   });
 
   it('should not submit the form with invalid values', () => {
