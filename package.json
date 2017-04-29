@@ -1,6 +1,6 @@
 {
   "name": "@falsy/forms",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "private": false,
   "main": "build/index.js",
   "jsnext:main": "src/Form.js",
