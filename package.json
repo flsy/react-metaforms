@@ -1,13 +1,16 @@
 {
-  "name": "forms",
+  "name": "@falsy/forms",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "main": "build/index.js",
   "jsnext:main": "src/Form.js",
   "files": [
     "build",
     "src"
   ],
+  "peerDependencies": {
+    "react": "^15.5.0"
+  },
   "dependencies": {
     "prop-types": "15.5.8",
     "react": "15.5.4"
@@ -25,6 +28,7 @@
     "sinon": "2.1.0"
   },
   "scripts": {
+    "prepublish": "rm -rf build && npm run build",
     "start": "react-scripts start",
     "transpile": "babel src -d build --presets es2015,react,stage-0",
     "build": "rm -rf build && npm run transpile && rm build/index.js && mv build/Form.js build/index.js && find build -name '*.test.js' -type f -delete",
