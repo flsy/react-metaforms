@@ -10,7 +10,6 @@ inlineGroup
 
 export const form = [
   {
-    id: 'textInput',
     name: 'text-input',     // name of the rendered input field
     label: 'Text input',
     size: 'L',              // optional sizes as S/M/L/XL
@@ -45,7 +44,6 @@ export const form = [
     ]
   },
   {
-    id: 'textArea',
     name: 'text-area',
     label: 'Text area',
     size: 'L',
@@ -80,9 +78,24 @@ export const form = [
     ]
   },
   {
-    id: 'btn',
+    name: 'checkbox-input',
+    label: 'Checkbox input',
+    type: 'checkbox',
+    validation: [
+      {
+        type: "required",
+        rules: [
+          {
+            message: "Please choose a username"
+          }
+        ]
+      }
+    ]
+  },
+  {
     label: 'Save',
     tooltip: '', // optional
+    name: 'saveButton',
     type: 'button',
     action: {
       type: 'SAVE_FORM', // enum string which would reflect some frontend logic
@@ -90,23 +103,22 @@ export const form = [
     }
   },
   {
-    id: 'submitBtn',
+    name: 'submitBtn',
     label: 'Save',
     tooltip: '', // optional
     type: 'submit'
   },
   {
-    id: 'InlineGroup',
+    name: 'InlineGroup',
     type: 'inlineGroup',
     legend: 'Inline group', // optional
     fields: [
       {
-        id: 'inline-button',
+        name: 'inline-button',
         label: 'Inline Button',
         type: 'button'
       },
       {
-        id: 'inline-input',
         type: 'text',
         name: 'inline-input',
         label: 'Inline Input',
@@ -122,7 +134,6 @@ export const form = [
         ]
       },
       {
-        id: 'inline-input-1',
         type: 'text',
         name: 'inline-input-1',
         label: 'Inline Input 1',
@@ -140,18 +151,16 @@ export const form = [
     ]
   },
   {
-    id: 'CollapsingGroup',
+    name: 'CollapsingGroup',
     type: 'collapsingGroup',
     isCollapsed: false,
     legend: 'Collapsing group', // optional
     fields: [
       {
-        id: 'collapsing-button',
         label: 'Collapsing Button',
         type: 'button'
       },
       {
-        id: 'collapsing-input',
         type: 'text',
         name: 'collapsing-input',
         label: 'Collapsing Input',

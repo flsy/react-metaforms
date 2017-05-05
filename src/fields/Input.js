@@ -6,17 +6,18 @@ import Label from './Label';
 import { validationShape } from '../shapes';
 import { isRequired } from '../utils/utils';
 
-const Input = ({id, groupId, label, type, placeholder, value, disabled, update, validate, errorMessage, validation }) => (
+const Input = ({ id, name, groupName, label, type, placeholder, value, disabled, update, validate, errorMessage, validation }) => (
   <div>
     {label ? <Label fieldId={id} label={label} isRequired={isRequired(validation)} /> : null }
     <input
       id={id}
       type={type}
+      name={name}
       placeholder={placeholder}
       defaultValue={value}
       disabled={disabled}
-      onChange={e => update(id, e.target.value)}
-      onBlur={() => validate(id, groupId)}
+      onChange={e => update({ name, value: e.target.value })}
+      onBlur={() => validate({ name, groupName })}
     />
     {errorMessage ? <ErrorMessage message={errorMessage} /> : null}
   </div>
@@ -26,7 +27,8 @@ const types = ['text', 'password', 'email'];
 
 Input.propTypes = {
   id: PropTypes.string.isRequired,
-  groupId: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  groupName: PropTypes.string,
   label: PropTypes.string,
   type: PropTypes.oneOf(types).isRequired,
   placeholder: PropTypes.string,
@@ -39,7 +41,7 @@ Input.propTypes = {
 };
 
 Input.defaultProps = {
-  groupId: null,
+  groupName: null,
   label: null,
   placeholder: '',
   value: '',

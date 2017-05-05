@@ -6,9 +6,10 @@ import Textarea from '../Textarea';
 import Label from '../Label';
 import ErrorMessage from '../ErrorMessage';
 
-const fieldId = 'testId';
+const name = 'some field name';
 const defaultProps = {
-  id: fieldId,
+  id: 'field_id',
+  name,
   update: ()=>{},
   validate: () => {}
 };
@@ -42,15 +43,15 @@ describe('<Textarea />', () => {
     const wrapper = shallow(<Textarea {...defaultProps} update={update} />);
 
     wrapper.find('textarea').simulate('change', {target: { value }});
-    expect(update.calledWith(fieldId, value)).toEqual(true);
+    expect(update.calledWith({ name, value })).toEqual(true);
   });
 
   it('should call validate method on blur', () => {
     const validate = spy();
-    const groupId = 'testGroupId';
-    const wrapper = shallow(<Textarea {...defaultProps} validate={validate} groupId={groupId} />);
+    const groupName = 'testGroupId';
+    const wrapper = shallow(<Textarea {...defaultProps} validate={validate} groupName={groupName} />);
 
     wrapper.find('textarea').simulate('blur');
-    expect(validate.calledWith(fieldId, groupId)).toEqual(true);
+    expect(validate.calledWith({ name, groupName })).toEqual(true);
   });
 });

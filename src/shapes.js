@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import 'react';
 
 export const fieldShape = PropTypes.shape({
-  id: PropTypes.string.isRequired
+  name: PropTypes.string.isRequired
 });
 
 export const validationShape = PropTypes.shape({

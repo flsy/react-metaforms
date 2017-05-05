@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { fieldShape } from './shapes';
 
-import { hasError } from './utils/utils';
+import { hasError, findField, createFieldId } from './utils/utils';
 import validate from './utils/validate';
 import getComponent from './utils/getComponent';
 
@@ -14,58 +14,61 @@ class Form extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.update = this.update.bind(this);
     this.validate = this.validate.bind(this);
+    this.updateAndValidate = this.updateAndValidate.bind(this);
     this.getValue = this.getValue.bind(this);
     this.getComponent = this.getComponent.bind(this);
     this.state = {}; // value, errorMessage
   }
 
-  update(id, value) {
+  update({ name, value }) {
     this.setState({
-      [id]: { ...this.state[id], value }
+      [name]: { ...this.state[name], value }
     })
   }
 
-  getValue(id) {
-    if (this.state[id] && this.state[id].value !== null) {
-      return this.state[id].value
+  getValue(name) {
+    if (this.state[name] && this.state[name].value !== null) {
+      return this.state[name].value
     }
-    const field = this.props.fields.find(f => f.id === id);
+    const field = this.props.fields.find(f => f.name === name);
     return field ? field.value : '';
   }
 
-  getErrorMessage(id) {
-    if (this.state[id] && this.state[id].errorMessage !== null) {
-      return this.state[id].errorMessage
+  getErrorMessage(name) {
+    if (this.state[name] && this.state[name].errorMessage !== null) {
+      return this.state[name].errorMessage
     }
-    const field = this.props.fields.find(f => f.id === id);
+    const field = this.props.fields.find(f => f.name === name);
     return field ? field.errorMessage : '';
   }
 
-  validate(id, groupId = null) {
-    let field;
-    if (groupId) {
-      const group = this.props.fields.find(f => f.id === groupId);
-      field = group.fields.find(f => f.id === id)
-    } else {
-      field = this.props.fields.find(f => f.id === id);
-    }
+  validate({ name, groupName }) {
+    const field = findField(name, groupName, this.props.fields);
 
-
-    const errorMessage = validate(this.getValue(id), field.validation, this.getFormData());
+    const errorMessage = validate(this.getValue(name), field.validation, this.getFormData());
     this.setState({
-      [id]: { ...this.state[id], errorMessage }
+      [name]: { ...this.state[name], errorMessage }
+    });
+  }
+
+  updateAndValidate({ name, value, groupName }) {
+    const field = findField(name, groupName, this.props.fields);
+
+    const errorMessage = validate(value, field.validation, this.getFormData());
+    this.setState({
+      [name]: { ...this.state[name], errorMessage, value }
     });
   }
 
   getFormData() {
     const fromState = {};
-    Object.keys(this.state).forEach(id => {
-      fromState[id] = this.state[id].value;
+    Object.keys(this.state).forEach(name => {
+      fromState[name] = this.state[name].value;
     });
 
     const fromProps = {};
     this.props.fields.forEach(field => {
-      fromProps[field.id] = field.value;
+      fromProps[field.name] = field.value;
     });
 
     const merged = {...fromProps, ...fromState};
@@ -85,13 +88,13 @@ class Form extends Component {
     const formData = this.getFormData();
     const validated = this.props.fields
       .filter(field => field.validation)
-      .map(field => ({ id: field.id, value: this.getValue(field.id), errorMessage: validate(this.getValue(field.id), field.validation, formData) }));
+      .map(field => ({ name: field.name, value: this.getValue(field.name), errorMessage: validate(this.getValue(field.name), field.validation, formData) }));
 
     if (hasError(validated)) {
 
       const x = {};
       validated.forEach(s => {
-        x[s.id] = { value: s.value, errorMessage: s.errorMessage }
+        x[s.name] = { value: s.value, errorMessage: s.errorMessage }
       });
 
       this.setState(x);
@@ -100,18 +103,22 @@ class Form extends Component {
     }
   }
 
-  getComponent(fields, groupId) {
+  getComponent(fields, groupName) {
     return fields.map(field => {
       if (field.fields) {
-        return getComponent({ ...field, key: field.id, components: this.getComponent(field.fields, field.id) });
+        const id = createFieldId(field.name);
+        return getComponent({ ...field, key: id, id, components: this.getComponent(field.fields, field.name) });
       }
+      const id = createFieldId(field.name, groupName);
       return getComponent({...field,
-        key: field.id,
-        groupId,
-        value: this.getValue(field.id),
+        key: id,
+        id,
+        groupName,
+        value: this.getValue(field.name),
         update: this.update,
         validate: this.validate,
-        errorMessage: this.getErrorMessage(field.id)
+        updateAndValidate: this.updateAndValidate,
+        errorMessage: this.getErrorMessage(field.name)
       })
     })
   }

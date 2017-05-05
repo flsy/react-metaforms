@@ -6,11 +6,12 @@ import Input from '../Input';
 import Label from '../Label';
 import ErrorMessage from '../ErrorMessage';
 
-const fieldId = 'testId';
+const name = 'test_field_name';
 const defaultProps = {
-  id: fieldId,
+  id: 'testId',
+  name,
   type: "text",
-  update: ()=>{},
+  update: () => {},
   validate: () => {}
 };
 
@@ -49,15 +50,15 @@ describe('<Input />', () => {
     const wrapper = shallow(<Input {...defaultProps} update={update} />);
 
     wrapper.find('input').simulate('change', {target: { value }});
-    expect(update.calledWith(fieldId, value)).toEqual(true);
+    expect(update.calledWith({ name, value })).toEqual(true);
   });
 
   it('should call validate method on blur', () => {
     const validate = spy();
-    const groupId = 'testGroupId';
-    const wrapper = shallow(<Input {...defaultProps} validate={validate} groupId={groupId} />);
+    const groupName = 'testGroupName';
+    const wrapper = shallow(<Input {...defaultProps} validate={validate} groupName={groupName} />);
 
     wrapper.find('input').simulate('blur');
-    expect(validate.calledWith(fieldId, groupId)).toEqual(true);
+    expect(validate.calledWith({ name, groupName })).toEqual(true);
   });
 });

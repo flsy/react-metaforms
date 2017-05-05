@@ -8,7 +8,7 @@ describe('<Form />', () => {
   it('should render and update a field', () => {
     const fields = [
       {
-        id: 'name',
+        name: 'name',
         type: 'text',
         label: 'Name',
       }
@@ -23,7 +23,7 @@ describe('<Form />', () => {
   it('should update default value to empty string', () => {
     const fields = [
       {
-        id: 'name',
+        name: 'name',
         type: 'text',
         label: 'Name',
         value: 'some default value',
@@ -39,12 +39,12 @@ describe('<Form />', () => {
     const onSubmit = spy();
     const fields = [
       {
-        id: 'name',
+        name: 'name',
         type: 'text',
         label: 'Name',
         value: 'some default value',
       },{
-        id: 'submitBtn',
+        name: 'submitBtn',
         label: 'Submit',
         type: 'button'
       }
@@ -58,7 +58,7 @@ describe('<Form />', () => {
   it('should validate', () => {
     const fields = [
       {
-        id: 'name',
+        name: 'name',
         type: 'text',
         label: 'Name',
         validation: [
@@ -82,7 +82,7 @@ describe('<Form />', () => {
   it('should show the default error message when there is some', () => {
     const fields = [
       {
-        id: 'name',
+        name: 'name',
         type: 'text',
         label: 'Name',
         errorMessage: 'some error message',
@@ -105,7 +105,7 @@ describe('<Form />', () => {
         this.state = {
           fields: [
             {
-              id: 'name',
+              name: 'name',
               type: 'text',
               label: 'Name',
               errorMessage: 'error 1'
@@ -115,7 +115,7 @@ describe('<Form />', () => {
       }
 
       setErrorMessage() {
-        this.setState({ fields: this.state.fields.map(x => x.id === 'name' ?  {...x, errorMessage: 'error 2' } : x) })
+        this.setState({ fields: this.state.fields.map(x => x.name === 'name' ?  {...x, errorMessage: 'error 2' } : x) })
       }
 
       render () {
@@ -132,7 +132,7 @@ describe('<Form />', () => {
   it('should not submit the form with invalid values', () => {
     const fields = [
       {
-        id: 'name',
+        name: 'name',
         type: 'text',
         label: 'Name',
         validation: [
@@ -157,7 +157,7 @@ describe('<Form />', () => {
   it('should submit the form with all values valid', () => {
     const fields = [
       {
-        id: 'name',
+        name: 'name',
         type: 'text',
         label: 'Name',
         validation: [

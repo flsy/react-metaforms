@@ -1,17 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Button = ({ id, label, type, disabled, tooltip, action }) => (
+const Button = ({ label, type, disabled, tooltip, action }) => (
   <div className="formField">
     <button
-      id={id}
       disabled={disabled}
       type={type}>{label}</button>
   </div>
 );
 
 Button.propTypes = {
-  id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
