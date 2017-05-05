@@ -178,5 +178,26 @@ describe('<Form />', () => {
 
     wrapper.find('form').simulate('submit');
     expect(onSubmit.calledWith({ name: 'ok value' })).toEqual(true)
+  });
+
+  it('should render and submit customComponents', () => {
+    const fields = [
+      {
+        id: 'name',
+        type: 'text',
+        label: 'Name',
+        validation: []
+      }
+    ];
+    const customComponents = {
+      text: (props) => <input name="testNameInput" defaultValue={props.value} onChange={e => props.update(props.id, e.target.value)} />
+    };
+    const onSubmit = spy();
+    const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={onSubmit} customComponents={customComponents} />);
+    wrapper.find('input[name="testNameInput"]').simulate('change', {target: {value: 'ok value' }});
+
+    wrapper.find('form').simulate('submit');
+
+    expect(wrapper.find('input[name="testNameInput"]').props().defaultValue).toEqual('ok value');
   })
 });

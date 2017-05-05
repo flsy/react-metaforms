@@ -119,7 +119,7 @@ class Form extends Component {
         validate: this.validate,
         updateAndValidate: this.updateAndValidate,
         errorMessage: this.getErrorMessage(field.name)
-      })
+      }, this.props.customComponents)
     })
   }
 
@@ -135,7 +135,9 @@ class Form extends Component {
 Form.propTypes = {
   id: PropTypes.string.isRequired,
   fields: PropTypes.arrayOf(fieldShape),
-  onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
+
+  customComponents: PropTypes.objectOf(PropTypes.func),
 };
 
 Form.defaultProps = {

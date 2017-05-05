@@ -29,6 +29,15 @@ export const form = [
         ]
       },
       {
+        "type": "minlength",
+        "rules": [
+          {
+            "value": 3,
+            "message": "Your username can only have 3 - 32 characters"
+          }
+        ]
+      },
+      {
         type: "pattern",
         rules: [
           {
@@ -42,6 +51,11 @@ export const form = [
         ]
       }
     ]
+  },
+  {
+    name: 'custom-message-field',
+    type: 'message',
+    value: "I'm a custom message text",
   },
   {
     name: 'text-area',
