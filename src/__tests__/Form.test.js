@@ -183,14 +183,14 @@ describe('<Form />', () => {
   it('should render and submit customComponents', () => {
     const fields = [
       {
-        id: 'name',
+        name: 'name',
         type: 'text',
         label: 'Name',
         validation: []
       }
     ];
     const customComponents = {
-      text: (props) => <input name="testNameInput" defaultValue={props.value} onChange={e => props.update(props.id, e.target.value)} />
+      text: (props) => <input name="testNameInput" defaultValue={props.value} onChange={e => props.update({ name: props.name, value: e.target.value })} />
     };
     const onSubmit = spy();
     const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={onSubmit} customComponents={customComponents} />);
