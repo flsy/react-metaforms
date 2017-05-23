@@ -1,9 +1,22 @@
 {
-  "name": "@falsy/forms",
+  "name": "react-metaforms",
   "version": "0.1.6",
   "private": false,
   "main": "lib/export.js",
   "jsnext:main": "src/export.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flsy/react-metaforms.git"
+  },
+  "keywords": [
+    "react",
+    "forms"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/flsy/react-metaforms/issues"
+  },
+  "homepage": "https://github.com/flsy/react-metaforms#readme",
   "files": [
     "lib",
     "src"

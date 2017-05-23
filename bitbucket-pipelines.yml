@@ -1,8 +1,0 @@
-image: node:7.3.0
-
-pipelines:
-  default:
-    - step:
-        script:
-          - npm install
-          - npm test

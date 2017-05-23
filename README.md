@@ -6,12 +6,11 @@
 import { Form } from 'forms';
 
 <Form
-	id="formId"
-	fields={fields}
-	onSubmit={onSubmit}
+  id="formId"
+  fields={fields}
+  onSubmit={onSubmit}
 />  
 ```
-
 
 ## Validation rules
 
@@ -131,15 +130,3 @@ import { Form } from 'forms';
   ]
 }
 ```
-
-## Publishing
-
-make sure you have everything pushed and run
-
-`npm version patch` (major | minor | patch)
-
-and then `npm publish`
-
-
-don't forget to push everything
-
