@@ -2,8 +2,14 @@
 
 ## How To Use It
 
+### Installation
+
+```bash
+npm install --save react-metaforms
+```
+
 ```jsx
-import { Form } from 'forms';
+import { Form } from 'react-metaforms';
 
 <Form
   id="formId"
