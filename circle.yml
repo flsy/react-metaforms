@@ -10,4 +10,3 @@ deployment:
     branch: master
     heroku:
       appname: react-metaforms
-      
