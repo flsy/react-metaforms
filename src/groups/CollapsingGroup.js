@@ -41,7 +41,7 @@ class CollapsingGroup extends Component {
 CollapsingGroup.propTypes = {
   id: PropTypes.string.isRequired,
   legend: PropTypes.string.isRequired,
-  isCollapsed: PropTypes.string,
+  isCollapsed: PropTypes.bool,
   components: PropTypes.arrayOf(PropTypes.node),
 };
 

@@ -6,7 +6,7 @@ const Button = ({ label, type, disabled, action }) => (
     <button
       disabled={disabled}
       type={type}
-      onClick={action} // todo
+      onClick={() => console.log('clicked', { action })} // eslint-disable-line no-console
     >
       {label}
     </button>
