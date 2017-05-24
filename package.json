@@ -43,8 +43,9 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "rimraf lib && babel src -d lib --presets es2015,react,stage-0 --ignore test.js",
-    "prepublish": "npm run build",
+    "build": "react-scripts build",
+    "transpile": "rimraf lib && babel src -d lib --presets es2015,react,stage-0 --ignore test.js",
+    "prepublish": "npm run transpile",
     "test": "react-scripts test --env=jsdom",
     "coverage": "npm test -- --coverage"
   }
