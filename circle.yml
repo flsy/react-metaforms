@@ -5,8 +5,4 @@ test:
   override:
       - npm run test
 
-deployment:
-  production:
-    branch: master
-    heroku:
-      appname: react-metaforms
+
