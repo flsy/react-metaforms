@@ -71,10 +71,10 @@ export default (fieldValue = '', validation = [], formData = {}) => {
           return isNotEqualCaseInsensitive(fieldValue, ruleValue, formData) ? errorMessage : null;
 
         default:
-          return null
+          return null;
       }
     })
     .filter(error => error !== null);
 
   return rule.length > 0 ? rule[0] : '';
-}
+};

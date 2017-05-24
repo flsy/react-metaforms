@@ -17,7 +17,7 @@ const Textarea = ({ id, name, groupName, label, placeholder, value, disabled, up
       onChange={e => update({ name, value: e.target.value })}
       onBlur={() => validate({ name, groupName })}
     />
-    {errorMessage ? <ErrorMessage message={errorMessage}/> : null}
+    {errorMessage ? <ErrorMessage message={errorMessage} /> : null}
   </div>
 );
 
@@ -32,17 +32,17 @@ Textarea.propTypes = {
   update: PropTypes.func.isRequired,
   validate: PropTypes.func.isRequired,
   errorMessage: PropTypes.string,
-  validation: PropTypes.arrayOf(validationShape)
+  validation: PropTypes.arrayOf(validationShape),
 };
 
-Textarea.defaultProps= {
+Textarea.defaultProps = {
   groupName: null,
   label: '',
   placeholder: '',
   value: '',
   disabled: false,
   errorMessage: null,
-  validation: []
+  validation: [],
 };
 
 export default Textarea;

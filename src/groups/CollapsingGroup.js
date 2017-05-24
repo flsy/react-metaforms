@@ -3,30 +3,36 @@ import React, { Component } from 'react';
 import GroupFields from './GroupFields';
 import GroupHeader from './GroupHeader';
 
-
 class CollapsingGroup extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.onToggle = this.onToggle.bind(this);
-    this.state = {isCollapsed: this.props.isCollapsed}
+    this.state = {
+      isCollapsed: this.props.isCollapsed,
+    };
   }
 
   onToggle() {
-    this.setState({isCollapsed: !this.state.isCollapsed});
+    this.setState({
+      isCollapsed: !this.state.isCollapsed,
+    });
   }
 
   render() {
     return (
       <div>
-        <GroupHeader id={this.props.id}
-                     legend={this.props.legend}
-                     action={this.onToggle}
-                     buttonLabel={this.state.isCollapsed ? 'open' : 'close'}
+        <GroupHeader
+          id={this.props.id}
+          legend={this.props.legend}
+          action={this.onToggle}
+          buttonLabel={this.state.isCollapsed ? 'open' : 'close'}
         />
-        <GroupFields components={this.props.components}
-                     rendered={!this.state.isCollapsed}
-                     className="collapsing-group-fields" />
+        <GroupFields
+          components={this.props.components}
+          rendered={!this.state.isCollapsed}
+          className="collapsing-group-fields"
+        />
       </div>
     );
   }
@@ -35,11 +41,13 @@ class CollapsingGroup extends Component {
 CollapsingGroup.propTypes = {
   id: PropTypes.string.isRequired,
   legend: PropTypes.string.isRequired,
-  components: PropTypes.arrayOf(PropTypes.node)
+  isCollapsed: PropTypes.string,
+  components: PropTypes.arrayOf(PropTypes.node),
 };
 
 CollapsingGroup.defaultProps = {
-  components: []
+  components: [],
+  isCollapsed: false,
 };
 
 export default CollapsingGroup;
