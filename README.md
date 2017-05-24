@@ -1,5 +1,7 @@
 # Forms
 
+[![CircleCI](https://circleci.com/gh/flsy/react-metaforms/tree/master.svg?style=svg)](https://circleci.com/gh/flsy/react-metaforms/tree/master)
+
 ## How To Use It
 
 ### Installation
@@ -9,7 +11,7 @@ npm install --save react-metaforms
 ```
 
 ```jsx
-import { Form } from 'react-metaforms';
+import Form from 'react-metaforms';
 
 <Form
   id="formId"
