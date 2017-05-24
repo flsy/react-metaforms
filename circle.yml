@@ -1,0 +1,13 @@
+machine:
+  node:
+    version: 6.10.3
+test:
+  override:
+      - npm run test
+
+deployment:
+  production:
+    branch: master
+    heroku:
+      appname: react-metaforms
+      
