@@ -5,7 +5,7 @@ import Label from '../fields/Label';
 
 const GroupHeader = ({ id, legend, action, buttonLabel }) => (
   <div>
-    <Label fieldId={id} label={legend} />
+    {legend ? <Label fieldId={id} label={legend} /> : null}
     {action ? <button type="button" onClick={() => action()}>{buttonLabel}</button> : null}
   </div>
 );
