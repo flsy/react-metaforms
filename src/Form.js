@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {fieldShape} from './shapes';
+import { fieldShape } from './shapes';
 
-import {hasError, findField, createFieldId} from './utils/utils';
+import { hasError, findField, createFieldId } from './utils/utils';
 import validate from './utils/validate';
 import getComponent from './utils/getComponent';
 
