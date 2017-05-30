@@ -22,7 +22,6 @@ class Form extends Component {
 
   onSubmit(event) {
     event.preventDefault();
-
     const formData = this.getFormData();
     const validated = this.props.fields
       .filter(field => field.validation)
@@ -32,14 +31,14 @@ class Form extends Component {
         errorMessage: validate(this.getValue(field.name), field.validation, formData),
       }));
 
-    if (hasError(validated)) {
       const x = {};
       validated.forEach((s) => {
-        x[s.name] = { value: s.value, errorMessage: s.errorMessage };
+        x[s.name] = { value: s.value, errorMessage: hasError(validated) ? s.errorMessage : '' };
       });
 
       this.setState(x);
-    } else {
+
+    if (!hasError(validated)) {
       this.props.onSubmit(this.getFormData());
     }
   }
@@ -115,10 +114,9 @@ class Form extends Component {
 
   validate({ name, groupName }) {
     const field = findField(name, groupName, this.props.fields);
-
     const errorMessage = validate(this.getValue(name), field.validation, this.getFormData());
     this.setState({
-      [name]: { ...this.state[name], errorMessage },
+      [name]: { ...this.state[name], value: this.getValue(name), errorMessage },
     });
   }
 
