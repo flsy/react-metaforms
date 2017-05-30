@@ -58,7 +58,7 @@ class Form extends Component {
     const merged = { ...fromProps, ...fromState };
     const final = {};
     Object.keys(merged).forEach((field) => {
-      if (merged[field]) {
+      if (merged[field] !== undefined) {
         final[field] = merged[field];
       }
     });
