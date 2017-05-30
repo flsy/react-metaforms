@@ -10,16 +10,16 @@ const name = 'test_field_name';
 const defaultProps = {
   id: 'testId',
   name,
-  type: "text",
+  type: 'text',
   update: () => {},
-  validate: () => {}
+  validate: () => {},
 };
 
 describe('<Input />', () => {
   it('should mount and unmout and render an input field', () => {
     const wrapper = mount(<Input {...defaultProps} />);
     expect(wrapper.find('input').exists()).toEqual(true);
-    wrapper.unmount()
+    wrapper.unmount();
   });
 
   it('should render <Label /> component', () => {
@@ -35,7 +35,7 @@ describe('<Input />', () => {
   it('should render correct type', () => {
     const wrapper = shallow(<Input {...defaultProps} />);
     expect(wrapper.find('input[type="text"]').exists()).toEqual(true);
-    wrapper.setProps({ type: 'password'});
+    wrapper.setProps({ type: 'password' });
     expect(wrapper.find('input[type="password"]').exists()).toEqual(true);
   });
 
@@ -49,7 +49,7 @@ describe('<Input />', () => {
     const value = 'aaa value';
     const wrapper = shallow(<Input {...defaultProps} update={update} />);
 
-    wrapper.find('input').simulate('change', {target: { value }});
+    wrapper.find('input').simulate('change', { target: { value } });
     expect(update.calledWith({ name, value })).toEqual(true);
   });
 

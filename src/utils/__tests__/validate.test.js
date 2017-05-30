@@ -1,5 +1,3 @@
-import React from 'react';
-
 import validate from '../validate';
 
 describe('validate', () => {
@@ -9,10 +7,10 @@ describe('validate', () => {
         type: 'required',
         rules: [
           {
-            message: 'Please enter your name'
-          }
-        ]
-      }
+            message: 'Please enter your name',
+          },
+        ],
+      },
     ];
 
     it('should return an error message when the field value is empty', () => {
@@ -38,10 +36,10 @@ describe('validate', () => {
         rules: [
           {
             value: 3,
-            message: 'min 3 characters'
-          }
-        ]
-      }
+            message: 'min 3 characters',
+          },
+        ],
+      },
     ];
 
     it('should return an error if value has too few characters', () => {
@@ -64,10 +62,10 @@ describe('validate', () => {
         rules: [
           {
             value: 5,
-            message: 'max 5 characters long'
-          }
-        ]
-      }
+            message: 'max 5 characters long',
+          },
+        ],
+      },
     ];
 
     it('should return an error if the entered text exceeds the max length rule', () => {
@@ -90,10 +88,10 @@ describe('validate', () => {
         rules: [
           {
             value: true,
-            message: 'You need to agree to the terms and conditions'
-          }
-        ]
-      }
+            message: 'You need to agree to the terms and conditions',
+          },
+        ],
+      },
     ];
 
     it('should return an error if the value is not equal to the specified value', () => {
@@ -123,12 +121,12 @@ describe('validate', () => {
               'Dr',
               'Rev',
               'Prof',
-              'Other'
+              'Other',
             ],
-            message: 'Title was not a valid choice'
-          }
-        ]
-      }
+            message: 'Title was not a valid choice',
+          },
+        ],
+      },
     ];
 
     it('should return an error if the user selects an invalid option', () => {
@@ -151,10 +149,10 @@ describe('validate', () => {
         rules: [
           {
             value: "^[a-zA-Z \\'-]+$",
-            message: 'Sorry, your name can only include letters and spaces'
-          }
-        ]
-      }
+            message: 'Sorry, your name can only include letters and spaces',
+          },
+        ],
+      },
     ];
 
     it('should not display error if field value is empty', () => {
@@ -177,7 +175,7 @@ describe('validate', () => {
       const message = 'Sorry, your name cannot include spaces';
 
       const multipleValidations = [...validationRules];
-      multipleValidations[0].rules.push({ value: "^\\S*$", message });
+      multipleValidations[0].rules.push({ value: '^\\S*$', message });
 
       const errorMessage = validate('John Smith', multipleValidations);
 
@@ -192,10 +190,10 @@ describe('validate', () => {
         rules: [
           {
             value: '[pP][aA][sS][sS][wW][oO][rR][dD]',
-            message: 'invalid password'
-          }
-        ]
-      }
+            message: 'invalid password',
+          },
+        ],
+      },
     ];
 
     it('should not return an error if value is empty', () => {
@@ -219,7 +217,7 @@ describe('validate', () => {
     it('should return the correct error when multiple rules are given', () => {
       const message = 'Sorry, your password must include spaces';
       const multipleValidations = [...validationRules];
-      multipleValidations[0].rules.push({ value: "^\\S*$", message });
+      multipleValidations[0].rules.push({ value: '^\\S*$', message });
       const errorMessage = validate('hellothere', multipleValidations);
 
       expect(errorMessage).toEqual(multipleValidations[0].rules[1].message);
@@ -233,20 +231,20 @@ describe('validate', () => {
         rules: [
           {
             value: 'password',
-            message: "The passwords you entered didn't match. Please try again"
-          }
-        ]
-      }
+            message: "The passwords you entered didn't match. Please try again",
+          },
+        ],
+      },
     ];
 
     it('should return an error when the specified field values do not match', () => {
-      const errorMessage = validate('joe12334', validationRules, { password: 'bob' } );
+      const errorMessage = validate('joe12334', validationRules, { password: 'bob' });
 
       expect(errorMessage).toEqual("The passwords you entered didn't match. Please try again");
     });
 
     it('should not return an error when the specified field values match', () => {
-      const errorMessage = validate('joe12334', validationRules, { password: 'joe12334' } );
+      const errorMessage = validate('joe12334', validationRules, { password: 'joe12334' });
 
       expect(errorMessage).toEqual('');
     });
@@ -259,14 +257,14 @@ describe('validate', () => {
         rules: [
           {
             value: 'email',
-            message: 'Sorry, your email addresses do not match. Please try again'
-          }
-        ]
-      }
+            message: 'Sorry, your email addresses do not match. Please try again',
+          },
+        ],
+      },
     ];
 
     it('should return an error if value does not match, case is not sensitive', () => {
-      const errorMessage = validate('email@email.com', validationRules, { email: 'emails@emails.com' } );
+      const errorMessage = validate('email@email.com', validationRules, { email: 'emails@emails.com' });
 
       expect(errorMessage).toEqual('Sorry, your email addresses do not match. Please try again');
     });

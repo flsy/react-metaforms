@@ -1,4 +1,5 @@
 import React, { createElement } from 'react';
+import PropTypes from 'prop-types';
 
 import Input from '../fields/Input';
 import Textarea from '../fields/Textarea';
@@ -7,14 +8,13 @@ import Button from '../fields/Button';
 import InlineGroup from '../groups/InlineGroup';
 import CollapsingGroup from '../groups/CollapsingGroup';
 
-export default (props, customComponents) => {
-
+const getComponent = (props, customComponents) => {
   const component = customComponents && customComponents[props.type];
   if (component) {
-    return createElement(component, props)
+    return createElement(component, props);
   }
 
-  switch (props.type) {// todo: use the 'types' constant in <Input />
+  switch (props.type) { // todo: use the 'types' constant in <Input />
     case 'text':
     case 'email':
     case 'password':
@@ -34,3 +34,9 @@ export default (props, customComponents) => {
       return null;
   }
 };
+
+getComponent.propTypes = {
+  type: PropTypes.string.isRequired,
+};
+
+export default getComponent;

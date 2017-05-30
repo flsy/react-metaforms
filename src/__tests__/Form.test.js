@@ -11,13 +11,13 @@ describe('<Form />', () => {
         name: 'name',
         type: 'text',
         label: 'Name',
-      }
+      },
     ];
     const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={() => {}} />);
     const newValue = 'My new value';
-    wrapper.find('input').simulate('change', {target: {value: newValue }});
+    wrapper.find('input').simulate('change', { target: { value: newValue } });
 
-    expect(wrapper.find(Input).props().value).toEqual(newValue)
+    expect(wrapper.find(Input).props().value).toEqual(newValue);
   });
 
   it('should update default value to empty string', () => {
@@ -27,12 +27,12 @@ describe('<Form />', () => {
         type: 'text',
         label: 'Name',
         value: 'some default value',
-      }
+      },
     ];
     const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={() => {}} />);
-    wrapper.find('input').simulate('change', {target: {value: '' }});
+    wrapper.find('input').simulate('change', { target: { value: '' } });
 
-    expect(wrapper.find('input').props().defaultValue).toEqual('')
+    expect(wrapper.find('input').props().defaultValue).toEqual('');
   });
 
   it('should submit the default values', () => {
@@ -43,16 +43,17 @@ describe('<Form />', () => {
         type: 'text',
         label: 'Name',
         value: 'some default value',
-      },{
+      },
+      {
         name: 'submitBtn',
         label: 'Submit',
-        type: 'button'
-      }
+        type: 'button',
+      },
     ];
     const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={onSubmit} />);
 
     wrapper.find('form').simulate('submit');
-    expect(onSubmit.calledWith({ name: 'some default value' })).toEqual(true)
+    expect(onSubmit.calledWith({ name: 'some default value' })).toEqual(true);
   });
 
   it('should validate', () => {
@@ -63,20 +64,20 @@ describe('<Form />', () => {
         label: 'Name',
         validation: [
           {
-            type: "required",
+            type: 'required',
             rules: [
               {
-                message: "Please choose a username"
-              }
-            ]
-          }
-        ]
-      }
+                message: 'Please choose a username',
+              },
+            ],
+          },
+        ],
+      },
     ];
     const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={() => {}} />);
     wrapper.find('input').simulate('blur');
 
-    expect(wrapper.find(Input).props().errorMessage).toEqual('Please choose a username')
+    expect(wrapper.find(Input).props().errorMessage).toEqual('Please choose a username');
   });
 
   it('should show the default error message when there is some', () => {
@@ -86,7 +87,7 @@ describe('<Form />', () => {
         type: 'text',
         label: 'Name',
         errorMessage: 'some error message',
-      }
+      },
     ];
     const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={() => {}} />);
 
@@ -94,12 +95,12 @@ describe('<Form />', () => {
 
     wrapper.find('form').simulate('submit');
 
-    expect(wrapper.find(Input).props().errorMessage).toEqual(fields[0].errorMessage)
+    expect(wrapper.find(Input).props().errorMessage).toEqual(fields[0].errorMessage);
   });
 
   it('should set the error message after submission', () => {
     class App extends Component {
-      constructor(props){
+      constructor(props) {
         super(props);
         this.setErrorMessage = this.setErrorMessage.bind(this);
         this.state = {
@@ -108,17 +109,17 @@ describe('<Form />', () => {
               name: 'name',
               type: 'text',
               label: 'Name',
-              errorMessage: 'error 1'
-            }
-          ]
+              errorMessage: 'error 1',
+            },
+          ],
         };
       }
 
       setErrorMessage() {
-        this.setState({ fields: this.state.fields.map(x => x.name === 'name' ?  {...x, errorMessage: 'error 2' } : x) })
+        this.setState({ fields: this.state.fields.map(x => (x.name === 'name' ? { ...x, errorMessage: 'error 2' } : x)) });
       }
 
-      render () {
+      render() {
         return (<Form id="testFormId" fields={this.state.fields} onSubmit={this.setErrorMessage} />);
       }
     }
@@ -137,22 +138,22 @@ describe('<Form />', () => {
         label: 'Name',
         validation: [
           {
-            type: "required",
+            type: 'required',
             rules: [
               {
-                message: "Please choose a username"
-              }
-            ]
-          }
-        ]
-      }
+                message: 'Please choose a username',
+              },
+            ],
+          },
+        ],
+      },
     ];
     const onSubmit = spy();
     const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={onSubmit} />);
     wrapper.find('form').simulate('submit');
 
-    expect(wrapper.find(Input).props().errorMessage).toEqual('Please choose a username')
-  })
+    expect(wrapper.find(Input).props().errorMessage).toEqual('Please choose a username');
+  });
 
   it('should submit the form with all values valid', () => {
     const fields = [
@@ -162,22 +163,22 @@ describe('<Form />', () => {
         label: 'Name',
         validation: [
           {
-            type: "required",
+            type: 'required',
             rules: [
               {
-                message: "Please choose a username"
-              }
-            ]
-          }
-        ]
-      }
+                message: 'Please choose a username',
+              },
+            ],
+          },
+        ],
+      },
     ];
     const onSubmit = spy();
     const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={onSubmit} />);
-    wrapper.find('input').simulate('change', {target: {value: 'ok value' }});
+    wrapper.find('input').simulate('change', { target: { value: 'ok value' } });
 
     wrapper.find('form').simulate('submit');
-    expect(onSubmit.calledWith({ name: 'ok value' })).toEqual(true)
+    expect(onSubmit.calledWith({ name: 'ok value' })).toEqual(true);
   });
 
   it('should render and submit customComponents', () => {
@@ -186,18 +187,18 @@ describe('<Form />', () => {
         name: 'name',
         type: 'text',
         label: 'Name',
-        validation: []
-      }
+        validation: [],
+      },
     ];
     const customComponents = {
-      text: (props) => <input name="testNameInput" defaultValue={props.value} onChange={e => props.update({ name: props.name, value: e.target.value })} />
+      text: props => <input name="testNameInput" defaultValue={props.value} onChange={e => props.update({ name: props.name, value: e.target.value })} /> // eslint-disable-line
     };
     const onSubmit = spy();
     const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={onSubmit} customComponents={customComponents} />);
-    wrapper.find('input[name="testNameInput"]').simulate('change', {target: {value: 'ok value' }});
+    wrapper.find('input[name="testNameInput"]').simulate('change', { target: { value: 'ok value' } });
 
     wrapper.find('form').simulate('submit');
 
     expect(wrapper.find('input[name="testNameInput"]').props().defaultValue).toEqual('ok value');
-  })
+  });
 });

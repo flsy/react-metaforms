@@ -7,14 +7,14 @@ import GroupHeader from '../GroupHeader';
 
 const defaultProps = {
   id: 'some-id',
-  legend: 'collapsing group'
+  legend: 'collapsing group',
 };
 
 describe('<CollapsingGroup />', () => {
   it('should mount and unmout and render an collapsing group', () => {
-    const wrapper = mount(<CollapsingGroup {...defaultProps}/>);
+    const wrapper = mount(<CollapsingGroup {...defaultProps} />);
     expect(wrapper.find(GroupFields).exists()).toEqual(true);
     expect(wrapper.find(GroupHeader).exists()).toEqual(true);
-    wrapper.unmount()
+    wrapper.unmount();
   });
 });

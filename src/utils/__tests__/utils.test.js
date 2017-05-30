@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { isRequired, hasError } from '../utils';
 
 describe('utils', () => {
@@ -9,7 +7,7 @@ describe('utils', () => {
       expect(isRequired([{}, { type: 'required' }])).toEqual(true);
       expect(isRequired([{ type: 'required' }])).toEqual(true);
       expect(isRequired([{ type: 'blablabal' }])).toEqual(false);
-    })
+    });
   });
 
   describe('hasError', () => {
