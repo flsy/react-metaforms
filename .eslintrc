@@ -1,0 +1,7 @@
+{
+  "extends": "airbnb",
+  "rules": {
+    "max-len": ["error", 200],
+    "react/jsx-filename-extension": 0
+  }
+}

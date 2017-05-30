@@ -37,7 +37,7 @@ Input.propTypes = {
   update: PropTypes.func.isRequired,
   validate: PropTypes.func.isRequired,
   errorMessage: PropTypes.string,
-  validation: PropTypes.arrayOf(validationShape)
+  validation: PropTypes.arrayOf(validationShape),
 };
 
 Input.defaultProps = {
@@ -46,7 +46,8 @@ Input.defaultProps = {
   placeholder: '',
   value: '',
   disabled: false,
-  validation: []
+  validation: [],
+  errorMessage: '',
 };
 
 export default Input;
