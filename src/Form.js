@@ -74,17 +74,16 @@ class Form extends Component {
     const merged = {...fromProps, ...fromState};
     const final = {};
     Object.keys(merged).forEach(field => {
-      if (merged[field]) {
+      if (merged[field] !== undefined) {
         final[field] = merged[field];
       }
     });
-
+    console.log(final);
     return final;
   }
 
   onSubmit(event) {
     event.preventDefault();
-
     const formData = this.getFormData();
     const validated = this.props.fields
       .filter(field => field.validation)
