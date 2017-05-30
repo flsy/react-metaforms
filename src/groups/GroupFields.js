@@ -11,13 +11,13 @@ const GroupFields = ({ components, className, rendered }) => (
 GroupFields.propTypes = {
   className: PropTypes.string,
   rendered: PropTypes.bool,
-  components: PropTypes.arrayOf(PropTypes.node)
+  components: PropTypes.arrayOf(PropTypes.node),
 };
 
 GroupFields.defaultProps = {
   components: [],
-  className: "",
-  rendered: true
+  className: '',
+  rendered: true,
 };
 
 export default GroupFields;

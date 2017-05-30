@@ -18,11 +18,11 @@ describe('<Checkbox />', () => {
     expect(wrapper.find('input').exists()).toEqual(true);
     expect(wrapper.find('input[type="checkbox"]').exists()).toEqual(true);
     expect(wrapper.find(`input[name="${props.name}"]`).exists()).toEqual(true);
-    wrapper.unmount()
+    wrapper.unmount();
   });
 
   it('should show checked checkbox when value is true', () => {
-    const wrapper = shallow(<Checkbox {...props} value={true} />);
+    const wrapper = shallow(<Checkbox {...props} value />);
     expect(wrapper.find(`input[name="${props.name}"]`).prop('checked')).toEqual(true);
   });
 
@@ -32,15 +32,15 @@ describe('<Checkbox />', () => {
   });
 
   it('should show errorMessage when available', () => {
-    const message = "some error";
+    const message = 'some error';
     const wrapper = shallow(<Checkbox {...props} errorMessage={message} />);
     expect(wrapper.find(ErrorMessage).exists()).toEqual(true);
     expect(wrapper.find(ErrorMessage).props()).toEqual({ message });
   });
 
   it('should show label when passed down', () => {
-    const label = "some meaningful label";
-    const wrapper =shallow(<Checkbox {...props} label={label} />);
+    const label = 'some meaningful label';
+    const wrapper = shallow(<Checkbox {...props} label={label} />);
 
     expect(wrapper.find(Label).exists()).toEqual(true);
   });
@@ -49,10 +49,10 @@ describe('<Checkbox />', () => {
     const updateAndValidate = spy();
     const wrapper = shallow(<Checkbox {...props} updateAndValidate={updateAndValidate} />);
 
-    wrapper.find('input').simulate('change', { target: { checked: true }});
+    wrapper.find('input').simulate('change', { target: { checked: true } });
     expect(updateAndValidate.calledWith({ name: props.name, value: true, groupName: null })).toEqual(true);
 
-    wrapper.find('input').simulate('change', { target: { checked: false }});
+    wrapper.find('input').simulate('change', { target: { checked: false } });
     expect(updateAndValidate.calledWith({ name: props.name, value: false, groupName: null })).toEqual(true);
   });
 });

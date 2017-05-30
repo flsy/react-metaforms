@@ -14,12 +14,12 @@ GroupHeader.propTypes = {
   id: PropTypes.string.isRequired,
   legend: PropTypes.string.isRequired,
   action: PropTypes.func,
-  buttonLabel: PropTypes.string
+  buttonLabel: PropTypes.string,
 };
 
 GroupHeader.defaultProps = {
   action: null,
-  buttonLabel: ""
+  buttonLabel: '',
 };
 
 export default GroupHeader;

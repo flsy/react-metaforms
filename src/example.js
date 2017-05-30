@@ -1,3 +1,4 @@
+/* eslint-disable */
 /*
 - possible types: text/textarea, password...
 inlineGroup

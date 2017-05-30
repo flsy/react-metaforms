@@ -10,15 +10,15 @@ const name = 'some field name';
 const defaultProps = {
   id: 'field_id',
   name,
-  update: ()=>{},
-  validate: () => {}
+  update: () => {},
+  validate: () => {},
 };
 
 describe('<Textarea />', () => {
   it('should mount and unmout and render an textarea', () => {
     const wrapper = mount(<Textarea {...defaultProps} />);
     expect(wrapper.find('textarea').exists()).toEqual(true);
-    wrapper.unmount()
+    wrapper.unmount();
   });
 
   it('should render <Label /> component', () => {
@@ -42,7 +42,7 @@ describe('<Textarea />', () => {
     const value = 'aaa value';
     const wrapper = shallow(<Textarea {...defaultProps} update={update} />);
 
-    wrapper.find('textarea').simulate('change', {target: { value }});
+    wrapper.find('textarea').simulate('change', { target: { value } });
     expect(update.calledWith({ name, value })).toEqual(true);
   });
 
