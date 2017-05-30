@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Button = ({ label, type, disabled, action }) => (
+const Button = ({ label, type, disabled, action, onBtnClick }) => (
   <div className="formField">
     <button
       disabled={disabled}
+      onClick={onBtnClick && action ? () => onBtnClick(action) : null}
       type={type}
-      onClick={() => console.log('clicked', { action })} // eslint-disable-line no-console
     >
       {label}
     </button>
@@ -15,16 +15,16 @@ const Button = ({ label, type, disabled, action }) => (
 
 Button.propTypes = {
   label: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
+  type: PropTypes.string,
   disabled: PropTypes.bool,
-  action: PropTypes.shape({
-    type: PropTypes.string.isRequired,
-    payload: PropTypes.string.isRequired,
-  }),
+  onBtnClick: PropTypes.func,
+  action: PropTypes.string,
 };
 
 Button.defaultProps = {
   disabled: false,
+  type: 'button',
+  onBtnClick: null,
   action: null,
 };
 

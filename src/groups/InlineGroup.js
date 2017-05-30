@@ -12,12 +12,13 @@ const InlineGroup = ({ id, legend, components }) => (
 
 InlineGroup.propTypes = {
   id: PropTypes.string.isRequired,
-  legend: PropTypes.string.isRequired,
+  legend: PropTypes.string,
   components: PropTypes.arrayOf(PropTypes.node),
 };
 
 InlineGroup.defaultProps = {
   components: [],
+  legend: null,
 };
 
 export default InlineGroup;

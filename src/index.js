@@ -13,6 +13,11 @@ const customComponents = {
 };
 
 render(
-  <Form id="testForm" fields={form} onSubmit={onSubmit} customComponents={customComponents} />,
-  document.getElementById('root'),
+  <Form
+    id="testForm"
+    fields={form}
+    onBtnClick={(action) => console.log(`btn action: ${action}`)}
+    onSubmit={onSubmit}
+    customComponents={customComponents} />,
+  document.getElementById('root')
 );
