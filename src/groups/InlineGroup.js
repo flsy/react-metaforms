@@ -13,7 +13,7 @@ const InlineGroup = ({ id, name, legend, components }) => (
 InlineGroup.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  legend: PropTypes.string.isRequired,
+  legend: PropTypes.string,
   components: PropTypes.arrayOf(PropTypes.node)
 };
 

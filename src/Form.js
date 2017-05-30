@@ -114,6 +114,7 @@ class Form extends Component {
         key: id,
         id,
         groupName,
+        onBtnClick: this.props.onBtnClick,
         value: this.getValue(field.name),
         update: this.update,
         validate: this.validate,
@@ -136,6 +137,7 @@ Form.propTypes = {
   id: PropTypes.string.isRequired,
   fields: PropTypes.arrayOf(fieldShape),
   onSubmit: PropTypes.func.isRequired,
+  onBtnClick: PropTypes.func,
 
   customComponents: PropTypes.objectOf(PropTypes.func),
 };

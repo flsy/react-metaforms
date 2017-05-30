@@ -107,14 +107,11 @@ export const form = [
     ]
   },
   {
-    label: 'Save',
+    label: 'button with an action',
     tooltip: '', // optional
     name: 'saveButton',
     type: 'button',
-    action: {
-      type: 'SAVE_FORM', // enum string which would reflect some frontend logic
-      payload: '' // action params
-    }
+    action: 'MY_ACTION',
   },
   {
     name: 'submitBtn',
