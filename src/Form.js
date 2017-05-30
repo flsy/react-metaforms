@@ -78,7 +78,6 @@ class Form extends Component {
         final[field] = merged[field];
       }
     });
-    console.log(final);
     return final;
   }
 
