@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import { fieldShape } from './shapes';
+import {fieldShape} from './shapes';
 
-import { hasError, findField, createFieldId } from './utils/utils';
+import {hasError, findField, createFieldId} from './utils/utils';
 import validate from './utils/validate';
 import getComponent from './utils/getComponent';
 
@@ -31,12 +31,12 @@ class Form extends Component {
         errorMessage: validate(this.getValue(field.name), field.validation, formData),
       }));
 
-      const x = {};
-      validated.forEach((s) => {
-        x[s.name] = { value: s.value, errorMessage: hasError(validated) ? s.errorMessage : '' };
-      });
+    const x = {};
+    validated.forEach((s) => {
+      x[s.name] = { value: s.value, errorMessage: hasError(validated) ? s.errorMessage : '' };
+    });
 
-      this.setState(x);
+    this.setState(x);
 
     if (!hasError(validated)) {
       this.props.onSubmit(this.getFormData());
