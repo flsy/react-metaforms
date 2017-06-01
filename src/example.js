@@ -123,6 +123,7 @@ export const form = [
   {
     name: 'InlineGroup',
     type: 'inlineGroup',
+    className: 'my-awesome-inline-group',
     legend: 'Inline group', // optional
     fields: [
       {

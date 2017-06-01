@@ -12,7 +12,7 @@ const GroupHeader = ({ id, legend, action, buttonLabel }) => (
 
 GroupHeader.propTypes = {
   id: PropTypes.string.isRequired,
-  legend: PropTypes.string.isRequired,
+  legend: PropTypes.string,
   action: PropTypes.func,
   buttonLabel: PropTypes.string,
 };
@@ -20,6 +20,7 @@ GroupHeader.propTypes = {
 GroupHeader.defaultProps = {
   action: null,
   buttonLabel: '',
+  legend: null,
 };
 
 export default GroupHeader;
