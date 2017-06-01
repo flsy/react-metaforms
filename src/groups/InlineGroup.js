@@ -14,7 +14,7 @@ InlineGroup.propTypes = {
   id: PropTypes.string.isRequired,
   legend: PropTypes.string,
   components: PropTypes.arrayOf(PropTypes.node),
-  className: PropTypes.string
+  className: PropTypes.string,
 };
 
 InlineGroup.defaultProps = {
