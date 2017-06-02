@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import ErrorMessage from './ErrorMessage';
@@ -6,22 +6,34 @@ import Label from './Label';
 import { validationShape } from '../shapes';
 import { isRequired } from '../utils/utils';
 
-const Input = ({ id, name, groupName, label, type, placeholder, value, disabled, update, validate, errorMessage, validation }) => (
-  <div>
-    {label ? <Label fieldId={id} label={label} isRequired={isRequired(validation)} /> : null }
-    <input
-      id={id}
-      type={type}
-      name={name}
-      placeholder={placeholder}
-      defaultValue={value}
-      disabled={disabled}
-      onChange={e => update({ name, value: e.target.value })}
-      onBlur={() => validate({ name, groupName })}
-    />
-    {errorMessage ? <ErrorMessage message={errorMessage} /> : null}
-  </div>
-);
+class Input extends Component {
+
+  componentDidMount() {
+    if (this.props.shouldFocus) {
+      this.inputEl.focus();
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        {this.props.label ? <Label fieldId={this.props.id} label={this.props.label} isRequired={isRequired(this.props.validation)} /> : null }
+        <input
+          id={this.props.id}
+          ref={(node) => { this.inputEl = node; }}
+          type={this.props.type}
+          name={this.props.name}
+          placeholder={this.props.placeholder}
+          defaultValue={this.props.value}
+          disabled={this.props.disabled}
+          onChange={e => this.props.update({ name: this.props.name, value: e.target.value })}
+          onBlur={() => this.props.validate({ name: this.props.name, groupName: this.props.groupName })}
+        />
+        {this.props.errorMessage ? <ErrorMessage message={this.props.errorMessage} /> : null}
+      </div>
+    );
+  }
+}
 
 const types = ['text', 'password', 'email'];
 
@@ -34,6 +46,7 @@ Input.propTypes = {
   placeholder: PropTypes.string,
   value: PropTypes.string,
   disabled: PropTypes.bool,
+  shouldFocus: PropTypes.bool,
   update: PropTypes.func.isRequired,
   validate: PropTypes.func.isRequired,
   errorMessage: PropTypes.string,
@@ -42,6 +55,7 @@ Input.propTypes = {
 
 Input.defaultProps = {
   groupName: null,
+  shouldFocus: false,
   label: null,
   placeholder: '',
   value: '',
