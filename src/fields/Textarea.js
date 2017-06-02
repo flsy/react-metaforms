@@ -1,25 +1,37 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ErrorMessage from './ErrorMessage';
 import { validationShape } from '../shapes';
 import Label from './Label';
 import { isRequired } from '../utils/utils';
 
-const Textarea = ({ id, name, groupName, label, placeholder, value, disabled, update, validate, errorMessage, validation }) => (
-  <div className="formField">
-    <Label fieldId={id} label={label} isRequired={isRequired(validation)} />
-    <textarea
-      id={id}
-      name={name}
-      placeholder={placeholder}
-      defaultValue={value}
-      disabled={disabled}
-      onChange={e => update({ name, value: e.target.value })}
-      onBlur={() => validate({ name, groupName })}
-    />
-    {errorMessage ? <ErrorMessage message={errorMessage} /> : null}
-  </div>
-);
+class Textarea extends Component {
+
+  componentDidMount() {
+    if (this.props.shouldFocus) {
+      this.inputEl.focus();
+    }
+  }
+
+  render() {
+    return (
+      <div className="formField">
+        <Label fieldId={this.props.id} label={this.props.label} isRequired={isRequired(this.props.validation)} />
+        <textarea
+          id={this.props.id}
+          ref={(node) => { this.inputEl = node; }}
+          name={this.props.name}
+          placeholder={this.props.placeholder}
+          defaultValue={this.props.value}
+          disabled={this.props.disabled}
+          onChange={e => this.props.update({ name: this.props.name, value: e.target.value })}
+          onBlur={() => this.props.validate({ name: this.props.name, groupName: this.props.groupName })}
+        />
+        {this.props.errorMessage ? <ErrorMessage message={this.props.errorMessage} /> : null}
+      </div>
+    );
+  }
+}
 
 Textarea.propTypes = {
   id: PropTypes.string.isRequired,
@@ -29,6 +41,7 @@ Textarea.propTypes = {
   placeholder: PropTypes.string,
   value: PropTypes.string,
   disabled: PropTypes.bool,
+  shouldFocus: PropTypes.bool,
   update: PropTypes.func.isRequired,
   validate: PropTypes.func.isRequired,
   errorMessage: PropTypes.string,
@@ -41,6 +54,7 @@ Textarea.defaultProps = {
   placeholder: '',
   value: '',
   disabled: false,
+  shouldFocus: false,
   errorMessage: null,
   validation: [],
 };

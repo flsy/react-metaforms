@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { fieldShape } from './shapes';
 
-import { hasError, findField, createFieldId } from './utils/utils';
+import { hasError, findField, createFieldId, shouldComponentFocus } from './utils/utils';
 import validate from './utils/validate';
 import getComponent from './utils/getComponent';
 
@@ -94,6 +94,7 @@ class Form extends Component {
         id,
         groupName,
         onBtnClick: this.props.onBtnClick,
+        shouldFocus: shouldComponentFocus(this.props.fields, field.name),
         value: this.getValue(field.name),
         update: this.update,
         validate: this.validate,

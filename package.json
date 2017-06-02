@@ -1,6 +1,6 @@
 {
   "name": "react-metaforms",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "private": false,
   "main": "lib/export.js",
   "jsnext:main": "src/export.js",
@@ -41,10 +41,10 @@
     "eslint-plugin-react": "7.0.1",
     "react-addons-test-utils": "15.5.1",
     "react-dom": "15.5.4",
-    "react-scripts": "1.0.6",
+    "react-scripts": "1.0.7",
     "react-test-renderer": "15.5.4",
     "rimraf": "2.6.1",
-    "sinon": "2.3.1"
+    "sinon": "2.3.2"
   },
   "scripts": {
     "start": "react-scripts start",
