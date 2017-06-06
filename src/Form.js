@@ -2,8 +2,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { fieldShape } from './shapes';
 
-import { hasError, findField, createFieldId, shouldComponentFocus } from './utils/utils';
-import validate from './utils/validate';
+import {
+  createFieldId,
+  shouldComponentFocus,
+  getValue,
+  getErrorMessage,
+  getFormData,
+  validateField,
+  validateFields,
+} from './utils/utils';
 import getComponent from './utils/getComponent';
 
 
@@ -15,79 +22,28 @@ class Form extends Component {
     this.update = this.update.bind(this);
     this.validate = this.validate.bind(this);
     this.updateAndValidate = this.updateAndValidate.bind(this);
-    this.getValue = this.getValue.bind(this);
     this.getComponent = this.getComponent.bind(this);
     this.state = {}; // value, errorMessage
   }
 
   onSubmit(event) {
     event.preventDefault();
-    const formData = this.getFormData();
-    const validated = this.props.fields
-      .filter(field => field.validation)
-      .map(field => ({
-        name: field.name,
-        value: this.getValue(field.name),
-        errorMessage: validate(this.getValue(field.name), field.validation, formData),
-      }));
 
-    const x = {};
-    validated.forEach((s) => {
-      x[s.name] = { value: s.value, errorMessage: hasError(validated) ? s.errorMessage : '' };
-    });
+    const { state, hasError } = validateFields(this.state, this.props.fields);
 
-    this.setState(x);
-
-    if (!hasError(validated)) {
-      this.props.onSubmit(this.getFormData());
-    }
-  }
-
-  getFormData() {
-    const fromState = {};
-    Object.keys(this.state).forEach((name) => {
-      fromState[name] = this.state[name].value;
-    });
-
-    const fromProps = {};
-    this.props.fields.forEach((field) => {
-      fromProps[field.name] = field.value;
-    });
-
-    const merged = { ...fromProps, ...fromState };
-    const final = {};
-    Object.keys(merged).forEach((field) => {
-      if (merged[field] !== undefined) {
-        final[field] = merged[field];
+    this.setState(state, () => {
+      if (!hasError) {
+        this.props.onSubmit(getFormData(state, this.props.fields));
       }
     });
-
-    return final;
-  }
-
-  getErrorMessage(name) {
-    if (this.state[name] && this.state[name].errorMessage !== null) {
-      return this.state[name].errorMessage;
-    }
-    const field = this.props.fields.find(f => f.name === name);
-    return field ? field.errorMessage : '';
-  }
-
-  getValue(name) {
-    if (this.state[name] && this.state[name].value !== null) {
-      return this.state[name].value;
-    }
-    const field = this.props.fields.find(f => f.name === name);
-    return field ? field.value : '';
   }
 
   getComponent(fields, groupName) {
     return fields.map((field) => {
+      const id = createFieldId(field.name, groupName);
       if (field.fields) {
-        const id = createFieldId(field.name);
         return getComponent({ ...field, key: id, id, components: this.getComponent(field.fields, field.name) });
       }
-      const id = createFieldId(field.name, groupName);
       return getComponent({
         ...field,
         key: id,
@@ -95,29 +51,25 @@ class Form extends Component {
         groupName,
         onBtnClick: this.props.onBtnClick,
         shouldFocus: shouldComponentFocus(this.props.fields, field.name),
-        value: this.getValue(field.name),
+        value: getValue(field.name, this.state, this.props.fields),
         update: this.update,
         validate: this.validate,
         updateAndValidate: this.updateAndValidate,
-        errorMessage: this.getErrorMessage(field.name),
+        errorMessage: getErrorMessage(field.name, this.state, this.props.fields),
       }, this.props.customComponents);
     });
   }
 
   updateAndValidate({ name, value, groupName }) {
-    const field = findField(name, groupName, this.props.fields);
-
-    const errorMessage = validate(value, field.validation, this.getFormData());
     this.setState({
-      [name]: { ...this.state[name], errorMessage, value },
+      [name]: validateField(name, groupName, value, this.state, this.props.fields),
     });
   }
 
   validate({ name, groupName }) {
-    const field = findField(name, groupName, this.props.fields);
-    const errorMessage = validate(this.getValue(name), field.validation, this.getFormData());
+    const value = getValue(name, this.state, this.props.fields);
     this.setState({
-      [name]: { ...this.state[name], value: this.getValue(name), errorMessage },
+      [name]: validateField(name, groupName, value, this.state, this.props.fields),
     });
   }
 

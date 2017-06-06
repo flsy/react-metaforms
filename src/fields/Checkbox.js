@@ -16,7 +16,7 @@ class Checkbox extends Component {
 
   render() {
     return (
-      <div>
+      <div className="formField">
         {this.props.label ? <Label fieldId={this.props.id} label={this.props.label} isRequired={isRequired(this.props.validation)} /> : null }
         <input
           id={this.props.id}

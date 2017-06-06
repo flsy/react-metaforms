@@ -21,7 +21,7 @@ class CollapsingGroup extends Component {
 
   render() {
     return (
-      <div>
+      <div className="formField">
         <GroupHeader
           id={this.props.id}
           legend={this.props.legend}
