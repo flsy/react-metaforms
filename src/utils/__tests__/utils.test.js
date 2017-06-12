@@ -71,7 +71,7 @@ describe('utils', () => {
 
   describe('getErrorMessage', () => {
     it('returns an error message from state', () => {
-      const state = { field1: { name: 'field1', errorMessage: 'error 1' }};
+      const state = { field1: { name: 'field1', errorMessage: 'error 1' } };
       expect(getErrorMessage('field1', state, [])).toEqual('error 1');
       expect(getErrorMessage('field2', state, [])).toEqual('');
     });
