@@ -1,6 +1,29 @@
 import validate from './validate';
 
-export const isRequired = validationRules => !!validationRules.find(rule => rule.type === 'required');
+export const equal = (a, b) => a === b;
+
+export const curry = (fn) => {
+  const r = (args) => {
+    if (args.length >= fn.length) {
+      return fn(...args);
+    }
+    return (...secArgs) => r([...args, ...secArgs]);
+  };
+
+  return (...args) => r(args);
+};
+
+export const compose = (...args) => value => args.reduceRight(
+  (result, fn) => fn(result),
+  value,
+);
+
+export const prop = curry((name, object) => object[name]);
+
+export const propEq = (property, value) => (object = {}) => equal(prop(property, object), value);
+export const head = input => input[0] || null;
+
+export const isRequired = validationRules => !!validationRules.find(propEq('type', 'required'));
 
 const hasFieldError = field => field.errorMessage && field.errorMessage !== '' && field.errorMessage !== null;
 
@@ -10,34 +33,35 @@ export const hasError = fields => !!findError(fields);
 
 export const createFieldId = (name, groupId) => (groupId ? `${name}-${groupId}` : name);
 
-const findField = (name, groupId, fields) => {
+export const findField = (name, groupId, fields) => {
   if (groupId) {
-    const group = fields.find(f => f.name === groupId);
-    return group.fields.find(f => f.name === name);
+    const group = fields.find(propEq('name', groupId));
+    return group.fields.find(propEq('name', name));
   }
-  return fields.find(f => f.name === name);
+  return fields.find(propEq('name', name)) || null;
 };
 
 export const shouldComponentFocus = (fields = [], name = '') => {
   const errorField = findError(fields);
 
-  return (errorField && errorField.name === name) || fields[0].name === name;
+  return (errorField && errorField.name === name) || head(fields).name === name;
 };
 
 export const getValue = (name, state, fields) => {
   if (state[name] && state[name].value !== null) {
     return state[name].value;
   }
-  const field = fields.find(f => f.name === name);
-  return field ? field.value : '';
+  const field = fields.find(propEq('name', name));
+  return (field && prop('value', field)) || '';
 };
 
 export const getErrorMessage = (name, state, fields) => {
-  if (state[name] && hasFieldError(state[name])) {
-    return state[name].errorMessage;
+  const saved = prop(name, state);
+  if (saved && hasFieldError(saved)) {
+    return prop('errorMessage', saved);
   }
-  const field = fields.find(f => f.name === name);
-  return field ? field.errorMessage : '';
+  const field = fields.find(propEq('name', name));
+  return (field && prop('errorMessage', field)) || '';
 };
 
 export const getFormData = (state, fields) => {

@@ -2,6 +2,18 @@ body {
   font-family: sans-serif;
 }
 
+input, select, textarea {
+  font-family: inherit;
+  font-size: 100%;
+  padding: 4px;
+  border: 1px solid #c1c1c1
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #2196f3;
+  outline: none;
+}
+
 .formField {
   padding: 10px;
 }
@@ -24,5 +36,6 @@ abbr[title] {
 
 label {
   display: block;
+  vertical-align: top;
   margin: 2px;
 }
