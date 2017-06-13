@@ -87,6 +87,16 @@ describe('<Form />', () => {
         type: 'text',
         label: 'Name',
         errorMessage: 'some error message',
+        validation: [
+          {
+            type: 'required',
+            rules: [
+              {
+                message: 'Please choose a username',
+              },
+            ],
+          },
+        ],
       },
     ];
     const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={() => {}} />);
@@ -95,7 +105,7 @@ describe('<Form />', () => {
 
     wrapper.find('form').simulate('submit');
 
-    expect(wrapper.find(Input).props().errorMessage).toEqual(fields[0].errorMessage);
+    expect(wrapper.find(Input).props().errorMessage).toEqual(fields[0].validation[0].rules[0].message);
   });
 
   it('should set the error message after submission', () => {

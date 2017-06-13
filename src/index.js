@@ -9,7 +9,7 @@ import { form } from './example';
 const onSubmit = formData => console.log('submitted', formData);
 
 const customComponents = {
-  message: props => (<div><i>{props.value}</i></div>),
+  message: props => (<div className="formField"><i>{props.value}</i></div>),
 };
 
 render(
