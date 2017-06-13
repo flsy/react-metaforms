@@ -52,7 +52,7 @@ export const getValue = (name, state, fields) => {
     return state[name].value;
   }
   const field = fields.find(propEq('name', name));
-  return (field && prop('value', field)) || '';
+  return (field && prop('value', field)) || null;
 };
 
 export const getErrorMessage = (name, state, fields) => {

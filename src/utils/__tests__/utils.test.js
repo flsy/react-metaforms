@@ -65,7 +65,7 @@ describe('utils', () => {
     it('returns an empty string when cant find the field', () => {
       const state = {};
       const fields = [];
-      expect(getValue('firstName', state, fields)).toEqual('');
+      expect(getValue('firstName', state, fields)).toEqual(null);
     });
   });
 
