@@ -10,6 +10,10 @@ const onSubmit = formData => console.log('submitted', formData);
 
 const customComponents = {
   message: props => (<div className="formField"><i>{props.value}</i></div>),
+  group: ({ id, legend, components, className }) => (
+    <div style={{background:'lightblue'}}>
+      {components.map(component => <span key={component.key}>{component}</span>)}
+    </div>),
 };
 
 render(

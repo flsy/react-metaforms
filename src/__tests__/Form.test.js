@@ -211,4 +211,36 @@ describe('<Form />', () => {
 
     expect(wrapper.find('input[name="testNameInput"]').props().defaultValue).toEqual('ok value');
   });
+
+
+  it('should render custom group component', () => {
+    const fields = [
+      {
+        name: 'name',
+        type: 'group',
+        label: 'Name',
+        validation: [],
+        fields: [
+          {
+            type: 'button',
+            name: 'button',
+            label: 'Click me',
+          },
+          {
+            type: 'text',
+            name: 'input',
+            label: 'Input',
+          },
+        ],
+      },
+    ];
+    const customComponents = {
+      group: ({ components }) => (<div>{components.map(component => <span key={component.key}>{component}</span>)}</div>), // eslint-disable-line
+    };
+    const onSubmit = spy();
+    const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={onSubmit} customComponents={customComponents} />);
+
+    expect(wrapper.find('button').prop('children')).toEqual('Click me');
+    expect(wrapper.find('input').prop('name')).toEqual('input');
+  });
 });
