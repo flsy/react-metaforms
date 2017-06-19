@@ -231,11 +231,11 @@ describe('<Form />', () => {
             name: 'input',
             label: 'Input',
           },
-        ]
+        ],
       },
     ];
     const customComponents = {
-      group: ({ components }) => (<div>{components.map(component => <span key={component.key}>{component}</span>)}</div>)
+      group: ({ components }) => (<div>{components.map(component => <span key={component.key}>{component}</span>)}</div>), // eslint-disable-line
     };
     const onSubmit = spy();
     const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={onSubmit} customComponents={customComponents} />);
@@ -243,5 +243,4 @@ describe('<Form />', () => {
     expect(wrapper.find('button').prop('children')).toEqual('Click me');
     expect(wrapper.find('input').prop('name')).toEqual('input');
   });
-
 });
