@@ -47,11 +47,23 @@ export const shouldComponentFocus = (fields = [], name = '') => {
   return (errorField && errorField.name === name) || head(fields).name === name;
 };
 
+export const findFieldInFields = (name, fields) => {
+  for( let i = 0; i < fields.length; i++) {
+    const field = fields[i];
+    if(name === field.name) return field;
+    if(prop('fields', field)){
+      return field.fields.find(propEq('name', name));
+    }
+  }
+
+  return null;
+};
+
 export const getValue = (name, state, fields) => {
   if (state[name] && state[name].value !== null) {
     return state[name].value;
   }
-  const field = fields.find(propEq('name', name));
+  const field = findFieldInFields(name, fields);
   return (field && prop('value', field)) || null;
 };
 
