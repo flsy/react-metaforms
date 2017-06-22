@@ -2,7 +2,6 @@
   "extends": "airbnb",
   "rules": {
     "max-len": ["error", 200],
-    "react/jsx-filename-extension": 0,
-    "linebreak-style": 0
+    "react/jsx-filename-extension": 0
   }
 }
