@@ -48,10 +48,10 @@ export const shouldComponentFocus = (fields = [], name = '') => {
 };
 
 export const findFieldInFields = (name, fields) => {
-  for( let i = 0; i < fields.length; i++) {
+  for (let i = 0; i < fields.length; i += 1) {
     const field = fields[i];
-    if(name === field.name) return field;
-    if(prop('fields', field)){
+    if (name === field.name) return field;
+    if (prop('fields', field)) {
       return field.fields.find(propEq('name', name));
     }
   }
