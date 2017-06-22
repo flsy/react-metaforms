@@ -129,12 +129,13 @@ export const form = [
       {
         name: 'inline-button',
         label: 'Inline Button',
-        type: 'button'
+        type: 'submit'
       },
       {
         type: 'text',
         name: 'inline-input',
         label: 'Inline Input',
+        value: 'Hello.',
         validation: [
           {
             type: "required",
