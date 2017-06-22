@@ -76,6 +76,20 @@ export const getErrorMessage = (name, state, fields) => {
   return (field && prop('errorMessage', field)) || '';
 };
 
+const flattenFields = (fields) => {
+  const flattened = [];
+  fields.forEach((field) => {
+    if (field.fields) {
+      field.fields.forEach((nestedField) => {
+        flattened.push(nestedField);
+      });
+    } else {
+      flattened.push(field);
+    }
+  });
+  return flattened;
+};
+
 export const getFormData = (state, fields) => {
   const fromState = {};
   Object.keys(state).forEach((name) => {
@@ -83,7 +97,7 @@ export const getFormData = (state, fields) => {
   });
 
   const fromProps = {};
-  fields.forEach((field) => {
+  flattenFields(fields).forEach((field) => {
     fromProps[field.name] = field.value;
   });
 
@@ -108,7 +122,7 @@ export const validateField = (name, groupName, value, state, fields) => {
 
 export const validateFields = (state, fields) => {
   const formData = getFormData(state, fields);
-  const validated = fields
+  const validated = flattenFields(fields)
     .filter(field => field.type !== 'button' && field.type !== 'submit')
     .map((field) => {
       const value = getValue(field.name, state, fields);
@@ -118,7 +132,6 @@ export const validateFields = (state, fields) => {
         errorMessage: validate(value, field.validation, formData),
       });
     });
-
 
   const newState = {};
   validated.forEach(({ name, value, errorMessage }) => {

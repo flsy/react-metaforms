@@ -24,7 +24,7 @@ class Checkbox extends Component {
           type="checkbox"
           name={this.props.name}
           disabled={this.props.disabled}
-          checked={this.props.value}
+          defaultChecked={this.props.value}
           onChange={event => this.props.updateAndValidate({ name: this.props.name, value: event.target.checked, groupName: this.props.groupName })}
         />
         {this.props.errorMessage ? <ErrorMessage message={this.props.errorMessage} /> : null}
