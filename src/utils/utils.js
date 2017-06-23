@@ -52,7 +52,10 @@ export const findFieldInFields = (name, fields) => {
     const field = fields[i];
     if (name === field.name) return field;
     if (prop('fields', field)) {
-      return field.fields.find(propEq('name', name));
+      let f = field.fields.find(propEq('name', name));
+      if(f) {
+        return f;
+      }
     }
   }
 

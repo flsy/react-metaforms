@@ -59,40 +59,6 @@ export const form = [
     value: "I'm a custom message text",
   },
   {
-    name: 'text-area',
-    label: 'Text area',
-    size: 'L',
-    type: 'textarea',
-    value: 'some value',
-    disabled: false,
-    placeholder: '',
-    tooltip: '', // optional
-    errorMessage: '',
-    validation: [
-      {
-        type: "required",
-        rules: [
-          {
-            message: "Please choose a username"
-          }
-        ]
-      },
-      {
-        type: "pattern",
-        rules: [
-          {
-            value: "^[a-zA-Z]+",
-            message: "Your username can only start with a letter"
-          },
-          {
-            value: "^[a-zA-Z0-9\\-\\._]+[a-zA-Z0-9]$",
-            message: "Your username can only contain letters and numbers"
-          }
-        ]
-      }
-    ]
-  },
-  {
     name: 'checkbox-input',
     label: 'Checkbox input',
     type: 'checkbox',
@@ -160,6 +126,40 @@ export const form = [
               }
             ]
           },
+        ]
+      }
+    ]
+  },
+  {
+    name: 'text-area',
+    label: 'Text area',
+    size: 'L',
+    type: 'textarea',
+    value: 'some value',
+    disabled: false,
+    placeholder: '',
+    tooltip: '', // optional
+    errorMessage: '',
+    validation: [
+      {
+        type: "required",
+        rules: [
+          {
+            message: "Please choose a username"
+          }
+        ]
+      },
+      {
+        type: "pattern",
+        rules: [
+          {
+            value: "^[a-zA-Z]+",
+            message: "Your username can only start with a letter"
+          },
+          {
+            value: "^[a-zA-Z0-9\\-\\._]+[a-zA-Z0-9]$",
+            message: "Your username can only contain letters and numbers"
+          }
         ]
       }
     ]
