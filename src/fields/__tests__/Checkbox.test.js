@@ -23,12 +23,12 @@ describe('<Checkbox />', () => {
 
   it('should show checked checkbox when value is true', () => {
     const wrapper = shallow(<Checkbox {...props} value />);
-    expect(wrapper.find(`input[name="${props.name}"]`).prop('checked')).toEqual(true);
+    expect(wrapper.find(`input[name="${props.name}"]`).prop('defaultChecked')).toEqual(true);
   });
 
   it('should show not checked checkbox by default', () => {
     const wrapper = shallow(<Checkbox {...props} />);
-    expect(wrapper.find(`input[name="${props.name}"]`).prop('checked')).toEqual(false);
+    expect(wrapper.find(`input[name="${props.name}"]`).prop('defaultChecked')).toEqual(false);
   });
 
   it('should show errorMessage when available', () => {
