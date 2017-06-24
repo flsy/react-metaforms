@@ -30,11 +30,11 @@ export const form = [
         ]
       },
       {
-        "type": "minlength",
-        "rules": [
+        type: "minlength",
+        rules: [
           {
-            "value": 3,
-            "message": "Your username can only have 3 - 32 characters"
+            value: 3,
+            message: "Your username can only have 3 - 32 characters"
           }
         ]
       },

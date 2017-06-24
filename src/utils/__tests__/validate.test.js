@@ -53,6 +53,12 @@ describe('validate', () => {
 
       expect(errorMessage).toEqual('');
     });
+
+    it('should return an error if value is null', () => {
+      const errorMessage = validate(null, validationRules);
+
+      expect(errorMessage).toEqual('min 3 characters');
+    });
   });
 
   describe('maxlength', () => {
@@ -78,6 +84,12 @@ describe('validate', () => {
       const errorMessage = validate('o', validationRules);
 
       expect(errorMessage).toEqual('');
+    });
+
+    it('should return an error if value is null', () => {
+      const errorMessage = validate(null, validationRules);
+
+      expect(errorMessage).toEqual('max 5 characters long');
     });
   });
 
@@ -198,6 +210,12 @@ describe('validate', () => {
 
     it('should not return an error if value is empty', () => {
       const errorMessage = validate('', validationRules);
+
+      expect(errorMessage).toEqual('');
+    });
+
+    it('should not return an error if value in null', () => {
+      const errorMessage = validate(null, validationRules, '');
 
       expect(errorMessage).toEqual('');
     });

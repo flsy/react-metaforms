@@ -1,7 +1,7 @@
 const isEmpty = value => value === null || value === undefined || value === '';
 
 const getErrorIfDoesNotMatchRegEx = (fieldValue, patterns) => {
-  if (fieldValue.length === 0) {
+  if (!fieldValue || fieldValue.length === 0) {
     return null;
   }
 
@@ -13,7 +13,7 @@ const getErrorIfDoesNotMatchRegEx = (fieldValue, patterns) => {
 };
 
 const getErrorIfMatchesRegEx = (fieldValue, patterns) => {
-  if (fieldValue.length === 0) {
+  if (!fieldValue || fieldValue.length === 0) {
     return null;
   }
 
@@ -28,9 +28,15 @@ const isNotEqualToExpectedValue = (fieldValue, expectedValue) => fieldValue !== 
 
 const isInList = (fieldValue, allowedValues) => allowedValues.indexOf(fieldValue) > -1;
 
-const isGreaterThanMaxLength = (value, maxLength) => value.length > maxLength;
+const isGreaterThanMaxLength = (value, maxLength) => {
+  if (!value) return true;
+  return value && value.length > maxLength
+};
 
-const isLessThanMinLength = (value, minLength) => value.length < minLength;
+const isLessThanMinLength = (value, minLength) => {
+  if (!value) return true;
+  return value.length < minLength;
+};
 
 const doesNotMatch = (fieldValue, fieldName, formData) => formData[fieldName] !== fieldValue;
 
