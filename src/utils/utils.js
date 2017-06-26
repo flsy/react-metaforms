@@ -52,8 +52,8 @@ export const findFieldInFields = (name, fields) => {
     const field = fields[i];
     if (name === field.name) return field;
     if (prop('fields', field)) {
-      let f = field.fields.find(propEq('name', name));
-      if(f) {
+      const f = field.fields.find(propEq('name', name));
+      if (f) {
         return f;
       }
     }
@@ -93,10 +93,10 @@ const flattenFields = (fields) => {
   return flattened;
 };
 
-export const getFormData = (state, fields) => {
+export const getFormData = (formData, fields) => {
   const fromState = {};
-  Object.keys(state).forEach((name) => {
-    fromState[name] = state[name].value;
+  Object.keys(formData).forEach((name) => {
+    fromState[name] = formData[name].value;
   });
 
   const fromProps = {};
@@ -115,12 +115,12 @@ export const getFormData = (state, fields) => {
   return final;
 };
 
-export const validateField = (name, groupName, value, state, fields) => {
+export const validateField = (name, groupName, value, formData, fields) => {
   const field = findField(name, groupName, fields);
 
-  const errorMessage = validate(value, field.validation, getFormData(state, fields));
+  const errorMessage = validate(value, field.validation, getFormData(formData, fields));
 
-  return { ...state[name], value, errorMessage };
+  return { ...formData[name], value, errorMessage };
 };
 
 export const validateFields = (state, fields) => {

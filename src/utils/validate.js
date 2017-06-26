@@ -30,7 +30,7 @@ const isInList = (fieldValue, allowedValues) => allowedValues.indexOf(fieldValue
 
 const isGreaterThanMaxLength = (value, maxLength) => {
   if (!value) return true;
-  return value && value.length > maxLength
+  return value && value.length > maxLength;
 };
 
 const isLessThanMinLength = (value, minLength) => {
