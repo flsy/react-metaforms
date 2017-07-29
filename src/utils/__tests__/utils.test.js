@@ -3,11 +3,7 @@ import {
   hasError,
   getValue,
   findField,
-  prop,
-  propEq,
   head,
-  curry,
-  compose,
   getErrorMessage,
 } from '../utils';
 
@@ -83,63 +79,12 @@ describe('utils', () => {
     });
   });
 
-  describe('prop', () => {
-    it('shoud return right property when passed in as two params', () => {
-      expect(prop('name', { name: 'test 1' })).toEqual('test 1');
-    });
-
-    it('shoud return right property when curried', () => {
-      expect(prop('name')({ name: 'test 152' })).toEqual('test 152');
-    });
-  });
-
-  describe('propEq', () => {
-    it('shoud return rigt property match', () => {
-      expect(propEq('name', 'test 1')({ name: 'test 1' })).toEqual(true);
-      expect(propEq('name', 'test 2')({ name: 'test 1' })).toEqual(false);
-      expect(propEq('name', 'test')()).toEqual(false);
-    });
-  });
-
   describe('head', () => {
     it('returns a first item from given input', () => {
       expect(head(['first', 'second'])).toEqual('first');
       expect(head([])).toEqual(null);
       expect(head('hello')).toEqual('h');
       expect(head('')).toEqual(null);
-    });
-  });
-
-  describe('curry', () => {
-    it('returns a curried sum function', () => {
-      const sum = curry((a, b, c, d) => a + b + c + d);
-      expect(sum(1, 2, 3, 4)).toEqual(10);
-    });
-
-    it('returns a function if you miss the params', () => {
-      const sum = curry((a, b, c, d) => a + b + c + d);
-
-      const sum1 = sum(1);
-      const sum2 = sum1(2);
-      const sum3 = sum2(3);
-      expect(sum3(4)).toEqual(10);
-    });
-
-    it('combines the two approaches and still returns correct values', () => {
-      const sum = curry((a, b, c, d) => a + b + c + d);
-
-      const sum1 = sum(1, 2);
-      const sum2 = sum1(3);
-      expect(sum2(4)).toEqual(10);
-    });
-  });
-
-  describe('compose', () => {
-    it('returns a curried sum function', () => {
-      expect(compose(number => number + 1, number => number * 2)(4)).toEqual(9);
-
-      expect(compose(string => string.toUpperCase(), string => `${string} - test`)('tak ted')).toEqual('TAK TED - TEST');
-      expect(compose()('a')).toEqual('a');
     });
   });
 });

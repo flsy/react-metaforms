@@ -1,26 +1,6 @@
+import { propEq, prop } from 'fputils';
 import validate from './validate';
 
-export const equal = (a, b) => a === b;
-
-export const curry = (fn) => {
-  const r = (args) => {
-    if (args.length >= fn.length) {
-      return fn(...args);
-    }
-    return (...secArgs) => r([...args, ...secArgs]);
-  };
-
-  return (...args) => r(args);
-};
-
-export const compose = (...args) => value => args.reduceRight(
-  (result, fn) => fn(result),
-  value,
-);
-
-export const prop = curry((name, object) => object[name]);
-
-export const propEq = (property, value) => (object = {}) => equal(prop(property, object), value);
 export const head = input => input[0] || null;
 
 export const isRequired = validationRules => !!validationRules.find(propEq('type', 'required'));
