@@ -1,5 +1,4 @@
 const isEmpty = value => value === null || value === undefined || value === '';
-const equals = (a, b) => a !== b;
 
 const getErrorIfDoesNotMatchRegEx = (fieldValue, patterns) => {
   if (!fieldValue || fieldValue.length === 0) {
