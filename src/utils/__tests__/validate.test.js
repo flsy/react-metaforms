@@ -266,6 +266,12 @@ describe('validate', () => {
 
       expect(errorMessage).toEqual('');
     });
+
+    it('does not return an error when both passwords are empty', () => {
+      const errorMessage = validate('', validationRules);
+
+      expect(errorMessage).toEqual('');
+    });
   });
 
   describe('mustmatchcaseinsensitive', () => {

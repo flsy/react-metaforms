@@ -38,7 +38,13 @@ const isLessThanMinLength = (value, minLength) => {
   return value.length < minLength;
 };
 
-const doesNotMatch = (fieldValue, fieldName, formData) => formData[fieldName] !== fieldValue;
+const doesNotMatch = (fieldValue, fieldName, formData) => {
+  if (!formData[fieldName] && !fieldValue) {
+    return false;
+  }
+
+  return formData[fieldName] !== fieldValue;
+};
 
 const isNotEqualCaseInsensitive = (fieldValue, fieldName, formData) => formData[fieldName].toLowerCase() !== fieldValue.toLowerCase();
 
