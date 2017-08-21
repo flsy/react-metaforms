@@ -105,7 +105,7 @@ export const getFormData = (state: State, fields: Field[]): FormData => {
 
 export const validateField = (name: Name, groupName: string, value: Value, state: State, fields: Field[]): State => {
   const field = findField(name, groupName, fields);
-  if(field) {
+  if (field) {
     const errorMessage = validate(value, field.validation, getFormData(state, fields));
     return { ...state[name], value, errorMessage };
   }
@@ -117,7 +117,7 @@ export const validateFields = (state: State, fields: Field[]) => {
   const validated = flattenFields(fields)
     .filter(field => field.type !== 'button' && field.type !== 'submit')
     .map((field) => {
-      const value = getValue(field.name, state, fields) || "";
+      const value = getValue(field.name, state, fields) || '';
       return ({
         name: field.name,
         value,

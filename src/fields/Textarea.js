@@ -6,7 +6,6 @@ import Label from './Label';
 import { isRequired } from '../utils/utils';
 
 class Textarea extends Component {
-
   componentDidMount() {
     if (this.props.shouldFocus) {
       this.inputEl.focus();

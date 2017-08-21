@@ -7,7 +7,6 @@ import { isRequired } from '../utils/utils';
 import { validationShape } from '../shapes';
 
 class Checkbox extends Component {
-
   componentDidMount() {
     if (this.props.shouldFocus) {
       this.inputEl.focus();

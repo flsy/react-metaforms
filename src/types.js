@@ -1,4 +1,5 @@
 /* @flow */
+
 export type Name = string;
 export type Value = string | number;
 

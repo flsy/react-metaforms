@@ -15,7 +15,6 @@ import getComponent from './utils/getComponent';
 
 
 class Form extends Component {
-
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);

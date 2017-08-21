@@ -5,6 +5,8 @@ export const fieldShape = PropTypes.shape({
   name: PropTypes.string.isRequired,
 });
 
+export const formShape = PropTypes.arrayOf(fieldShape);
+
 export const validationShape = PropTypes.shape({
   type: PropTypes.string.isRequired,
   rules: PropTypes.array, // todo

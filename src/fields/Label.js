@@ -19,6 +19,7 @@ Label.propTypes = {
 };
 
 Label.defaultProps = {
+  children: null,
   isRequired: false,
 };
 

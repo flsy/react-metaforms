@@ -1,5 +1,5 @@
 export { default } from './Form';
-export { fieldShape } from './shapes';
+export { fieldShape, formShape } from './shapes';
 
 export {
   validateField,

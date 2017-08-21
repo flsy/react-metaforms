@@ -7,7 +7,6 @@ import { validationShape } from '../shapes';
 import { isRequired } from '../utils/utils';
 
 class Input extends Component {
-
   componentDidMount() {
     if (this.props.shouldFocus) {
       this.inputEl.focus();

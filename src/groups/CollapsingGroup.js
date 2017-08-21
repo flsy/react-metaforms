@@ -4,7 +4,6 @@ import GroupFields from './GroupFields';
 import GroupHeader from './GroupHeader';
 
 class CollapsingGroup extends Component {
-
   constructor(props) {
     super(props);
     this.onToggle = this.onToggle.bind(this);
