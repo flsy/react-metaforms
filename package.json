@@ -1,6 +1,6 @@
 {
   "name": "react-metaforms",
-  "version": "0.1.20",
+  "version": "0.1.21",
   "private": false,
   "main": "lib/export.js",
   "jsnext:main": "src/export.js",
