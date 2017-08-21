@@ -1,37 +1,45 @@
-import { propEq, prop } from 'fputils';
+/* @flow */
+import { propEq, prop, curry } from 'fputils';
 import validate from './validate';
+import type { Name, Value, FormData, Validation, State, Field } from '../types';
 
-export const head = input => input[0] || null;
+export const head = (input: any[]) => input[0] || null;
 
-export const isRequired = validationRules => !!validationRules.find(propEq('type', 'required'));
+export const isRequired = (validationRules: Validation[]): boolean => !!validationRules.find(propEq('type', 'required'));
 
-const hasFieldError = field => field.errorMessage && field.errorMessage !== '' && field.errorMessage !== null;
+const hasFieldError = (field: Field) => field.errorMessage && field.errorMessage !== '' && field.errorMessage !== null;
 
 const findError = fields => fields.find(hasFieldError);
 
-export const hasError = fields => !!findError(fields);
+export const hasError = (fields: Field[]): boolean => !!findError(fields);
 
-export const createFieldId = (name, groupId) => (groupId ? `${name}-${groupId}` : name);
+export const createFieldId = (name: Name, groupId: string) => (groupId ? `${name}-${groupId}` : name);
 
-export const findField = (name, groupId, fields) => {
+export const findField = (name: Name, groupId: string, fields: Field[]): Field | null => {
   if (groupId) {
     const group = fields.find(propEq('name', groupId));
-    return group.fields.find(propEq('name', name));
+    if (group && group.fields) {
+      return group.fields.find(propEq('name', name)) || null;
+    }
+    return null;
   }
   return fields.find(propEq('name', name)) || null;
 };
 
-export const shouldComponentFocus = (fields = [], name = '') => {
+export const shouldComponentFocus = (fields: Field[] = [], name: Name = ''): boolean => {
   const errorField = findError(fields);
 
-  return (errorField && errorField.name === name) || head(fields).name === name;
+  if (errorField && errorField.name === name) return true;
+
+  const firstField = head(fields);
+  return firstField !== null && firstField.name === name;
 };
 
-export const findFieldInFields = (name, fields) => {
+export const findFieldInFields = (name: Name, fields: Field[]): Field | null => {
   for (let i = 0; i < fields.length; i += 1) {
     const field = fields[i];
     if (name === field.name) return field;
-    if (prop('fields', field)) {
+    if (field.fields) {
       const f = field.fields.find(propEq('name', name));
       if (f) {
         return f;
@@ -42,7 +50,7 @@ export const findFieldInFields = (name, fields) => {
   return null;
 };
 
-export const getValue = (name, state, fields) => {
+export const getValue = (name: Name, state: State, fields: Field[]): Value | null => {
   if (state[name] && state[name].value !== null) {
     return state[name].value;
   }
@@ -50,7 +58,7 @@ export const getValue = (name, state, fields) => {
   return (field && prop('value', field)) || null;
 };
 
-export const getErrorMessage = (name, state, fields) => {
+export const getErrorMessage = (name: Name, state: State, fields: Field[]): string => {
   const saved = prop(name, state);
   if (saved && hasFieldError(saved)) {
     return prop('errorMessage', saved);
@@ -59,7 +67,7 @@ export const getErrorMessage = (name, state, fields) => {
   return (field && prop('errorMessage', field)) || '';
 };
 
-const flattenFields = (fields) => {
+const flattenFields = (fields: Field[]) => {
   const flattened = [];
   fields.forEach((field) => {
     if (field.fields) {
@@ -73,10 +81,10 @@ const flattenFields = (fields) => {
   return flattened;
 };
 
-export const getFormData = (formData, fields) => {
+export const getFormData = (state: State, fields: Field[]): FormData => {
   const fromState = {};
-  Object.keys(formData).forEach((name) => {
-    fromState[name] = formData[name].value;
+  Object.keys(state).forEach((name) => {
+    fromState[name] = state[name].value;
   });
 
   const fromProps = {};
@@ -95,20 +103,21 @@ export const getFormData = (formData, fields) => {
   return final;
 };
 
-export const validateField = (name, groupName, value, formData, fields) => {
+export const validateField = (name: Name, groupName: string, value: Value, state: State, fields: Field[]): State => {
   const field = findField(name, groupName, fields);
-
-  const errorMessage = validate(value, field.validation, getFormData(formData, fields));
-
-  return { ...formData[name], value, errorMessage };
+  if(field) {
+    const errorMessage = validate(value, field.validation, getFormData(state, fields));
+    return { ...state[name], value, errorMessage };
+  }
+  return state;
 };
 
-export const validateFields = (state, fields) => {
+export const validateFields = (state: State, fields: Field[]) => {
   const formData = getFormData(state, fields);
   const validated = flattenFields(fields)
     .filter(field => field.type !== 'button' && field.type !== 'submit')
     .map((field) => {
-      const value = getValue(field.name, state, fields);
+      const value = getValue(field.name, state, fields) || "";
       return ({
         name: field.name,
         value,
@@ -127,3 +136,8 @@ export const validateFields = (state, fields) => {
   };
 };
 
+export const setValue = curry((name: Name, value: Value, fields: Field[]): Field[] => fields
+  .map(f => (f.name === name ? { ...f, value } : f)));
+
+export const setErrorMessage = curry((name: Name, errorMessage: string, fields: Field[]): Field[] => fields
+  .map(f => (f.name === name ? { ...f, errorMessage } : f)));

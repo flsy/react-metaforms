@@ -2,6 +2,7 @@ import {
   isRequired,
   hasError,
   getValue,
+  setValue,
   findField,
   head,
   getErrorMessage,
@@ -62,6 +63,31 @@ describe('utils', () => {
       const state = {};
       const fields = [];
       expect(getValue('firstName', state, fields)).toEqual(null);
+    });
+  });
+
+  describe('setValue', () => {
+    const value = 'my value';
+    const fields = [
+      { name: 'name' },
+      { name: 'password' },
+    ];
+
+    const expected = [
+      { name: 'name', value },
+      { name: 'password' },
+    ];
+
+    it('set a value into right field', () => {
+      expect(setValue('name', value, fields)).toEqual(expected);
+    });
+
+    it('set a value into right field curried', () => {
+      expect(setValue('name', value)(fields)).toEqual(expected);
+    });
+
+    it('set a value into right field curried all', () => {
+      expect(setValue('name')(value)(fields)).toEqual(expected);
     });
   });
 
