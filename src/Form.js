@@ -10,6 +10,7 @@ import {
   getFormData,
   validateField,
   validateFields,
+  formData,
 } from './utils/utils';
 import getComponent from './utils/getComponent';
 
@@ -23,6 +24,23 @@ class Form extends Component {
     this.updateAndValidate = this.updateAndValidate.bind(this);
     this.getComponent = this.getComponent.bind(this);
     this.state = {}; // value, errorMessage
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const current = formData(this.props.fields);
+    const next = formData(nextProps.fields);
+
+
+    const diff = {};
+    Object.keys(next).forEach((key) => {
+      if (next[key] !== current[key]) {
+        diff[key] = { value: next[key] };
+      }
+    });
+
+    if (Object.keys(diff).length > 0) {
+      this.setState({ ...this.state, ...diff });
+    }
   }
 
   onSubmit(event) {

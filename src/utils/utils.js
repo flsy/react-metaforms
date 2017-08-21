@@ -141,3 +141,12 @@ export const setValue = curry((name: Name, value: Value, fields: Field[]): Field
 
 export const setErrorMessage = curry((name: Name, errorMessage: string, fields: Field[]): Field[] => fields
   .map(f => (f.name === name ? { ...f, errorMessage } : f)));
+
+
+export const formData = (fields: Field[]): FormData => {
+  const fromProps = {};
+  flattenFields(fields).forEach((field) => {
+    fromProps[field.name] = field.value;
+  });
+  return fromProps;
+};

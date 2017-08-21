@@ -23,7 +23,7 @@ class Input extends Component {
           type={this.props.type}
           name={this.props.name}
           placeholder={this.props.placeholder}
-          defaultValue={this.props.value}
+          value={this.props.value || ''}
           disabled={this.props.disabled}
           onChange={e => this.props.update({ name: this.props.name, value: e.target.value })}
           onBlur={() => this.props.validate({ name: this.props.name, groupName: this.props.groupName })}
