@@ -32,7 +32,7 @@ describe('<Form />', () => {
     const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={() => {}} />);
     wrapper.find('input').simulate('change', { target: { value: '' } });
 
-    expect(wrapper.find('input').props().defaultValue).toEqual('');
+    expect(wrapper.find('input').props().value).toEqual('');
   });
 
   it('should submit the default values', () => {
