@@ -150,3 +150,6 @@ export const formData = (fields: Field[]): FormData => {
   });
   return fromProps;
 };
+
+export const removeField = curry((name: Name, fields: Field[]): Field[] => fields
+  .filter(field => field.name !== name));

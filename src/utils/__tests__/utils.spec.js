@@ -1,3 +1,4 @@
+import { compose } from 'fputils';
 import {
   isRequired,
   hasError,
@@ -6,6 +7,7 @@ import {
   findField,
   head,
   getErrorMessage,
+  removeField,
 } from '../utils';
 
 describe('utils', () => {
@@ -111,6 +113,39 @@ describe('utils', () => {
       expect(head([])).toEqual(null);
       expect(head('hello')).toEqual('h');
       expect(head('')).toEqual(null);
+    });
+  });
+
+  describe('removeField', () => {
+    it('removes nothing when fields is an empty array', () => {
+      expect(removeField('f1', [])).toEqual([]);
+    });
+
+    it('removes one field', () => {
+      expect(removeField('f1', [{ name: 'f1' }])).toEqual([]);
+    });
+
+    it('removes one field from more fields', () => {
+      expect(removeField('f1', [{ name: 'f1' }, { name: 'f2' }])).toEqual([{ name: 'f2' }]);
+    });
+
+    it('removes field from fields (curried)', () => {
+      expect(removeField('f1')([{ name: 'f1' }, { name: 'f2' }])).toEqual([{ name: 'f2' }]);
+    });
+
+    it('removes field from fields (composed)', () => {
+      const fields = [
+        { name: 'f1' },
+        { name: 'f2' },
+        { name: 'f3' },
+      ];
+
+      const expected = compose(
+        removeField('f1'),
+        removeField('f2'),
+      )(fields);
+
+      expect(expected).toEqual([{ name: 'f3' }]);
     });
   });
 });
