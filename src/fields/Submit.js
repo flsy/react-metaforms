@@ -1,27 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Button = ({ label, disabled, onButtonClick }) => (
+const Submit = ({ label, disabled }) => (
   <div className="formField">
     <button
       disabled={disabled}
-      onClick={onButtonClick}
-      type="button"
+      type="submit"
     >
       {label}
     </button>
   </div>
 );
 
-Button.propTypes = {
+Submit.propTypes = {
   label: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
-  onButtonClick: PropTypes.func,
 };
 
-Button.defaultProps = {
+Submit.defaultProps = {
   disabled: false,
-  onButtonClick: null,
 };
 
-export default Button;
+export default Submit;
