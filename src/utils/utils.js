@@ -136,6 +136,15 @@ export const validateFields = (state: State, fields: Field[]) => {
   };
 };
 
+export const getFields = (fields: Field[], state: State): Field[] => fields
+  .map((field) => {
+    if (state[field.name]) {
+      return { ...field, value: state[field.name].value };
+    }
+    return field;
+  });
+
+
 export const setValue = curry((name: Name, value: Value, fields: Field[]): Field[] => fields
   .map(f => (f.name === name ? { ...f, value } : f)));
 

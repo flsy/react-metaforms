@@ -8,8 +8,7 @@ const name = 'test_field_name';
 const defaultProps = {
   label: 'testId',
   name,
-  onBtnClick: spy(),
-  action: 'AN_ACTION',
+  onButtonClick: spy(),
 };
 
 describe('<Button />', () => {
@@ -28,6 +27,6 @@ describe('<Button />', () => {
 
     wrapper.find('button').simulate('click');
 
-    expect(defaultProps.onBtnClick.calledWith(defaultProps.action)).toEqual(true);
+    expect(defaultProps.onButtonClick.called).toEqual(true);
   });
 });

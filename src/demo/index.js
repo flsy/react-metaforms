@@ -19,7 +19,7 @@ export default () => (
   <Form
     id="testForm"
     fields={form}
-    onBtnClick={(action) => console.log(`btn action: ${action}`)}
+    onButtonClick={(fields) => console.log("btn action:", fields)}
     onSubmit={onSubmit}
     customComponents={customComponents} />
 )

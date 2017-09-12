@@ -74,11 +74,10 @@ export const form = [
     ]
   },
   {
-    label: 'button with an action',
+    label: 'a button',
     tooltip: '', // optional
     name: 'saveButton',
     type: 'button',
-    action: 'MY_ACTION',
   },
   {
     name: 'submitBtn',

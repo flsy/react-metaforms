@@ -243,4 +243,29 @@ describe('<Form />', () => {
     expect(wrapper.find('button').prop('children')).toEqual('Click me');
     expect(wrapper.find('input').prop('name')).toEqual('input');
   });
+
+  it('should return fields when clicked on button', () => {
+    const fields = [
+      {
+        name: 'test-name',
+        type: 'text',
+        label: 'Name',
+      },
+      {
+        name: '?',
+        label: 'just-a-button',
+        type: 'button',
+      },
+    ];
+    const onClick = spy();
+    const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={() => {}} onButtonClick={onClick} />);
+
+    wrapper.find('input[name="test-name"]').simulate('change', { target: { value: 'some test value' } });
+
+    wrapper.find('form').find('[type="button"]').simulate('click');
+
+    const expected = fields.map(f => (f.name === 'test-name' ? { ...f, value: 'some test value' } : f));
+
+    expect(onClick.calledWith(expected)).toEqual(true);
+  });
 });

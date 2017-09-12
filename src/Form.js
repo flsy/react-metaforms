@@ -11,6 +11,7 @@ import {
   validateField,
   validateFields,
   formData,
+  getFields,
 } from './utils/utils';
 import getComponent from './utils/getComponent';
 
@@ -23,6 +24,7 @@ class Form extends Component {
     this.validate = this.validate.bind(this);
     this.updateAndValidate = this.updateAndValidate.bind(this);
     this.getComponent = this.getComponent.bind(this);
+    this.onButtonClick = this.onButtonClick.bind(this);
     this.state = {}; // value, errorMessage
   }
 
@@ -55,6 +57,12 @@ class Form extends Component {
     });
   }
 
+  onButtonClick() {
+    if (this.props.onButtonClick) {
+      this.props.onButtonClick(getFields(this.props.fields, this.state));
+    }
+  }
+
   getComponent(fields, groupName) {
     return fields.map((field) => {
       const id = createFieldId(field.name, groupName);
@@ -66,7 +74,7 @@ class Form extends Component {
         key: id,
         id,
         groupName,
-        onBtnClick: this.props.onBtnClick,
+        onButtonClick: this.onButtonClick,
         shouldFocus: shouldComponentFocus(this.props.fields, field.name),
         value: getValue(field.name, this.state, this.props.fields),
         update: this.update,
@@ -109,7 +117,7 @@ Form.propTypes = {
   id: PropTypes.string.isRequired,
   fields: PropTypes.arrayOf(fieldShape),
   onSubmit: PropTypes.func.isRequired,
-  onBtnClick: PropTypes.func,
+  onButtonClick: PropTypes.func,
 
   customComponents: PropTypes.objectOf(PropTypes.func),
 };
@@ -117,7 +125,7 @@ Form.propTypes = {
 Form.defaultProps = {
   fields: [],
   customComponents: null,
-  onBtnClick: null,
+  onButtonClick: null,
 };
 
 export default Form;

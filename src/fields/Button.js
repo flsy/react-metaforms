@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Button = ({ label, type, disabled, action, onBtnClick }) => (
+const Button = ({ label, type, disabled, onButtonClick }) => (
   <div className="formField">
     <button
       disabled={disabled}
-      onClick={onBtnClick && action ? () => onBtnClick(action) : null}
+      onClick={onButtonClick}
       type={type}
     >
       {label}
@@ -17,15 +17,13 @@ Button.propTypes = {
   label: PropTypes.string.isRequired,
   type: PropTypes.string,
   disabled: PropTypes.bool,
-  onBtnClick: PropTypes.func,
-  action: PropTypes.string,
+  onButtonClick: PropTypes.func,
 };
 
 Button.defaultProps = {
   disabled: false,
   type: 'button',
-  onBtnClick: null,
-  action: null,
+  onButtonClick: null,
 };
 
 export default Button;
