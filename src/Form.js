@@ -7,10 +7,9 @@ import {
   shouldComponentFocus,
   getValue,
   getErrorMessage,
-  getFormData,
   validateField,
   validateFields,
-  formData,
+  getFormData,
   getFields,
 } from './utils/utils';
 import getComponent from './utils/getComponent';
@@ -29,9 +28,8 @@ class Form extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const current = formData(this.props.fields);
-    const next = formData(nextProps.fields);
-
+    const current = getFormData(this.props.fields);
+    const next = getFormData(nextProps.fields);
 
     const diff = {};
     Object.keys(next).forEach((key) => {
@@ -52,7 +50,7 @@ class Form extends Component {
 
     this.setState(state, () => {
       if (!hasError) {
-        this.props.onSubmit(getFormData(state, this.props.fields));
+        this.props.onSubmit(getFields(this.props.fields, state));
       }
     });
   }

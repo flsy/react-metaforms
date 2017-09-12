@@ -53,7 +53,7 @@ describe('<Form />', () => {
     const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={onSubmit} />);
 
     wrapper.find('form').simulate('submit');
-    expect(onSubmit.calledWith({ name: 'some default value' })).toEqual(true);
+    expect(onSubmit.calledWith(fields)).toEqual(true);
   });
 
   it('should validate', () => {
@@ -185,10 +185,13 @@ describe('<Form />', () => {
     ];
     const onSubmit = spy();
     const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={onSubmit} />);
-    wrapper.find('input').simulate('change', { target: { value: 'ok value' } });
+    wrapper.find('input[name="name"]').simulate('change', { target: { value: 'ok value' } });
 
     wrapper.find('form').simulate('submit');
-    expect(onSubmit.calledWith({ name: 'ok value' })).toEqual(true);
+
+    const expected = fields.map(field => (field.name === 'name' ? { ...field, value: 'ok value' } : field));
+
+    expect(onSubmit.calledWith(expected)).toEqual(true);
   });
 
   it('should render and submit customComponents', () => {

@@ -48,7 +48,7 @@ const doesNotMatch = (fieldValue, fieldName, formData) => {
 
 const isNotEqualCaseInsensitive = (fieldValue, fieldName, formData) => formData[fieldName].toLowerCase() !== fieldValue.toLowerCase();
 
-export default (fieldValue = '', validation = [], formData = {}) => {
+export default (fieldValue = '', validation = [], formData = {}): string => {
   const rule = validation
     .map(({ type, rules }) => {
       const ruleValue = rules[0].value;

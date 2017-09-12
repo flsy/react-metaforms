@@ -15,6 +15,8 @@ export const hasError = (fields: Field[]): boolean => !!findError(fields);
 
 export const createFieldId = (name: Name, groupId: string) => (groupId ? `${name}-${groupId}` : name);
 
+const filterOutButtons = (field: Field) => field.type !== 'button' && field.type !== 'submit';
+
 export const findField = (name: Name, groupId: string, fields: Field[]): Field | null => {
   if (groupId) {
     const group = fields.find(propEq('name', groupId));
@@ -81,7 +83,19 @@ const flattenFields = (fields: Field[]) => {
   return flattened;
 };
 
-export const getFormData = (state: State, fields: Field[]): FormData => {
+export const getFormData = (fields: Field[]): FormData => {
+  const formData = {};
+
+  flattenFields(fields)
+    .filter(filterOutButtons)
+    .forEach((field) => {
+      formData[field.name] = field.value;
+    });
+
+  return formData;
+};
+
+const getFormDataWithValues = (state: State, fields: Field[]): FormData => {
   const fromState = {};
   Object.keys(state).forEach((name) => {
     fromState[name] = state[name].value;
@@ -106,16 +120,16 @@ export const getFormData = (state: State, fields: Field[]): FormData => {
 export const validateField = (name: Name, groupName: string, value: Value, state: State, fields: Field[]): State => {
   const field = findField(name, groupName, fields);
   if (field) {
-    const errorMessage = validate(value, field.validation, getFormData(state, fields));
+    const errorMessage = validate(value, field.validation, getFormDataWithValues(state, fields));
     return { ...state[name], value, errorMessage };
   }
   return state;
 };
 
 export const validateFields = (state: State, fields: Field[]) => {
-  const formData = getFormData(state, fields);
+  const formData = getFormDataWithValues(state, fields);
   const validated = flattenFields(fields)
-    .filter(field => field.type !== 'button' && field.type !== 'submit')
+    .filter(filterOutButtons)
     .map((field) => {
       const value = getValue(field.name, state, fields) || '';
       return ({
@@ -136,6 +150,15 @@ export const validateFields = (state: State, fields: Field[]) => {
   };
 };
 
+export const isFormValid = (fields: Field[]):boolean => {
+  const formData = getFormData(fields);
+  const errorMessages = fields
+    .map(field => validate(field.value, field.validation, formData))
+    .filter(field => field !== '');
+
+  return errorMessages.length === 0;
+};
+
 export const getFields = (fields: Field[], state: State): Field[] => fields
   .map((field) => {
     if (state[field.name]) {
@@ -151,14 +174,6 @@ export const setValue = curry((name: Name, value: Value, fields: Field[]): Field
 export const setErrorMessage = curry((name: Name, errorMessage: string, fields: Field[]): Field[] => fields
   .map(f => (f.name === name ? { ...f, errorMessage } : f)));
 
-
-export const formData = (fields: Field[]): FormData => {
-  const fromProps = {};
-  flattenFields(fields).forEach((field) => {
-    fromProps[field.name] = field.value;
-  });
-  return fromProps;
-};
 
 export const removeField = curry((name: Name, fields: Field[]): Field[] => fields
   .filter(field => field.name !== name));

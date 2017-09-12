@@ -8,6 +8,7 @@ export {
 
 export {
   validateField,
+  isFormValid,
   getFormData,
   setValue,
   setErrorMessage,
