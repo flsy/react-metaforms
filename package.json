@@ -48,7 +48,10 @@
     "react-scripts": "1.0.13",
     "react-test-renderer": "15.6.1",
     "rimraf": "2.6.1",
-    "sinon": "3.2.1"
+    "sinon": "3.2.1",
+    "@storybook/react": "^3.2.8",
+    "@storybook/addon-actions": "^3.2.6",
+    "@storybook/addon-links": "^3.2.6"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -58,6 +61,8 @@
     "test": "react-scripts test --env=jsdom",
     "coverage": "npm test -- --coverage",
     "lint": "eslint src",
-    "flow": "flow"
+    "flow": "flow",
+    "storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "build-storybook -s public -o docs"
   }
 }
