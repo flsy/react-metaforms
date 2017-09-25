@@ -55,9 +55,9 @@ class Form extends Component {
     });
   }
 
-  onButtonClick() {
+  onButtonClick(field) {
     if (this.props.onButtonClick) {
-      this.props.onButtonClick(getFields(this.props.fields, this.state));
+      this.props.onButtonClick(field, getFields(this.props.fields, this.state));
     }
   }
 
@@ -72,7 +72,7 @@ class Form extends Component {
         key: id,
         id,
         groupName,
-        onButtonClick: this.onButtonClick,
+        onButtonClick: () => this.onButtonClick(field),
         shouldFocus: shouldComponentFocus(this.props.fields, field.name),
         value: getValue(field.name, this.state, this.props.fields),
         update: this.update,

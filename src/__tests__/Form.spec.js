@@ -267,8 +267,13 @@ describe('<Form />', () => {
 
     wrapper.find('form').find('[type="button"]').simulate('click');
 
-    const expected = fields.map(f => (f.name === 'test-name' ? { ...f, value: 'some test value' } : f));
+    const expectedFormFields = fields.map(f => (f.name === 'test-name' ? { ...f, value: 'some test value' } : f));
+    const expectedField = {
+      name: '?',
+      label: 'just-a-button',
+      type: 'button',
+    };
 
-    expect(onClick.calledWith(expected)).toEqual(true);
+    expect(onClick.calledWith(expectedField, expectedFormFields)).toEqual(true);
   });
 });
