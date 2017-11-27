@@ -22,17 +22,17 @@ import Form from 'react-metaforms';
 ## Sample Fields
 
 sample username field 
-```json
+```
 {
-  "name": "username", // name of the rendered input field
+  "name": "username", # name of the rendered input field
   "label": "Username",
   "type": "text",
-  "value": "field value", // optional string as a value
-  "disabled": false, // optional; default false
-  "placeholder": "", // optional placeholder text
-  "errorMessage": "", // optional
-  "tooltip": "", // optional
-  "validation": [ // all the validation rules are listed below
+  "value": "field value", # optional string as a value
+  "disabled": false, # optional; default false
+  "placeholder": "", # optional placeholder text
+  "errorMessage": "", # optional
+  "tooltip": "", # optional
+  "validation": [ # all the validation rules are listed below
     {
       "type": "required",
       "rules": [
@@ -45,11 +45,11 @@ sample username field
 }
 ```
 sample submit button
-```json
+```
 {
   "name": "submitBtn",
   "label": "Save",
-  "tooltip": "", // optional
+  "tooltip": "", # optional
   "type": "submit"
 }
 ```
