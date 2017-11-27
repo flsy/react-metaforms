@@ -19,6 +19,40 @@ import Form from 'react-metaforms';
   onSubmit={onSubmit}
 />  
 ```
+## Sample Fields
+
+sample username field 
+```json
+{
+  "name": "username", // name of the rendered input field
+  "label": "Username",
+  "type": "text",
+  "value": "field value", // optional string as a value
+  "disabled": false, // optional; default false
+  "placeholder": "", // optional placeholder text
+  "errorMessage": "", // optional
+  "tooltip": "", // optional
+  "validation": [ // all the validation rules are listed below
+    {
+      "type": "required",
+      "rules": [
+        {
+          "message": "Please choose a username"
+        }
+      ]
+    }
+  ]
+}
+```
+sample submit button
+```json
+{
+  "name": "submitBtn",
+  "label": "Save",
+  "tooltip": "", // optional
+  "type": "submit"
+}
+```
 
 ## Validation rules
 
