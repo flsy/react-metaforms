@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 
 import Label from '../fields/Label';
 
-const GroupHeader = ({ id, legend, action, buttonLabel }) => (
+const GroupHeader = ({
+  id, legend, action, buttonLabel,
+}) => (
   <div>
     {legend ? <Label fieldId={id} label={legend} /> : null}
     {action ? <button type="button" onClick={() => action()}>{buttonLabel}</button> : null}

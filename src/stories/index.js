@@ -2,9 +2,9 @@ import React from 'react';
 
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import { linkTo } from '@storybook/addon-links';
+// import { linkTo } from '@storybook/addon-links';
 
-import { getFormData } from '../export';
+// import { getFormData } from '../export';
 
 
 import LoginForm from './LoginForm';

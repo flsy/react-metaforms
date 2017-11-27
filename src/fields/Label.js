@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 
 const Asterisk = () => (<abbr title="This field is required" aria-hidden="true"> *</abbr>);
 
-const Label = ({ fieldId, label, isRequired, children }) => (
+const Label = ({
+  fieldId, label, isRequired, children,
+}) => (
   <label htmlFor={fieldId}>
     {label}
     {isRequired && <Asterisk /> }

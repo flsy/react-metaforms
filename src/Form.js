@@ -65,7 +65,9 @@ class Form extends Component {
     return fields.map((field) => {
       const id = createFieldId(field.name, groupName);
       if (field.fields) {
-        return getComponent({ ...field, key: id, id, components: this.getComponent(field.fields, field.name) }, this.props.customComponents);
+        return getComponent({
+          ...field, key: id, id, components: this.getComponent(field.fields, field.name),
+        }, this.props.customComponents);
       }
       return getComponent({
         ...field,

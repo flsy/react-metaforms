@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import GroupFields from './GroupFields';
 import GroupHeader from './GroupHeader';
 
-const InlineGroup = ({ id, legend, components, className }) => (
+const InlineGroup = ({
+  id, legend, components, className,
+}) => (
   <div className="formField">
     <GroupHeader id={id} legend={legend} />
     <GroupFields components={components} className={`inline-group-fields ${className}`} />
