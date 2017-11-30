@@ -13,4 +13,8 @@ export {
   setValue,
   setErrorMessage,
   removeField,
+  setFieldErrorMessage,
+  setFieldValue,
+  validateForm,
+  hasError,
 } from './utils/utils';

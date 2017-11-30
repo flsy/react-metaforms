@@ -1,13 +1,14 @@
-import { compose } from 'fputils';
+import { compose, head } from 'ramda';
 import {
   isRequired,
   hasError,
   getValue,
   setValue,
   findField,
-  head,
   getErrorMessage,
   removeField,
+  validateForm,
+  setFieldValue,
 } from '../utils';
 
 describe('utils', () => {
@@ -107,15 +108,6 @@ describe('utils', () => {
     });
   });
 
-  describe('head', () => {
-    it('returns a first item from given input', () => {
-      expect(head(['first', 'second'])).toEqual('first');
-      expect(head([])).toEqual(null);
-      expect(head('hello')).toEqual('h');
-      expect(head('')).toEqual(null);
-    });
-  });
-
   describe('removeField', () => {
     it('removes nothing when fields is an empty array', () => {
       expect(removeField('f1', [])).toEqual([]);
@@ -146,6 +138,44 @@ describe('utils', () => {
       )(fields);
 
       expect(expected).toEqual([{ name: 'f3' }]);
+    });
+  });
+
+  describe('validateForm', () => {
+    it('validates a form', () => {
+      const message = 'This field is required error message';
+      const fields = [
+        {
+          name: 'a',
+          validation: [{
+            type: 'required',
+            rules: [{ message }],
+          }],
+        },
+        {
+          name: 'b',
+        },
+      ];
+
+      expect(validateForm(fields)[0].errorMessage).toEqual(message);
+      expect(validateForm(fields)[1].errorMessage).toEqual(undefined);
+    });
+  });
+
+  describe('setFieldValue', () => {
+    it('validates a form', () => {
+      const fields = [
+        {
+          name: 'a',
+        },
+        {
+          name: 'b',
+        },
+      ];
+
+      expect(setFieldValue('a', 'hey yo!')(fields)[0].value).toEqual('hey yo!');
+      expect(fields[1].value).toEqual(undefined);
+      expect(setFieldValue('b', 'b yo!')(fields)[1].value).toEqual('b yo!');
     });
   });
 });

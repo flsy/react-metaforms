@@ -25,12 +25,12 @@
     "react": "^15.5.0"
   },
   "dependencies": {
-    "fputils": "1.0.7",
-    "prop-types": "15.6.0",
-    "react": "15.6.1",
-    "@storybook/react": "3.2.16",
     "@storybook/addon-actions": "3.2.16",
-    "@storybook/addon-links": "3.2.16"
+    "@storybook/addon-links": "3.2.16",
+    "@storybook/react": "3.2.16",
+    "prop-types": "15.6.0",
+    "ramda": "0.25.0",
+    "react": "15.6.1"
   },
   "devDependencies": {
     "babel-cli": "6.26.0",

@@ -1,9 +1,8 @@
 /* @flow */
-import { propEq, prop, curry } from 'fputils';
+import { propEq, prop, curry, set, lensProp, map, cond, T, identity, head } from 'ramda';
+
 import validate from './validate';
 import type { Name, Value, FormData, Validation, State, Field } from '../types';
-
-export const head = (input: any[]) => input[0] || null;
 
 export const isRequired = (validationRules: Validation[]): boolean => !!validationRules.find(propEq('type', 'required'));
 
@@ -159,13 +158,13 @@ export const isFormValid = (fields: Field[]):boolean => {
   return errorMessages.length === 0;
 };
 
-export const getFields = (fields: Field[], state: State): Field[] => fields
-  .map((field) => {
+export const getFields = (fields: Field[], state: State): Field[] =>
+  map((field) => {
     if (state[field.name]) {
       return { ...field, value: state[field.name].value };
     }
     return field;
-  });
+  }, fields);
 
 
 export const setValue = curry((name: Name, value: Value, fields: Field[]): Field[] => fields
@@ -177,3 +176,24 @@ export const setErrorMessage = curry((name: Name, errorMessage: string, fields: 
 
 export const removeField = curry((name: Name, fields: Field[]): Field[] => fields
   .filter(field => field.name !== name));
+
+
+const errorMessageLens = lensProp('errorMessage');
+const valueLens = lensProp('value');
+
+const updateField = (name, lens) => map(cond([
+  [propEq('name', name), lens],
+  [T, identity],
+]));
+
+export const setFieldErrorMessage = (name, message) => updateField(name, set(errorMessageLens, message));
+export const setFieldValue = (name, value) => updateField(name, set(valueLens, value));
+
+export const validateForm = (fields: Field[]): Field[] => {
+  const formData = getFormData(fields);
+
+  return map((field) => {
+    const error = validate(field.value, field.validation, formData);
+    return error === '' ? field : set(errorMessageLens, error, field);
+  }, fields);
+};
