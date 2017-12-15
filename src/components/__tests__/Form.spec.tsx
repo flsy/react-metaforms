@@ -9,6 +9,8 @@ configure({ adapter: new Adapter() });
 import { Input, Form } from '../index';
 import { FieldType } from '../../export';
 import { CustomComponentProps } from '../fields/types';
+import Checkbox from '../fields/Checkbox';
+import Textarea from '../fields/Textarea';
 
 describe('<Form />', () => {
     it('should render and update a field', () => {
@@ -83,7 +85,88 @@ describe('<Form />', () => {
         const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={() => null} />);
         wrapper.find('input').simulate('blur');
 
-        expect(wrapper.find(Input).props().errorMessage).toEqual('Please choose a username');
+        expect(wrapper.find(Input).prop('errorMessage')).toEqual('Please choose a username');
+    });
+
+    it('should updateAndValidate', () => {
+        const onSubmit = spy();
+        const message = 'Check this checkbox';
+        const fields = [
+            {
+                name: 'name',
+                type: 'checkbox',
+                label: 'Name',
+                validation: [
+                    {
+                        type: 'required',
+                        rules: [
+                            { message },
+                        ],
+                    },
+                ],
+            },
+            {
+                name: 'submit',
+                type: 'submit'
+            }
+        ] as FieldType[];
+        const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={onSubmit} />);
+        expect(wrapper.find(Checkbox).prop('errorMessage')).toEqual(undefined);
+
+        wrapper.find('form').simulate('submit');
+        expect(onSubmit.calledOnce).toEqual(false);
+
+        expect(wrapper.find(Checkbox).prop('errorMessage')).toEqual(message);
+
+        wrapper.find('input').simulate('change', { target: { checked: true } });
+
+        expect(wrapper.find(Checkbox).prop('errorMessage')).toEqual(null);
+
+        wrapper.find('form').simulate('submit');
+        expect(onSubmit.calledOnce).toEqual(true);
+        expect(onSubmit.calledWith(fields.map(d => d.name === 'name' ? { ...d, value: true } : d))).toEqual(true);
+
+    });
+
+    it('should render textarea', () => {
+        const onSubmit = spy();
+        const message = 'Fill this textarea';
+        const value = 'some content';
+        const fields = [
+            {
+                name: 'name',
+                type: 'textarea',
+                label: 'Name',
+                validation: [
+                    {
+                        type: 'required',
+                        rules: [
+                            { message },
+                        ],
+                    },
+                ],
+            },
+            {
+                name: 'submit',
+                type: 'submit'
+            }
+        ] as FieldType[];
+        const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={onSubmit} />);
+        expect(wrapper.find(Textarea).prop('errorMessage')).toEqual(undefined);
+
+        wrapper.find('form').simulate('submit');
+        expect(onSubmit.calledOnce).toEqual(false);
+
+        expect(wrapper.find(Textarea).prop('errorMessage')).toEqual(message);
+
+        wrapper.find('textarea').simulate('change', { target: { value } });
+        wrapper.find('textarea').simulate('blur');
+
+        expect(wrapper.find(Textarea).prop('errorMessage')).toEqual(null);
+
+        wrapper.find('form').simulate('submit');
+        expect(onSubmit.calledOnce).toEqual(true);
+        expect(onSubmit.calledWith(fields.map(d => d.name === 'name' ? { ...d, value } : d))).toEqual(true);
     });
 
     it('should show the default error message when there is some', () => {

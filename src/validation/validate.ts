@@ -77,36 +77,36 @@ const mustMatchCaseInsensitive = (value: string, rule: MustMatchCaseInsensitive,
     return formData[name] && formData[name].toLowerCase() !== value.toLowerCase() ? first.message : null;
 };
 
-const validate = (value: any, validation: Validation[], formData: FormData = {}): string | null => {
+const validate = (value: string | boolean | undefined, validation: Validation[], formData: FormData = {}): string | null => {
     const errorMessages = validation
         .map((rule) => {
             switch (rule.type) {
                 case 'required':
-                    return isEmpty(value, rule);
+                    return isEmpty(value as string, rule);
 
                 case 'minlength':
-                    return isLessThanMinLength(value, rule);
+                    return isLessThanMinLength(value as string, rule);
 
                 case 'maxlength':
-                    return isGreaterThanMaxLength(value, rule);
+                    return isGreaterThanMaxLength(value as string, rule);
 
                 case 'mustbeequal':
-                    return isNotEqualToExpectedValue(value, rule);
+                    return isNotEqualToExpectedValue(value as boolean, rule);
 
                 case 'inlist':
-                    return isInList(value, rule);
+                    return isInList(value as string, rule);
 
                 case 'pattern':
-                    return getErrorIfDoesNotMatchRegEx(value, rule);
+                    return getErrorIfDoesNotMatchRegEx(value as string, rule);
 
                 case 'notpattern':
-                    return getErrorIfMatchesRegEx(value, rule);
+                    return getErrorIfMatchesRegEx(value as string, rule);
 
                 case 'mustmatch':
-                    return mustMatch(value, rule, formData);
+                    return mustMatch(value as string, rule, formData);
 
                 case 'mustmatchcaseinsensitive':
-                    return mustMatchCaseInsensitive(value, rule, formData);
+                    return mustMatchCaseInsensitive(value as string, rule, formData);
 
                 default:
                     return null;

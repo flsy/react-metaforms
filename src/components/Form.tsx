@@ -34,12 +34,10 @@ class Form extends React.Component<Props, State> {
     }
 
     update = ({ name, value }: UpdateActionType) => {
-
         const fields = map(field => field.name === name ? { ...field, value } as FieldType : field, this.state.fields);
         this.setState({
             fields
         });
-
     }
 
     validate = ({ name, groupName }: ValidateActionType) => {

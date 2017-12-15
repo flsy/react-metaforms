@@ -19,10 +19,6 @@ const fields1 = [
         ]
     },
     {
-        name: 'email',
-        type: 'email',
-    },
-    {
         name: 'button',
         label: 'Button example',
         type: 'button',
@@ -77,7 +73,7 @@ class Demo extends React.Component<{}, State> {
 
     render() {
         return (
-            <div>
+            <div className="App">
                 <button onClick={() => this.setState({ fields: fields1 })}>form 1</button>
                 <button onClick={() => this.setState({ fields: fields2 })}>form 2</button>
                 <hr/>
