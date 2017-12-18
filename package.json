@@ -1,6 +1,6 @@
 {
-  "name": "forms",
-  "version": "0.1.0",
+  "name": "react-metaforms",
+  "version": "1.0.0",
   "private": false,
   "main": "lib/export.js",
   "jsnext:main": "src/export.js",
