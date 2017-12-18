@@ -1,8 +1,7 @@
 {
   "name": "react-metaforms",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "lib/export.js",
-  "jsnext:main": "src/export.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/flsy/react-metaforms.git"
