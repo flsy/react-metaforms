@@ -10,7 +10,7 @@ import { shouldComponentFocus, update, updateAndValidate, validate, validateForm
 
 interface Props {
     id: string;
-    fields: FieldType[];
+    fields?: FieldType[];
     customComponents?: {};
     onButtonClick?: (field: FieldType, fields: FieldType[]) => void;
     onSubmit: (fields: FieldType[]) => void;
@@ -25,13 +25,13 @@ class Form extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            fields: this.props.fields
+            fields: this.props.fields || []
         };
     }
 
     componentWillReceiveProps(nextProps: Props) {
         if (!equals(this.props, nextProps)) {
-            this.setState({ fields: nextProps.fields });
+            this.setState({ fields: nextProps.fields || [] });
         }
     }
 
