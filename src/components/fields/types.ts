@@ -66,7 +66,7 @@ export interface GroupProps extends CommonProps {
 export interface CustomComponentProps extends CommonProps {
     name: string;
     type: string;
-    value?: any;
+    value?: string | boolean;
     legend?: string;
     fields?: FieldType[];
     update: (object: UpdateActionType) => void;

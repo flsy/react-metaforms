@@ -297,7 +297,7 @@ describe('<Form />', () => {
         ] as FieldType[];
         const customComponents = {
             text: (props: CustomComponentProps) =>
-                <input name="testNameInput" defaultValue={props.value} onChange={e => props.update({ name: props.name, value: e.target.value })} />
+                <input name="testNameInput" defaultValue={props.value as string} onChange={e => props.update({ name: props.name, value: e.target.value })} />
         };
         const onSubmit = spy();
         const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={onSubmit} customComponents={customComponents} />);
