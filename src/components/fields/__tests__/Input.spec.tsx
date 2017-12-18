@@ -51,15 +51,14 @@ describe('<Input />', () => {
         const wrapper = shallow(<Input {...defaultProps} update={update}/>);
 
         wrapper.find('input').simulate('change', { target: { value } });
-        expect(update.calledWith({ name, value })).toEqual(true);
+        expect(update.calledWith({ name, value, groupName: undefined })).toEqual(true);
     });
 
     it('should call validate method on blur', () => {
         const validate = spy();
-        const groupName = 'testGroupName';
-        const wrapper = shallow(<Input {...defaultProps} validate={validate} groupName={groupName}/>);
+        const wrapper = shallow(<Input {...defaultProps} validate={validate} groupName="testGroupName" />);
 
         wrapper.find('input').simulate('blur');
-        expect(validate.calledWith({ name, groupName })).toEqual(true);
+        expect(validate.calledWith({ name })).toEqual(true);
     });
 });

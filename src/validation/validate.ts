@@ -1,5 +1,4 @@
 import {
-    Validation,
     Required,
     MinLength,
     MaxLength,
@@ -77,36 +76,36 @@ const mustMatchCaseInsensitive = (value: string, rule: MustMatchCaseInsensitive,
     return formData[name] && formData[name].toLowerCase() !== value.toLowerCase() ? first.message : null;
 };
 
-const validate = (value: string | boolean | undefined, validation: Validation[], formData: FormData = {}): string | null => {
-    const errorMessages = validation
+const validate = (formData: FormData, field: FieldType): string | null => {
+    const errorMessages = (field.validation || [])
         .map((rule) => {
             switch (rule.type) {
                 case 'required':
-                    return isEmpty(value as string, rule);
+                    return isEmpty(field.value as string, rule);
 
                 case 'minlength':
-                    return isLessThanMinLength(value as string, rule);
+                    return isLessThanMinLength(field.value as string, rule);
 
                 case 'maxlength':
-                    return isGreaterThanMaxLength(value as string, rule);
+                    return isGreaterThanMaxLength(field.value as string, rule);
 
                 case 'mustbeequal':
-                    return isNotEqualToExpectedValue(value as boolean, rule);
+                    return isNotEqualToExpectedValue(field.value as boolean, rule);
 
                 case 'inlist':
-                    return isInList(value as string, rule);
+                    return isInList(field.value as string, rule);
 
                 case 'pattern':
-                    return getErrorIfDoesNotMatchRegEx(value as string, rule);
+                    return getErrorIfDoesNotMatchRegEx(field.value as string, rule);
 
                 case 'notpattern':
-                    return getErrorIfMatchesRegEx(value as string, rule);
+                    return getErrorIfMatchesRegEx(field.value as string, rule);
 
                 case 'mustmatch':
-                    return mustMatch(value as string, rule, formData);
+                    return mustMatch(field.value as string, rule, formData);
 
                 case 'mustmatchcaseinsensitive':
-                    return mustMatchCaseInsensitive(value as string, rule, formData);
+                    return mustMatchCaseInsensitive(field.value as string, rule, formData);
 
                 default:
                     return null;
@@ -116,7 +115,5 @@ const validate = (value: string | boolean | undefined, validation: Validation[],
 
     return errorMessages.length > 0 ? errorMessages[0] : null;
 };
-
-export const validateField = (formData: FormData, field: FieldType) => validate(field.value, field.validation || [], formData);
 
 export default validate;

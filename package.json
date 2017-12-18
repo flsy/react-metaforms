@@ -1,16 +1,26 @@
 {
   "name": "forms",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "main": "lib/export.js",
   "jsnext:main": "src/export.js",
-  "esnext": "src/export.js",
-  "dependencies": {
-    "ramda": "^0.25.0",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-scripts-ts": "2.8.0"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flsy/react-metaforms.git"
   },
+  "keywords": [
+    "react",
+    "forms"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/flsy/react-metaforms/issues"
+  },
+  "homepage": "https://github.com/flsy/react-metaforms#readme",
+  "files": [
+    "lib",
+    "src"
+  ],
   "scripts": {
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
@@ -19,6 +29,13 @@
     "lint": "tslint -c ./tslint.json './src/**/*.{ts,tsx}'",
     "transpile": "tsc",
     "prepublish": "npm run transpile"
+  },
+  "peerDependencies": {
+    "react": "^15.5.0"
+  },
+  "dependencies": {
+    "ramda": "^0.25.0",
+    "react": "^16.2.0"
   },
   "devDependencies": {
     "@types/enzyme": "3.1.6",
@@ -31,6 +48,8 @@
     "@types/sinon": "4.1.2",
     "enzyme": "3.2.0",
     "enzyme-adapter-react-16": "1.1.0",
+    "react-dom": "16.2.0",
+    "react-scripts-ts": "2.8.0",
     "sinon": "4.1.3"
   }
 }

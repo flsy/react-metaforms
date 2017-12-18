@@ -1,5 +1,9 @@
-import validate from '../validate';
+import validateField from '../validate';
 import { Validation } from '../types';
+import { FieldType } from '../../components/fields/types';
+
+const validate = (value: string | boolean | null, validation: Validation[], formData: {} = {}) =>
+    validateField(formData, { value, validation } as FieldType);
 
 describe('validate', () => {
     describe('required', () => {

@@ -26,8 +26,8 @@ class Textarea extends React.Component<TextAreaPropsFinal> {
                     placeholder={placeholder}
                     defaultValue={value}
                     disabled={disabled}
-                    onChange={e => update({ name, value: e.target.value })}
-                    onBlur={() => validate({ name, groupName })}
+                    onChange={e => update({ name, value: e.target.value, groupName })}
+                    onBlur={() => validate({ name })}
                 />
                 {errorMessage ? <ErrorMessage message={errorMessage} /> : null}
             </div>

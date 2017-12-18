@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Form from './export';
-import { FieldType } from './components/fields/types';
+import { CustomComponentProps, FieldType } from './components/fields/types';
 
 const fields1 = [
     {
@@ -41,6 +41,33 @@ const fields1 = [
         type: 'message3',
     },
     {
+        type: 'group',
+        name: 'first-group',
+        legend: 'Inline group', // optional
+        fields: [
+            {
+                name: 'inline-button',
+                label: 'Inline Button',
+                type: 'button'
+            },
+            {
+                type: 'text',
+                name: 'inline-input',
+                label: 'Inline Input',
+                validation: [
+                    {
+                        type: 'required',
+                        rules: [
+                            {
+                                message: 'Please choose a inline text value'
+                            }
+                        ]
+                    },
+                ]
+            },
+        ],
+    },
+    {
         name: 'submit',
         type: 'submit',
     },
@@ -72,6 +99,16 @@ class Demo extends React.Component<{}, State> {
     }
 
     render() {
+
+        const customComponents = {
+            group: (props: CustomComponentProps) => {
+                return (
+                    <div style={{ background: 'lightblue' }}>
+                        {props.children}
+                    </div>);
+            }
+        };
+
         return (
             <div className="App">
                 <button onClick={() => this.setState({ fields: fields1 })}>form 1</button>
@@ -81,6 +118,7 @@ class Demo extends React.Component<{}, State> {
                     id="demo-form"
                     fields={this.state.fields as FieldType[]}
                     onSubmit={console.log}
+                    customComponents={customComponents}
                     onButtonClick={console.log}
                 />
             </div>

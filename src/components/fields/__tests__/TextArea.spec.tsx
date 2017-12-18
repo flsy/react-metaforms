@@ -45,15 +45,14 @@ describe('<Textarea />', () => {
         const wrapper = shallow(<Textarea {...defaultProps} update={update} />);
 
         wrapper.find('textarea').simulate('change', { target: { value } });
-        expect(update.calledWith({ name, value })).toEqual(true);
+        expect(update.calledWith({ name, value, groupName: undefined })).toEqual(true);
     });
 
     it('should call validate method on blur', () => {
         const validate = spy();
-        const groupName = 'testGroupId';
-        const wrapper = shallow(<Textarea {...defaultProps} validate={validate} groupName={groupName} />);
+        const wrapper = shallow(<Textarea {...defaultProps} validate={validate} groupName="testGroupId" />);
 
         wrapper.find('textarea').simulate('blur');
-        expect(validate.calledWith({ name, groupName })).toEqual(true);
+        expect(validate.calledWith({ name })).toEqual(true);
     });
 });

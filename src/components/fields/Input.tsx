@@ -24,8 +24,8 @@ class Input extends React.Component<InputPropsFinal, {}> {
                     placeholder={this.props.placeholder}
                     value={this.props.value || ''}
                     disabled={this.props.disabled}
-                    onChange={e => this.props.update({ name: this.props.name, value: e.target.value })}
-                    onBlur={() => this.props.validate({ name: this.props.name, groupName: this.props.groupName })}
+                    onChange={e => this.props.update({ name: this.props.name, value: e.target.value, groupName: this.props.groupName })}
+                    onBlur={() => this.props.validate({ name: this.props.name })}
 
                 />
                 {this.props.errorMessage ? <ErrorMessage message={this.props.errorMessage}/> : null}

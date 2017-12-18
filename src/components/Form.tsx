@@ -1,10 +1,12 @@
 import * as React from 'react';
-import { equals, find, map } from 'ramda';
-import { FieldType, UpdateActionType, UpdateAndValidateActionType, ValidateActionType } from './fields/types';
-import validate, { validateField } from '../validation/validate';
-import { Input, Textarea, Checkbox, Button, Submit } from './index';
+import { equals, map } from 'ramda';
+import {
+    CustomComponentProps, FieldType, UpdateActionType, UpdateAndValidateActionType,
+    ValidateActionType
+} from './fields/types';
+import { Input, Textarea, Checkbox, Button, Submit, Group } from './index';
 import { hasError } from '../export';
-import { getFormData, shouldComponentFocus, validateForm } from '../utils/utils';
+import { shouldComponentFocus, update, updateAndValidate, validate, validateForm } from '../utils/utils';
 
 interface Props {
     id: string;
@@ -33,37 +35,22 @@ class Form extends React.Component<Props, State> {
         }
     }
 
-    update = ({ name, value }: UpdateActionType) => {
-        const fields = map(field => field.name === name ? { ...field, value } as FieldType : field, this.state.fields);
+    update = ({ name, value, groupName }: UpdateActionType) => {
         this.setState({
-            fields
+            fields: update({ name, value, groupName }, this.state.fields)
         });
     }
 
-    validate = ({ name, groupName }: ValidateActionType) => {
-        const formData = getFormData(this.state.fields);
-        const field = find(f => f.name === name, this.state.fields);
-        if (field) {
-            const errorMessage = validateField(formData, field);
-            const fields = map(f => f.name === name ? { ...f, errorMessage } as FieldType : f, this.state.fields);
-            this.setState({
-                fields
-            });
-        }
+    validate = ({ name }: ValidateActionType) => {
+        this.setState({
+            fields: validate({ name }, this.state.fields),
+        });
     }
 
     updateAndValidate = ({ name, value, groupName }: UpdateAndValidateActionType) => {
-        const formData = getFormData(this.state.fields);
-
-        const field = find(f => f.name === name, this.state.fields);
-        if (field) {
-            const errorMessage = validate(value, field.validation || [], formData);
-            const fields = map(f => f.name === name ? { ...f, value, errorMessage } as FieldType : f, this.state.fields);
-
-            this.setState({
-                fields,
-            });
-        }
+        this.setState({
+            fields: updateAndValidate({ name, value, groupName }, this.state.fields),
+        });
     }
 
     onButtonClick = (field: FieldType) => {
@@ -85,39 +72,45 @@ class Form extends React.Component<Props, State> {
 
     }
 
-    getComponent = (field: FieldType) => {
+    getComponent = (field: FieldType, groupName?: string): JSX.Element | null => {
         const { customComponents } = this.props;
 
         const shouldFocus = shouldComponentFocus(this.state.fields, field.name);
         const component = customComponents && customComponents[field.type];
         if (component) {
-            return React.createElement(component, {
+            const props: CustomComponentProps = {
                 ...field,
-                key: field.name,
                 shouldFocus,
+                key: field.name,
+                children: field.fields ? map((c) => this.getComponent(c, field.name), field.fields) : [],
                 update: this.update,
                 validate: this.validate,
                 updateAndValidate: this.updateAndValidate
-            });
+            };
+            return React.createElement(component, props);
         }
 
         switch (field.type) {
             case 'text':
             case 'email':
             case 'password':
-                return <Input key={field.name} {...field} shouldFocus={shouldFocus} update={this.update} validate={this.validate} />;
+                return <Input key={field.name} {...field} groupName={groupName} shouldFocus={shouldFocus} update={this.update} validate={this.validate} />;
             case 'textarea':
-                return <Textarea key={field.name} {...field} shouldFocus={shouldFocus} update={this.update} validate={this.validate} />;
+                return <Textarea key={field.name} {...field} groupName={groupName} shouldFocus={shouldFocus} update={this.update} validate={this.validate} />;
             case 'checkbox':
-                return <Checkbox key={field.name} {...field} shouldFocus={shouldFocus} updateAndValidate={this.updateAndValidate} />;
+                return <Checkbox key={field.name} {...field} groupName={groupName} shouldFocus={shouldFocus} updateAndValidate={this.updateAndValidate} />;
+
             case 'button':
-                return <Button key={field.name} {...field} shouldFocus={shouldFocus} onButtonClick={() => this.onButtonClick(field)} />;
+                return <Button key={field.name} {...field} groupName={groupName} shouldFocus={shouldFocus} onButtonClick={() => this.onButtonClick(field)} />;
             case 'submit':
-                return <Submit key={field.name} {...field} shouldFocus={shouldFocus} />;
-            // case 'inlineGroup':
-            //     return <InlineGroup {...field} />;
-            // case 'collapsingGroup':
-            //     return <CollapsingGroup {...field} />;
+                return <Submit key={field.name} {...field} groupName={groupName} shouldFocus={shouldFocus} />;
+
+            case 'group':
+                return (
+                    <Group key={field.name} name={field.name} type="group" legend={field.legend}>
+                        {map((c) => this.getComponent(c, field.name), field.fields)}
+                    </Group>);
+
             default:
                 return null;
         }

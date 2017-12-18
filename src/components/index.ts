@@ -6,5 +6,7 @@ export { default as Checkbox } from './fields/Checkbox';
 export { default as Button } from './fields/Button';
 export { default as Submit } from './fields/Submit';
 
+export { default as Group } from './fields/Group';
+
 export { default as Label } from './Label';
 export { default as ErrorMessage } from './ErrorMessage';

@@ -308,36 +308,52 @@ describe('<Form />', () => {
         expect(wrapper.find('input[name="testNameInput"]').props().defaultValue).toEqual('ok value');
     });
 
-    // xit('should render custom group component', () => {
-    //     const fields = [
-    //         {
-    //             name: 'name',
-    //             type: 'group',
-    //             label: 'Name',
-    //             validation: [],
-    //             fields: [
-    //                 {
-    //                     type: 'button',
-    //                     name: 'button',
-    //                     label: 'Click me',
-    //                 },
-    //                 {
-    //                     type: 'text',
-    //                     name: 'input',
-    //                     label: 'Input',
-    //                 },
-    //             ],
-    //         },
-    //     ];
-    //     const customComponents = {
-    //         group: ({ components }) => (<div>{components.map(component => <span key={component.key}>{component}</span>)}</div>), // eslint-disable-line
-    //     };
-    //     const onSubmit = spy();
-    //     const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={onSubmit} customComponents={customComponents} />);
-    //
-    //     expect(wrapper.find('button').prop('children')).toEqual('Click me');
-    //     expect(wrapper.find('input').prop('name')).toEqual('input');
-    // });
+    it('should render custom group component', () => {
+        const groupFields = [
+            {
+                type: 'button',
+                name: 'button',
+                label: 'Click me',
+            },
+            {
+                type: 'text',
+                name: 'input',
+                label: 'Input',
+            },
+        ] as FieldType[];
+        const fields = [
+            {
+                name: 'name',
+                type: 'group',
+                label: 'Name',
+                validation: [],
+                fields: groupFields,
+            },
+        ] as FieldType[];
+        const customComponents = {
+            group: (props: CustomComponentProps) => (
+                <div>
+                    <h2>My Custom Group</h2>
+                    {props.children}
+                </div>
+            ),
+        };
+        const onButtonClick = spy();
+
+        const onSubmit = spy();
+        const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={onSubmit} customComponents={customComponents} onButtonClick={onButtonClick} />);
+
+        expect(wrapper.find('h2').text()).toEqual('My Custom Group');
+        expect(wrapper.find('button').prop('children')).toEqual('Click me');
+
+        wrapper.find('button').simulate('click');
+
+        expect(wrapper.find('input').prop('name')).toEqual('input');
+        expect(onButtonClick.calledWith(groupFields[0], fields)).toEqual(true);
+
+        wrapper.find('form').simulate('submit');
+        expect(onSubmit.calledWith(fields)).toEqual(true);
+    });
 
     it('should return fields when clicked on button', () => {
         const fields = [

@@ -3,11 +3,11 @@ import { Validation } from '../../validation/types';
 export type UpdateActionType = {
     name: string;
     value: string;
+    groupName?: string;
 };
 
 export type ValidateActionType = {
     name: string;
-    groupName?: string;
 };
 
 export type UpdateAndValidateActionType = {
@@ -26,6 +26,7 @@ export type CommonProps = {
     errorMessage?: string;
     groupName?: string;
     placeholder?: string;
+    fields?: FieldType[];
 };
 
 export interface CheckboxProps extends CommonProps {
@@ -54,16 +55,28 @@ export interface SubmitProps extends CommonProps {
     value?: string;
 }
 
-export interface CustomComponentProps {
+export interface GroupProps extends CommonProps {
+    type: 'group';
+    name: string;
+    value?: string;
+    legend?: string;
+    fields: FieldType[];
+}
+
+export interface CustomComponentProps extends CommonProps {
     name: string;
     type: string;
-    value: string;
+    value?: any;
+    legend?: string;
+    fields?: FieldType[];
     update: (object: UpdateActionType) => void;
     validate: (o: ValidateActionType) => void;
     updateAndValidate: (o: UpdateAndValidateActionType) => void;
+    children?: (JSX.Element | null)[];
+    key: string;
 }
 
-export type FieldType = InputProps | TextAreaProps | CheckboxProps | ButtonProps | SubmitProps;
+export type FieldType = InputProps | TextAreaProps | CheckboxProps | ButtonProps | SubmitProps | GroupProps;
 
 export interface InputPropsFinal extends InputProps {
     update: (object: UpdateActionType) => void;
@@ -81,4 +94,11 @@ export interface CheckBoxPropsFinal extends CheckboxProps {
 
 export interface ButtonPropsFinal extends ButtonProps {
     onButtonClick: () => void;
+}
+
+export interface GroupPropsFinal {
+    type: 'group';
+    name: string;
+    legend?: string;
+    children: (JSX.Element | null)[];
 }
