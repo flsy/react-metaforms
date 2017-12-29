@@ -8,6 +8,7 @@ import {
     // removeField,
     validateForm,
     getFormData,
+    getFieldValue,
     setFieldValue,
     update,
     validate,
@@ -216,6 +217,23 @@ describe('utils', () => {
             ];
 
             expect(update({ name: 'f', groupName: 'groupD', value }, fields)).toEqual(expected);
+        });
+    });
+
+    describe('getFieldValue', () => {
+        it('gets the right value', () => {
+            const fields: FieldType[] = [
+                { name: 'a', type: 'text', value: 'a value' },
+                { name: 'b', type: 'text' },
+                { name: 'c', type: 'group', fields: [
+                        { name: 'd', value: 'd value', type: 'text' }
+                    ]}
+            ];
+
+            expect(getFieldValue('a', fields)).toEqual('a value');
+            expect(getFieldValue('b', fields)).toEqual(null);
+            expect(getFieldValue('c', fields)).toEqual(null);
+            expect(getFieldValue('d', fields)).toEqual('d value');
         });
     });
 

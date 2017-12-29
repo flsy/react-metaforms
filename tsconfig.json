@@ -2,7 +2,7 @@
   "compilerOptions": {
     "outDir": "lib",
     "module": "commonjs",
-    "declaration": false,
+    "declaration": true,
     "strict": true,
     "target": "es5",
     "lib": ["es6", "dom"],
@@ -17,9 +17,10 @@
     "noImplicitAny": true,
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": true
   },
   "exclude": [
+    "src/**/*.spec.ts",
     "node_modules",
     "coverage",
     "__tests__",

@@ -2,12 +2,12 @@ import * as React from 'react';
 
 const Asterisk = () => (<abbr title="This field is required" aria-hidden="true"> *</abbr>);
 
-interface Props {
+type Props = {
     fieldId: string;
     label: string;
     isRequired: boolean;
     children?: React.ReactChildren;
-}
+};
 
 const Label = ({ fieldId, label, isRequired, children }: Props) => (
     <label htmlFor={fieldId}>

@@ -86,7 +86,7 @@ const fields2 = [
     },
 ];
 
-interface State {
+export interface State {
     fields: {}[];
 }
 
