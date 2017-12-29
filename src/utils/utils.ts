@@ -37,7 +37,7 @@ export const getFormData = (fields: FieldType[]): FormData =>
         }
 
         return R.assoc(field.name, field.value || null, all);
-    },{}, fields);
+    },       {}, fields);
 
 const clearField = (field: FieldType): FieldType => {
     if (R.propEq('errorMessage', null, field)) {
@@ -58,7 +58,7 @@ export const validateForm = (fields: FieldType[]): FieldType[] => {
             }
 
             return R.compose(clearField, R.set(errorMessageLens, error))(field);
-        },     fields);
+        },       fields);
 };
 
 const updateField = R.curry((name: string, fn: <Value>(value: Value) => Value, fields: FieldType[]): FieldType[] =>
@@ -72,7 +72,7 @@ const updateField = R.curry((name: string, fn: <Value>(value: Value) => Value, f
         }
 
         return field;
-    },  fields));
+    },    fields));
 
 export const getFieldValue = R.curry((name: string, fields: FieldType[]): string | boolean | null =>
     R.view(R.lensProp(name), getFormData(fields)) || null);
@@ -88,7 +88,7 @@ export const update = ({ value, name, groupName }: UpdateActionType, fields: Fie
         } else {
             return field;
         }
-    },  fields);
+    },    fields);
 
 export const validate = ({ name }: ValidateActionType, fields: FieldType[]): FieldType[] => {
     const formData = getFormData(fields);
@@ -102,7 +102,7 @@ export const validate = ({ name }: ValidateActionType, fields: FieldType[]): Fie
         }
 
         return field;
-    }, fields);
+    },           fields);
 };
 
 export const updateAndValidate = ({ name, value, groupName }: UpdateAndValidateActionType, fields: FieldType[]): FieldType[] => {
@@ -116,5 +116,5 @@ export const updateAndValidate = ({ name, value, groupName }: UpdateAndValidateA
         } else {
             return field;
         }
-    },         fields);
+    },           fields);
 };
