@@ -1,6 +1,4 @@
-export {
-    Form as default,
-} from './components/index';
+export { default } from './components/Form';
 
 export { FieldType } from './components/fields/types';
 
@@ -12,6 +10,7 @@ export {
 //     setErrorMessage,
 //     removeField,
 //     setFieldErrorMessage,
+    getFieldValue,
     setFieldValue,
     validateForm,
     hasError,

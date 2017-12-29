@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-interface Props {
+type Props = {
     message: string;
-}
+};
 
 const ErrorMessage = ({ message }: Props) => (<div className="error-message">{message}</div>);
 

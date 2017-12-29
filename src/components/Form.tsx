@@ -8,17 +8,17 @@ import { Input, Textarea, Checkbox, Button, Submit, Group } from './index';
 import { hasError } from '../export';
 import { shouldComponentFocus, update, updateAndValidate, validate, validateForm } from '../utils/utils';
 
-interface Props {
+export type Props = {
     id: string;
     fields?: FieldType[];
     customComponents?: {};
     onButtonClick?: (field: FieldType, fields: FieldType[]) => void;
     onSubmit: (fields: FieldType[]) => void;
-}
+};
 
-interface State {
+export type State = {
     fields: FieldType[];
-}
+};
 
 class Form extends React.Component<Props, State> {
 
