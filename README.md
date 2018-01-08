@@ -10,6 +10,8 @@
 npm install --save react-metaforms
 ```
 
+## Basic Usage
+
 ```jsx
 import Form from 'react-metaforms';
 
