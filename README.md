@@ -23,15 +23,15 @@ import Form from 'react-metaforms';
 ## Custom Fields
 ```jsx
 <Form
-      id={id}
-      fields={fields}
-      onSubmit={onSubmit}
-      onButtonClick={onButtonClick}
-      customComponents={{
-        myInput: () => <input className="my-awesome-input" />,
-        myButton: () => <button>Hello</button>,
-      }}
-    />
+  id={id}
+  fields={fields}
+  onSubmit={onSubmit}
+  onButtonClick={onButtonClick}
+  customComponents={{
+    myInput: () => <input className="my-awesome-input" />,
+    myButton: () => <button>Hello</button>,
+  }}
+/>
 ```
 ## Sample Fields
 
