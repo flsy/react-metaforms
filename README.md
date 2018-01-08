@@ -35,6 +35,15 @@ import Form from 'react-metaforms';
   }}
 />
 ```
+
+## Callback functions
+
+### onButtonClick
+Function called after clicking on any button. Returns whole button definition.
+
+### onSubmit
+Function called after submitting form. Returns same structure as provided into ```fields``` property and adds value to each field.
+
 ## Sample Fields
 
 sample username field 
