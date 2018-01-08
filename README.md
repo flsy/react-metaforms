@@ -2,15 +2,15 @@
 
 [![CircleCI](https://circleci.com/gh/flsy/react-metaforms/tree/master.svg?style=svg)](https://circleci.com/gh/flsy/react-metaforms/tree/master)
 
-## How To Use It
-
-### Installation
+## Installation
 
 ```bash
 npm install --save react-metaforms
 ```
 
-## Basic Usage
+## How To Use It
+
+### Basic Usage
 
 ```jsx
 import Form from 'react-metaforms';
@@ -22,8 +22,10 @@ import Form from 'react-metaforms';
 />  
 ```
 
-## Custom Fields
+### Metaform with custom fields
 ```jsx
+import Form from 'react-metaforms';
+
 <Form
   id={id}
   fields={fields}
@@ -36,13 +38,13 @@ import Form from 'react-metaforms';
 />
 ```
 
-## Callback functions
+## Properties
 
-### onButtonClick
-Function called after clicking on any button. Returns whole button definition.
-
-### onSubmit
-Function called after submitting form. Returns same structure as provided into ```fields``` property and adds value to each field.
+* id - id of form.
+* fields - array of objects rendered by metaform.
+* customComponents - object containing custom components provided to metaform in following structure: ```{ fieldType: Component }``` where fieldType is unique type name, which is matched against value provided in ```fields``` property.
+* onButtonClick - Function called after clicking on any button. Returns whole button definition.
+* onSubmit - Function called after submitting form. Returns same structure as provided into ```fields``` property and adds value to each field.
 
 ## Sample Fields
 
