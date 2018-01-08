@@ -23,6 +23,7 @@ import Form from 'react-metaforms';
 ```
 
 ### Metaform with custom fields
+
 ```jsx
 import Form from 'react-metaforms';
 
@@ -32,10 +33,28 @@ import Form from 'react-metaforms';
   onSubmit={onSubmit}
   onButtonClick={onButtonClick}
   customComponents={{
-    myInput: () => <input className="my-awesome-input" />,
+    myInput: ({ name }) => <input name={name} className="my-awesome-input" />,
     myButton: () => <button>Hello</button>,
   }}
 />
+```
+
+#### Example of fields definition
+
+```json
+[
+    {
+      "name": "username",
+      "type": "myInput"
+    },
+    {
+      "name": "fullName",
+      "type": "myInput"
+    },
+    {
+        "type": "myButton"
+    }
+]
 ```
 
 ## Properties
