@@ -19,6 +19,20 @@ import Form from 'react-metaforms';
   onSubmit={onSubmit}
 />  
 ```
+
+## Custom Fields
+```jsx
+<Form
+      id={id}
+      fields={fields}
+      onSubmit={onSubmit}
+      onButtonClick={onButtonClick}
+      customComponents={{
+        myInput: () => <input className="my-awesome-input" />,
+        myButton: () => <button>Hello</button>,
+      }}
+    />
+```
 ## Sample Fields
 
 sample username field 
