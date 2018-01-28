@@ -10,10 +10,9 @@ export {
 //     setErrorMessage,
 //     removeField,
 //     setFieldErrorMessage,
+    isRequired,
     getFieldValue,
     setFieldValue,
     validateForm,
     hasError,
 } from './utils/utils';
-
-// fieldShape

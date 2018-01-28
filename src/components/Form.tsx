@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { equals, map } from 'ramda';
+import { equals, map } from 'fputils';
 import {
     CustomComponentProps, FieldType, UpdateActionType, UpdateAndValidateActionType,
     ValidateActionType
