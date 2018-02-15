@@ -30,7 +30,7 @@ class Form extends React.Component<Props, State> {
     }
 
     componentWillReceiveProps(nextProps: Props) {
-        if (!equals(this.props, nextProps)) {
+        if (!equals(JSON.stringify(this.props), JSON.stringify(nextProps))) { // todo: came up with some deepEqual implementation
             this.setState({ fields: nextProps.fields || [] });
         }
     }
@@ -47,7 +47,7 @@ class Form extends React.Component<Props, State> {
         });
     }
 
-    updateAndValidate = ({ name, value, groupName }: UpdateAndValidateActionType) => {
+    updateAndValidate = ({ name, value, groupName }: UpdateAndValidateActionType<string | boolean>) => {
         this.setState({
             fields: updateAndValidate({ name, value, groupName }, this.state.fields),
         });
@@ -78,13 +78,14 @@ class Form extends React.Component<Props, State> {
         const shouldFocus = shouldComponentFocus(this.state.fields, field.name);
         const component = customComponents && customComponents[field.type];
         if (component) {
-            const props: CustomComponentProps = {
+            const props: CustomComponentProps<string | boolean> = {
                 ...field,
                 shouldFocus,
                 key: field.name,
                 children: field.fields ? map((c) => this.getComponent(c, field.name), field.fields) : [],
                 update: this.update,
                 validate: this.validate,
+                onButtonClick: () => this.onButtonClick(field),
                 updateAndValidate: this.updateAndValidate
             };
             return React.createElement(component, props);

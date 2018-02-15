@@ -26,7 +26,7 @@
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
     "lint": "tslint -c ./tslint.json './src/**/*.{ts,tsx}'",
-    "transpile": "tsc",
+    "transpile": "rm -rf ./lib && tsc",
     "prepublishOnly": "npm run transpile"
   },
   "peerDependencies": {

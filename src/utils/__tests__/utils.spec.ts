@@ -122,9 +122,9 @@ describe('utils', () => {
                 { name: 'b' },
             ] as FieldType[];
 
-            expect(setFieldValue('a', 'hey yo!')(fields)[0].value).toEqual('hey yo!');
+            expect(setFieldValue<string>('a', 'hey yo!')(fields)[0].value).toEqual('hey yo!');
             expect(fields[1].value).toEqual(undefined);
-            expect(setFieldValue('b', 'b yo!', fields)[1].value).toEqual('b yo!');
+            expect(setFieldValue<string>('b', 'b yo!', fields)[1].value).toEqual('b yo!');
         });
 
         it('sets a value on nested fields', () => {
@@ -230,10 +230,10 @@ describe('utils', () => {
                     ]}
             ];
 
-            expect(getFieldValue('a', fields)).toEqual('a value');
+            expect(getFieldValue<string>('a', fields)).toEqual('a value');
             expect(getFieldValue('b', fields)).toEqual(null);
             expect(getFieldValue('c', fields)).toEqual(null);
-            expect(getFieldValue('d', fields)).toEqual('d value');
+            expect(getFieldValue('d')(fields)).toEqual('d value');
         });
     });
 

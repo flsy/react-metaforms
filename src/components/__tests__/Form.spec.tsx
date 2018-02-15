@@ -296,7 +296,7 @@ describe('<Form />', () => {
             },
         ] as FieldType[];
         const customComponents = {
-            text: (props: CustomComponentProps) =>
+            text: (props: CustomComponentProps<string>) =>
                 <input name="testNameInput" defaultValue={props.value as string} onChange={e => props.update({ name: props.name, value: e.target.value })} />
         };
         const onSubmit = spy();
@@ -331,7 +331,7 @@ describe('<Form />', () => {
             },
         ] as FieldType[];
         const customComponents = {
-            group: (props: CustomComponentProps) => (
+            group: (props: CustomComponentProps<string>) => (
                 <div>
                     <h2>My Custom Group</h2>
                     {props.children}

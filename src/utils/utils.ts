@@ -87,10 +87,17 @@ const updateField = curry((name: string, fn: <Value>(value: Value) => Value, fie
         return field;
     },  fields));
 
-export const getFieldValue = curry((name: string, fields: FieldType[]): string | boolean | null =>
-    view(lensProp(name), getFormData(fields)) || null);
+export interface GetFieldValue {
+    <Value>(name: string, fields: FieldType[]): Value | null;
+    <Value>(name: string): (fields: FieldType[]) => Value | null;
+}
+export const getFieldValue: GetFieldValue = curry((name, fields) => view(lensProp(name), getFormData(fields)) || null);
 
-export const setFieldValue = curry((name: string, value: string, fields: FieldType[]): FieldType[] => updateField(name, set(valueLens, value), fields));
+export interface SetFieldValue {
+    <Value>(name: string, value: Value, fields: FieldType[]): FieldType[];
+    <Value>(name: string, value: Value): (fields: FieldType[]) => FieldType[];
+}
+export const setFieldValue: SetFieldValue = curry((name: string, value: string, fields: FieldType[]): FieldType[] => updateField(name, set(valueLens, value), fields));
 
 export const update = ({ value, name, groupName }: UpdateActionType, fields: FieldType[]): FieldType[] =>
     map(field => {
@@ -118,7 +125,7 @@ export const validate = ({ name }: ValidateActionType, fields: FieldType[]): Fie
     },         fields);
 };
 
-export const updateAndValidate = ({ name, value, groupName }: UpdateAndValidateActionType, fields: FieldType[]): FieldType[] => {
+export const updateAndValidate = <Value>({ name, value, groupName }: UpdateAndValidateActionType<Value>, fields: FieldType[]): FieldType[] => {
     const formData = getFormData(fields);
     return map((field) => {
         if (groupName && field.type === 'group') {
