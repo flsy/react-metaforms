@@ -18,6 +18,7 @@ export type Props = {
 
 export type State = {
     fields: FieldType[];
+    lastEditedFieldName: string | null;
 };
 
 class Form extends React.Component<Props, State> {
@@ -25,7 +26,8 @@ class Form extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            fields: this.props.fields || []
+            fields: this.props.fields || [],
+            lastEditedFieldName: null,
         };
     }
 
@@ -37,19 +39,22 @@ class Form extends React.Component<Props, State> {
 
     update = ({ name, value, groupName }: UpdateActionType) => {
         this.setState({
-            fields: update({ name, value, groupName }, this.state.fields)
+            fields: update({ name, value, groupName }, this.state.fields),
+            lastEditedFieldName: name
         });
     }
 
     validate = ({ name }: ValidateActionType) => {
         this.setState({
             fields: validate({ name }, this.state.fields),
+            lastEditedFieldName: name,
         });
     }
 
     updateAndValidate = ({ name, value, groupName }: UpdateAndValidateActionType<string | boolean>) => {
         this.setState({
             fields: updateAndValidate({ name, value, groupName }, this.state.fields),
+            lastEditedFieldName: name,
         });
     }
 
@@ -75,7 +80,8 @@ class Form extends React.Component<Props, State> {
     getComponent = (field: FieldType, groupName?: string): JSX.Element | null => {
         const { customComponents } = this.props;
 
-        const shouldFocus = shouldComponentFocus(this.state.fields, field.name);
+        const shouldFocus = shouldComponentFocus(this.state.fields, field.name, this.state.lastEditedFieldName);
+
         const component = customComponents && customComponents[field.type];
         if (component) {
             const props: CustomComponentProps<string | boolean> = {

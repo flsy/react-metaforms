@@ -32,13 +32,18 @@ const hasFieldError = (field: FieldType): boolean => !!prop('errorMessage', fiel
 
 const findFieldWithError = (fields: FieldType[]) => find(hasFieldError, fields);
 
-export const shouldComponentFocus = (fields: FieldType[], name: string): boolean => {
-    const errorField = findFieldWithError(fields);
+export const shouldComponentFocus = (fields: FieldType[], name: string, lastEditedFieldName: string | null): boolean => {
+    // stay on last edited field
+    if (lastEditedFieldName === name) {
+        return true;
+    }
 
+    const errorField = findFieldWithError(fields);
     if (errorField && errorField.name === name) {
         return true;
     }
 
+    // todo: find first empty field
     const firstField = head(fields);
     return firstField ? firstField.name === name : false;
 };
