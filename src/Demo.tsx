@@ -120,6 +120,7 @@ class Demo extends React.Component<{}, State> {
                     onSubmit={console.log}
                     customComponents={customComponents}
                     onButtonClick={console.log}
+                    onUpdate={console.log}
                 />
             </div>
         );

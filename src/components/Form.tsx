@@ -4,9 +4,10 @@ import {
     CustomComponentProps, FieldType, UpdateActionType, UpdateAndValidateActionType,
     ValidateActionType
 } from './fields/types';
+import { FormData } from '../types';
 import { Input, Textarea, Checkbox, Button, Submit, Group } from './index';
 import { hasError } from '../export';
-import { shouldComponentFocus, update, updateAndValidate, validate, validateForm } from '../utils/utils';
+import { getFormData, shouldComponentFocus, update, updateAndValidate, validate, validateForm } from '../utils/utils';
 
 export type Props = {
     id: string;
@@ -14,6 +15,7 @@ export type Props = {
     customComponents?: {};
     onButtonClick?: (field: FieldType, fields: FieldType[]) => void;
     onSubmit: (fields: FieldType[]) => void;
+    onUpdate?: (formData: FormData) => void;
 };
 
 export type State = {
@@ -41,6 +43,10 @@ class Form extends React.Component<Props, State> {
         this.setState({
             fields: update({ name, value, groupName }, this.state.fields),
             lastEditedFieldName: name
+        },            () => {
+            if (this.props.onUpdate) {
+                this.props.onUpdate(getFormData(this.state.fields));
+            }
         });
     }
 
@@ -55,6 +61,10 @@ class Form extends React.Component<Props, State> {
         this.setState({
             fields: updateAndValidate({ name, value, groupName }, this.state.fields),
             lastEditedFieldName: name,
+        },            () => {
+            if (this.props.onUpdate) {
+                this.props.onUpdate(getFormData(this.state.fields));
+            }
         });
     }
 
