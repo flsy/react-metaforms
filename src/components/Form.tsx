@@ -96,6 +96,7 @@ class Form extends React.Component<Props, State> {
         if (component) {
             const props: CustomComponentProps<string | boolean> = {
                 ...field,
+                groupName,
                 shouldFocus,
                 key: field.name,
                 children: field.fields ? map((c) => this.getComponent(c, field.name), field.fields) : [],
