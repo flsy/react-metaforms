@@ -5,7 +5,7 @@ import {
     ValidateActionType
 } from './fields/types';
 import { FormData } from '../types';
-import { Input, Textarea, Checkbox, Button, Submit, Group } from './index';
+import { Input, Textarea, Checkbox, Button, Submit, Group, Select } from './index';
 import { hasError } from '../export';
 import { getFormData, shouldComponentFocus, update, updateAndValidate, validate, validateForm } from '../utils/utils';
 
@@ -117,6 +117,8 @@ class Form extends React.Component<Props, State> {
                 return <Textarea key={field.name} {...field} groupName={groupName} shouldFocus={shouldFocus} update={this.update} validate={this.validate} />;
             case 'checkbox':
                 return <Checkbox key={field.name} {...field} groupName={groupName} shouldFocus={shouldFocus} updateAndValidate={this.updateAndValidate} />;
+            case 'select':
+                return <Select key={field.name} {...field} groupName={groupName} shouldFocus={shouldFocus} updateAndValidate={this.updateAndValidate} />;
 
             case 'button':
                 return <Button key={field.name} {...field} groupName={groupName} shouldFocus={shouldFocus} onButtonClick={() => this.onButtonClick(field)} />;

@@ -34,6 +34,12 @@ export interface CheckboxProps extends CommonProps {
     value?: boolean;
 }
 
+export interface SelectProps extends CommonProps {
+    type: 'select';
+    value?: string;
+    options: string[];
+}
+
 export interface InputProps extends CommonProps {
     type: 'text' | 'password' | 'email';
     value?: string;
@@ -77,7 +83,7 @@ export interface CustomComponentProps<T = string> extends CommonProps {
     key: string;
 }
 
-export type FieldType = InputProps | TextAreaProps | CheckboxProps | ButtonProps | SubmitProps | GroupProps;
+export type FieldType = InputProps | TextAreaProps | CheckboxProps | SelectProps | ButtonProps | SubmitProps | GroupProps;
 
 export interface InputPropsFinal extends InputProps {
     update: (object: UpdateActionType) => void;
@@ -87,6 +93,10 @@ export interface InputPropsFinal extends InputProps {
 export interface TextAreaPropsFinal extends TextAreaProps {
     update: (object: UpdateActionType) => void;
     validate: (o: ValidateActionType) => void;
+}
+
+export interface SelectPropsFinal extends SelectProps {
+    updateAndValidate: (o: UpdateAndValidateActionType<string>) => void;
 }
 
 export interface CheckBoxPropsFinal extends CheckboxProps {
