@@ -1,3 +1,5 @@
+/* tslint:disable:no-console */
+
 import * as React from 'react';
 import Form from './export';
 import { CustomComponentProps, FieldType } from './components/fields/types';
