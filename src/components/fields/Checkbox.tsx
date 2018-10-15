@@ -7,6 +7,11 @@ import { CheckBoxPropsFinal } from './types';
 class Checkbox extends React.Component<CheckBoxPropsFinal> {
     private inputEl: HTMLInputElement | null;
 
+    constructor(props: CheckBoxPropsFinal) {
+        super(props);
+        this.inputEl = null;
+    }
+
     componentDidMount() {
         if (this.props.shouldFocus && this.inputEl) {
             this.inputEl.focus();

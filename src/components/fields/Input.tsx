@@ -6,6 +6,11 @@ import { isRequired } from '../../utils/utils';
 class Input extends React.Component<InputPropsFinal, {}> {
     private inputEl: HTMLInputElement | null;
 
+    constructor(props: InputPropsFinal) {
+        super(props);
+        this.inputEl = null;
+    }
+
     componentDidMount() {
         if (this.props.shouldFocus && this.inputEl) {
             this.inputEl.focus();

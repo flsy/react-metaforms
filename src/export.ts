@@ -3,7 +3,7 @@ export { default } from './components/Form';
 export { FieldType } from './components/fields/types';
 
 export {
-//     validateField,
+//     validateF ield,
 //     isFormValid,
     getFormData,
 //     setValue,

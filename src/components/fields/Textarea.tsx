@@ -7,6 +7,11 @@ import { isRequired } from '../../utils/utils';
 class Textarea extends React.Component<TextAreaPropsFinal> {
     private inputEl: HTMLTextAreaElement | null;
 
+    constructor(props: TextAreaPropsFinal) {
+        super(props);
+        this.inputEl = null;
+    }
+
     componentDidMount() {
         if (this.props.shouldFocus && this.inputEl) {
             this.inputEl.focus();
