@@ -21,7 +21,7 @@
   ],
   "scripts": {
     "start": "react-scripts-ts start",
-    "build": "react-scripts-ts build",
+    "build": "npm run transpile",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
     "lint": "tslint -c ./tslint.json './src/**/*.{ts,tsx}'",
