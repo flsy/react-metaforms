@@ -12,7 +12,7 @@ import {
     view,
     find,
 } from 'fputils';
-import { FormData } from '../types';
+import { FormData, Optional, Value } from '../types';
 import { Validation } from '../validation/types';
 import {
     FieldType, UpdateActionType, UpdateAndValidateActionType,
@@ -32,7 +32,7 @@ const hasFieldError = (field: FieldType): boolean => !!prop('errorMessage', fiel
 
 const findFieldWithError = (fields: FieldType[]) => find(hasFieldError, fields);
 
-export const shouldComponentFocus = (fields: FieldType[], name: string, lastEditedFieldName: string | null): boolean => {
+export const shouldComponentFocus = (fields: FieldType[], name: string, lastEditedFieldName: Value): boolean => {
     // stay on last edited field
     if (lastEditedFieldName === name) {
         return true;
@@ -79,7 +79,7 @@ export const validateForm = (fields: FieldType[]): FieldType[] => {
         },     fields);
 };
 
-const updateField = curry((name: string, fn: <Value>(value: Value) => Value, fields: FieldType[]): FieldType[] =>
+const updateField = curry((name: string, fn: <Val>(value: Val) => Val, fields: FieldType[]): FieldType[] =>
     map((field) => {
         if (field.fields) {
             return {...field, fields: updateField(name, fn, field.fields)};
@@ -93,14 +93,14 @@ const updateField = curry((name: string, fn: <Value>(value: Value) => Value, fie
     },  fields));
 
 export interface GetFieldValue {
-    <Value>(name: string, fields: FieldType[]): Value | null;
-    <Value>(name: string): (fields: FieldType[]) => Value | null;
+    <Val>(name: string, fields: FieldType[]): Optional<Val>;
+    <Val>(name: string): (fields: FieldType[]) => Optional<Val>;
 }
-export const getFieldValue: GetFieldValue = curry((name, fields) => view(lensProp(name), getFormData(fields)) || null);
+export const getFieldValue: GetFieldValue = curry((name, fields) => view(lensProp(name), getFormData(fields)) || undefined);
 
 export interface SetFieldValue {
-    <Value>(name: string, value: Value, fields: FieldType[]): FieldType[];
-    <Value>(name: string, value: Value): (fields: FieldType[]) => FieldType[];
+    <Val>(name: string, value: Val, fields: FieldType[]): FieldType[];
+    <Val>(name: string, value: Val): (fields: FieldType[]) => FieldType[];
 }
 export const setFieldValue: SetFieldValue = curry((name: string, value: string, fields: FieldType[]): FieldType[] => updateField(name, set(valueLens, value), fields));
 
@@ -130,7 +130,7 @@ export const validate = ({ name }: ValidateActionType, fields: FieldType[]): Fie
     },         fields);
 };
 
-export const updateAndValidate = <Value>({ name, value, groupName }: UpdateAndValidateActionType<Value>, fields: FieldType[]): FieldType[] => {
+export const updateAndValidate = ({ name, value, groupName }: UpdateAndValidateActionType, fields: FieldType[]): FieldType[] => {
     const formData = getFormData(fields);
     return map((field) => {
         if (groupName && field.type === 'group') {

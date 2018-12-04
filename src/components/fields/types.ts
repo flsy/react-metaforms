@@ -1,4 +1,5 @@
 import { Validation } from '../../validation/types';
+import { Value } from '../../types';
 
 export type UpdateActionType = {
     name: string;
@@ -10,7 +11,7 @@ export type ValidateActionType = {
     name: string;
 };
 
-export type UpdateAndValidateActionType<Value> = {
+export type UpdateAndValidateActionType = {
     name: string;
     value: Value;
     groupName?: string;
@@ -69,15 +70,15 @@ export interface GroupProps extends CommonProps {
     fields: FieldType[];
 }
 
-export interface CustomComponentProps<T = string> extends CommonProps {
+export interface CustomComponentProps extends CommonProps {
     name: string;
     type: string;
-    value?: string | boolean;
+    value?: Value;
     legend?: string;
     fields?: FieldType[];
     update: (object: UpdateActionType) => void;
     validate: (o: ValidateActionType) => void;
-    updateAndValidate: (o: UpdateAndValidateActionType<T>) => void;
+    updateAndValidate: (o: UpdateAndValidateActionType) => void;
     onButtonClick: () => void;
     children?: (JSX.Element | null)[];
     key: string;
@@ -96,11 +97,11 @@ export interface TextAreaPropsFinal extends TextAreaProps {
 }
 
 export interface SelectPropsFinal extends SelectProps {
-    updateAndValidate: (o: UpdateAndValidateActionType<string>) => void;
+    updateAndValidate: (o: UpdateAndValidateActionType) => void;
 }
 
 export interface CheckBoxPropsFinal extends CheckboxProps {
-    updateAndValidate: (o: UpdateAndValidateActionType<boolean>) => void;
+    updateAndValidate: (o: UpdateAndValidateActionType) => void;
 }
 
 export interface ButtonPropsFinal extends ButtonProps {

@@ -1,3 +1,5 @@
+import { Value } from '../types';
+
 export type Required = {
     type: 'required',
     rules: { message: string } []
@@ -20,7 +22,7 @@ export type MustBeEqual = {
 
 export type InList = {
     type: 'inlist',
-    rules: { value: string[], message: string } []
+    rules: { value: Value[], message: string } []
 };
 
 export type Pattern = {

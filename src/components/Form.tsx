@@ -4,7 +4,7 @@ import {
     CustomComponentProps, FieldType, UpdateActionType, UpdateAndValidateActionType,
     ValidateActionType
 } from './fields/types';
-import { FormData } from '../types';
+import { FormData, Optional } from '../types';
 import { Input, Textarea, Checkbox, Button, Submit, Group, Select } from './index';
 import { hasError } from '../export';
 import { getFormData, shouldComponentFocus, update, updateAndValidate, validate, validateForm } from '../utils/utils';
@@ -20,7 +20,7 @@ export type Props = {
 
 export type State = {
     fields: FieldType[];
-    lastEditedFieldName: string | null;
+    lastEditedFieldName: Optional<string>;
 };
 
 class Form extends React.Component<Props, State> {
@@ -29,7 +29,7 @@ class Form extends React.Component<Props, State> {
         super(props);
         this.state = {
             fields: this.props.fields || [],
-            lastEditedFieldName: null,
+            lastEditedFieldName: undefined,
         };
     }
 
@@ -57,7 +57,7 @@ class Form extends React.Component<Props, State> {
         });
     }
 
-    updateAndValidate = ({ name, value, groupName }: UpdateAndValidateActionType<string | boolean>) => {
+    updateAndValidate = ({ name, value, groupName }: UpdateAndValidateActionType) => {
         this.setState({
             fields: updateAndValidate({ name, value, groupName }, this.state.fields),
             lastEditedFieldName: name,
@@ -94,7 +94,7 @@ class Form extends React.Component<Props, State> {
 
         const component = customComponents && customComponents[field.type];
         if (component) {
-            const props: CustomComponentProps<string | boolean> = {
+            const props: CustomComponentProps = {
                 ...field,
                 groupName,
                 shouldFocus,

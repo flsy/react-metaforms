@@ -9,111 +9,130 @@ import {
     MustMatch,
     MustMatchCaseInsensitive,
 } from './types';
-import { FormData } from '../types';
+import { FormData, Optional, Value } from '../types';
 import { FieldType } from '../components/fields/types';
 
-const isEmpty = (value: string, rule: Required): string | null => {
+const isEmpty = (value: Value, rule: Required): Optional<string> => {
     const errorMessage = rule.rules[0].message;
-    return value === null || value === undefined || value === '' ? errorMessage : null;
+    return value === null || value === undefined || value === '' ? errorMessage : undefined;
 };
 
-const getErrorIfDoesNotMatchRegEx = (value: string, rule: Pattern): string | null => {
+const getErrorIfDoesNotMatchRegEx = (value: Value, rule: Pattern): Optional<string> => {
+    if (value && typeof value === 'boolean') {
+        return undefined;
+    }
     if (!value || value.length === 0) {
-        return null;
+        return undefined;
     }
 
     const messages = rule.rules
         .filter(pattern => value.match(pattern.value) === null)
         .map(pattern => pattern.message);
 
-    return (messages.length > 0) ? messages[0] : null;
+    return (messages.length > 0) ? messages[0] : undefined;
 };
 
-const getErrorIfMatchesRegEx = (value: string, rule: NotPattern): string | null => {
+const getErrorIfMatchesRegEx = (value: Value, rule: NotPattern): Optional<string> => {
+    if (value && typeof value === 'boolean') {
+        return undefined;
+    }
+
     if (!value || value.length === 0) {
-        return null;
+        return undefined;
     }
 
     const errors = rule.rules
         .filter(pattern => value.match(pattern.value) !== null)
         .map(pattern => pattern.message);
 
-    return (errors.length > 0) ? errors[0] : null;
+    return (errors.length > 0) ? errors[0] : undefined;
 };
 
-const isNotEqualToExpectedValue = (value: boolean, rule: MustBeEqual): string | null => {
+const isNotEqualToExpectedValue = (value: Value, rule: MustBeEqual): Optional<string> => {
     const first = rule.rules[0];
-    return value !== first.value ? first.message : null;
+    if (value && typeof value === 'boolean') {
+        return value !== first.value ? first.message : undefined;
+    }
+    return undefined;
 };
 
-const isInList = (value: string, rule: InList): string | null => {
+const isInList = (value: Value, rule: InList): Optional<string> => {
     const first = rule.rules[0];
 
-    return first.value.indexOf(value) > -1 ? null : first.message;
+    return first.value.indexOf(value) > -1 ? undefined : first.message;
 };
 
-const isGreaterThanMaxLength = (value: string, rule: MaxLength): string | null => {
+const isGreaterThanMaxLength = (value: Value, rule: MaxLength): Optional<string> => {
     const first = rule.rules[0];
-    return value.length > first.value ? first.message : null;
+    if (value && typeof value === 'string') {
+        return value.length > first.value ? first.message : undefined;
+    }
+    return undefined;
 };
 
-const isLessThanMinLength = (value: string, rule: MinLength): string | null => {
+const isLessThanMinLength = (value: Value, rule: MinLength): Optional<string> => {
     const first = rule.rules[0];
-    return value.length < first.value ? first.message : null;
+    if (value && typeof value === 'string') {
+        return value.length < first.value ? first.message : undefined;
+    }
+    return undefined;
 };
 
-const mustMatch = (value: string, rule: MustMatch, formData: {}): string | null => {
+const mustMatch = (value: Value, rule: MustMatch, formData: {}): Optional<string> => {
     const first = rule.rules[0];
     const name = first.value;
 
-    return formData[name] && formData[name] !== value ? first.message : null;
+    return formData[name] && formData[name] !== value ? first.message : undefined;
 };
 
-const mustMatchCaseInsensitive = (value: string, rule: MustMatchCaseInsensitive, formData: {}): string | null => {
+const mustMatchCaseInsensitive = (value: Value, rule: MustMatchCaseInsensitive, formData: {}): Optional<string> => {
     const first = rule.rules[0];
 
     const name = first.value;
-    return formData[name] && formData[name].toLowerCase() !== value.toLowerCase() ? first.message : null;
+    if (value && typeof value === 'string') {
+        return formData[name] && formData[name].toLowerCase() !== value.toLowerCase() ? first.message : undefined;
+    }
+    return undefined;
 };
 
-const validate = (formData: FormData, field: FieldType): string | null => {
+const validate = (formData: FormData, field: FieldType): Optional<string> => {
     const errorMessages = (field.validation || [])
         .map((rule) => {
             switch (rule.type) {
                 case 'required':
-                    return isEmpty(field.value as string, rule);
+                    return isEmpty(field.value, rule);
 
                 case 'minlength':
-                    return isLessThanMinLength(field.value as string, rule);
+                    return isLessThanMinLength(field.value, rule);
 
                 case 'maxlength':
-                    return isGreaterThanMaxLength(field.value as string, rule);
+                    return isGreaterThanMaxLength(field.value, rule);
 
                 case 'mustbeequal':
-                    return isNotEqualToExpectedValue(field.value as boolean, rule);
+                    return isNotEqualToExpectedValue(field.value, rule);
 
                 case 'inlist':
-                    return isInList(field.value as string, rule);
+                    return isInList(field.value, rule);
 
                 case 'pattern':
-                    return getErrorIfDoesNotMatchRegEx(field.value as string, rule);
+                    return getErrorIfDoesNotMatchRegEx(field.value, rule);
 
                 case 'notpattern':
-                    return getErrorIfMatchesRegEx(field.value as string, rule);
+                    return getErrorIfMatchesRegEx(field.value, rule);
 
                 case 'mustmatch':
-                    return mustMatch(field.value as string, rule, formData);
+                    return mustMatch(field.value, rule, formData);
 
                 case 'mustmatchcaseinsensitive':
-                    return mustMatchCaseInsensitive(field.value as string, rule, formData);
+                    return mustMatchCaseInsensitive(field.value, rule, formData);
 
                 default:
-                    return null;
+                    return undefined;
             }
         })
         .filter(error => error !== null);
 
-    return errorMessages.length > 0 ? errorMessages[0] : null;
+    return errorMessages.length > 0 ? errorMessages[0] : undefined;
 };
 
 export default validate;
