@@ -33,7 +33,7 @@
     "react-dom": "^16.0.0"
   },
   "dependencies": {
-    "fputils": "1.0.9",
+    "fputils": "1.0.11",
     "react": "^16.2.0"
   },
   "devDependencies": {
