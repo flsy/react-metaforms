@@ -96,7 +96,7 @@ describe('validate', () => {
         it('should return an error if the value is not equal to the specified value', () => {
                 const errorMessage = validate(false, validationRules);
 
-            expect(errorMessage).toEqual('You need to agree to the terms and conditions');
+                expect(errorMessage).toEqual('You need to agree to the terms and conditions');
         });
 
         it('should not return an error if the value is equal to the specified value', () => {
