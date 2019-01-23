@@ -231,8 +231,8 @@ describe('utils', () => {
             ];
 
             expect(getFieldValue<string>('a', fields)).toEqual('a value');
-            expect(getFieldValue('b', fields)).toEqual(null);
-            expect(getFieldValue('c', fields)).toEqual(null);
+            expect(getFieldValue('b', fields)).toEqual(undefined);
+            expect(getFieldValue('c', fields)).toEqual(undefined);
             expect(getFieldValue('d')(fields)).toEqual('d value');
         });
     });
