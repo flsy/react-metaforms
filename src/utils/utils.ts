@@ -63,6 +63,11 @@ const clearField = (field: FieldType): FieldType => {
         return rest;
     }
 
+    if (propEq('errorMessage', undefined, field)) {
+        const { errorMessage, ...rest } = field;
+        return rest;
+    }
+
     return field;
 };
 

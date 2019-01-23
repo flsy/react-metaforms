@@ -120,7 +120,7 @@ describe('<Form />', () => {
 
         wrapper.find('input').simulate('change', { target: { checked: true } });
 
-        expect(wrapper.find(Checkbox).prop('errorMessage')).toEqual(null);
+        expect(wrapper.find(Checkbox).prop('errorMessage')).toEqual(undefined);
 
         wrapper.find('form').simulate('submit');
         expect(onSubmit.calledOnce).toEqual(true);
@@ -162,7 +162,7 @@ describe('<Form />', () => {
         wrapper.find('textarea').simulate('change', { target: { value } });
         wrapper.find('textarea').simulate('blur');
 
-        expect(wrapper.find(Textarea).prop('errorMessage')).toEqual(null);
+        expect(wrapper.find(Textarea).prop('errorMessage')).toEqual(undefined);
 
         wrapper.find('form').simulate('submit');
         expect(onSubmit.calledOnce).toEqual(true);

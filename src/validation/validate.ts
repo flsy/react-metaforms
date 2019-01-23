@@ -50,7 +50,7 @@ const getErrorIfMatchesRegEx = (value: Value, rule: NotPattern): Optional<string
 
 const isNotEqualToExpectedValue = (value: Value, rule: MustBeEqual): Optional<string> => {
     const first = rule.rules[0];
-    if (value && typeof value === 'boolean') {
+    if (typeof value === 'boolean') {
         return value !== first.value ? first.message : undefined;
     }
     return undefined;

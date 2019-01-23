@@ -2,8 +2,7 @@ import validateField from '../validate';
 import { Validation } from '../types';
 import { FieldType } from '../../components/fields/types';
 
-const validate = (value: string | boolean | null, validation: Validation[], formData: {} = {}) =>
-    validateField(formData, { value, validation } as FieldType);
+const validate = (value: string | boolean | null, validation: Validation[], formData: {} = {}) => validateField(formData, { value, validation } as FieldType);
 
 describe('validate', () => {
     describe('required', () => {
@@ -25,7 +24,7 @@ describe('validate', () => {
 
         it('should not return an error message when the field value is not empty', () => {
             const errorMessage = validate('Jan', validationRules);
-            expect(errorMessage).toEqual(null);
+            expect(errorMessage).toEqual(undefined);
         });
     });
 
@@ -51,7 +50,7 @@ describe('validate', () => {
         it('should not return an error if value has enough characters', () => {
             const errorMessage = validate('name', validationRules);
 
-            expect(errorMessage).toEqual(null);
+            expect(errorMessage).toEqual(undefined);
         });
     });
 
@@ -77,7 +76,7 @@ describe('validate', () => {
         it('should not return an error if the entered text does not exceed the max length rule', () => {
             const errorMessage = validate('o', validationRules);
 
-            expect(errorMessage).toEqual(null);
+            expect(errorMessage).toEqual(undefined);
         });
     });
 
@@ -95,7 +94,7 @@ describe('validate', () => {
         ];
 
         it('should return an error if the value is not equal to the specified value', () => {
-            const errorMessage = validate(false, validationRules);
+                const errorMessage = validate(false, validationRules);
 
             expect(errorMessage).toEqual('You need to agree to the terms and conditions');
         });
@@ -103,7 +102,7 @@ describe('validate', () => {
         it('should not return an error if the value is equal to the specified value', () => {
             const errorMessage = validate(true, validationRules);
 
-            expect(errorMessage).toEqual(null);
+            expect(errorMessage).toEqual(undefined);
         });
     });
 
@@ -138,7 +137,7 @@ describe('validate', () => {
         it('should not return an error if the user selects something in the list of options', () => {
             const errorMessage = validate('Mr', validationRules);
 
-            expect(errorMessage).toEqual(null);
+            expect(errorMessage).toEqual(undefined);
         });
     });
 
@@ -157,7 +156,7 @@ describe('validate', () => {
 
         it('should not display error if field value is empty', () => {
             const errorMessage = validate('', validationRules);
-            expect(errorMessage).toEqual(null);
+            expect(errorMessage).toEqual(undefined);
         });
 
         it('should return an error when a pattern rule has been violated', () => {
@@ -168,7 +167,7 @@ describe('validate', () => {
         it('should not return an error when a pattern rule has not been violated', () => {
             const errorMessage = validate('as', validationRules);
 
-            expect(errorMessage).toEqual(null);
+            expect(errorMessage).toEqual(undefined);
         });
 
         it('should return the correct error when multiple rules are given', () => {
@@ -208,7 +207,7 @@ describe('validate', () => {
         it('should not return an error if value is empty', () => {
             const errorMessage = validate('', validationRules);
 
-            expect(errorMessage).toEqual(null);
+            expect(errorMessage).toEqual(undefined);
         });
 
         it('should return an error if value does not match pattern', () => {
@@ -220,7 +219,7 @@ describe('validate', () => {
         it('should not return an error if the value does match the pattern', () => {
             const errorMessage = validate('hello', validationRules);
 
-            expect(errorMessage).toEqual(null);
+            expect(errorMessage).toEqual(undefined);
         });
 
         it('should return the correct error when multiple rules are given', () => {
@@ -268,13 +267,13 @@ describe('validate', () => {
         it('should not return an error when the specified field values match', () => {
             const errorMessage = validate('joe12334', validationRules, { password: 'joe12334' });
 
-            expect(errorMessage).toEqual(null);
+            expect(errorMessage).toEqual(undefined);
         });
 
         it('does not return an error when both passwords are empty', () => {
             const errorMessage = validate('', validationRules);
 
-            expect(errorMessage).toEqual(null);
+            expect(errorMessage).toEqual(undefined);
         });
     });
 
@@ -300,7 +299,7 @@ describe('validate', () => {
         it('should not return an error if the value does match, case is not sensitive', () => {
             const errorMessage = validate('email@email.com', validationRules, { email: 'email@email.com' });
 
-            expect(errorMessage).toEqual(null);
+            expect(errorMessage).toEqual(undefined);
         });
     });
 });
