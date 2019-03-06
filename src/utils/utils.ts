@@ -12,11 +12,12 @@ import {
     view,
     find,
 } from 'fputils';
+import { FieldType } from '../export';
 import { FormData, Optional, Value } from '../types';
 import { Validation } from '../validation/types';
 import {
-    FieldType, UpdateActionType, UpdateAndValidateActionType,
-    ValidateActionType
+    UpdateActionType, UpdateAndValidateActionType,
+    ValidateActionType,
 } from '../components/fields/types';
 import validateField from '../validation/validate';
 

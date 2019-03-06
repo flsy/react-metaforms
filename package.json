@@ -20,12 +20,13 @@
     "lib"
   ],
   "scripts": {
-    "start": "react-scripts-ts start",
-    "build": "react-scripts-ts build",
-    "test": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
     "lint": "tslint -c ./tslint.json './src/**/*.{ts,tsx}'",
-    "transpile": "rm -rf ./lib && tsc",
+    "transpile": "rm -rf ./lib && tsc --p tsconfig_transpile.json",
+    "verify": "npm run lint && npm test -- --coverage && npm run transpile",
     "prepublishOnly": "npm run transpile"
   },
   "peerDependencies": {
@@ -37,19 +38,21 @@
     "react": "^16.2.0"
   },
   "devDependencies": {
-    "@types/enzyme": "3.1.15",
-    "@types/enzyme-adapter-react-16": "1.0.3",
-    "@types/jest": "23.3.13",
-    "@types/node": "10.12.18",
-    "@types/react": "16.7.20",
-    "@types/react-dom": "16.0.11",
-    "@types/sinon": "7.0.4",
-    "enzyme": "3.8.0",
-    "enzyme-adapter-react-16": "1.7.1",
-    "react-dom": "16.7.0",
-    "react-scripts-ts": "4.0.8",
-    "sinon": "7.2.3",
-    "typescript": "3.2.4"
+    "@types/enzyme": "3.9.0",
+    "@types/enzyme-adapter-react-16": "1.0.5",
+    "@types/jest": "24.0.9",
+    "@types/node": "11.10.4",
+    "@types/react": "16.8.6",
+    "@types/react-dom": "16.8.2",
+    "@types/sinon": "7.0.9",
+    "enzyme": "3.9.0",
+    "enzyme-adapter-react-16": "1.10.0",
+    "react-dom": "16.8.4",
+    "react-scripts": "2.1.8",
+    "sinon": "7.2.7",
+    "tslint": "5.13.1",
+    "tslint-react": "3.6.0",
+    "typescript": "3.3.3333"
   },
   "browserslist": [
     ">0.2%",

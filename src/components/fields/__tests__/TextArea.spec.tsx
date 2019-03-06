@@ -1,9 +1,6 @@
 import * as React from 'react';
-import { mount, shallow, configure } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import { spy } from 'sinon';
-
-import * as Adapter from 'enzyme-adapter-react-16';
-configure({ adapter: new Adapter() });
 
 import Textarea from '../Textarea';
 import { Label, ErrorMessage } from '../../index';

@@ -1,8 +1,8 @@
 /* tslint:disable:no-console */
 
 import * as React from 'react';
-import Form from './export';
-import { CustomComponentProps, FieldType } from './components/fields/types';
+import Form, { FieldType } from './export';
+import { CustomComponentProps } from './components/fields/types';
 
 const fields1 = [
     {
@@ -11,14 +11,14 @@ const fields1 = [
         type: 'text',
         validation: [
             {
-                'type': 'required',
-                'rules': [
+                type: 'required',
+                rules: [
                     {
-                        'message': 'This field is required.'
-                    }
-                ]
-            }
-        ]
+                        message: 'This field is required.',
+                    },
+                ],
+            },
+        ],
     },
     {
         name: 'button',
@@ -50,7 +50,7 @@ const fields1 = [
             {
                 name: 'inline-button',
                 label: 'Inline Button',
-                type: 'button'
+                type: 'button',
             },
             {
                 type: 'text',
@@ -61,11 +61,11 @@ const fields1 = [
                         type: 'required',
                         rules: [
                             {
-                                message: 'Please choose a inline text value'
-                            }
-                        ]
+                                message: 'Please choose a inline text value',
+                            },
+                        ],
                     },
-                ]
+                ],
             },
         ],
     },
@@ -80,7 +80,7 @@ const fields2 = [
         name: 'name',
         label: 'Name',
         type: 'text',
-        value: 'banana'
+        value: 'banana',
     },
     {
         name: 'submit',
@@ -96,11 +96,11 @@ class Demo extends React.Component<{}, State> {
     constructor(props: {}) {
         super(props);
         this.state = {
-            fields: fields1
+            fields: fields1,
         };
     }
 
-    render() {
+    public render() {
 
         const customComponents = {
             group: (props: CustomComponentProps) => {
@@ -108,7 +108,7 @@ class Demo extends React.Component<{}, State> {
                     <div style={{ background: 'lightblue' }}>
                         {props.children}
                     </div>);
-            }
+            },
         };
 
         return (
@@ -119,10 +119,10 @@ class Demo extends React.Component<{}, State> {
                 <Form
                     id="demo-form"
                     fields={this.state.fields as FieldType[]}
-                    onSubmit={console.log}
+                    onSubmit={(formData) => console.log('onSubmit', formData)}
                     customComponents={customComponents}
-                    onButtonClick={console.log}
-                    onUpdate={console.log}
+                    onButtonClick={(field, fields) => console.log('onButtonClick', field, fields)}
+                    onUpdate={(formData) => console.log('onUpdate', formData)}
                 />
             </div>
         );

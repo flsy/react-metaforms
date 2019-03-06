@@ -13,7 +13,7 @@ class Select extends React.Component<SelectPropsFinal> {
         this.inputEl = null;
     }
 
-    componentDidMount() {
+    public componentDidMount() {
         if (this.props.shouldFocus && this.inputEl) {
             this.inputEl.focus();
         }

@@ -12,13 +12,13 @@ class Textarea extends React.Component<TextAreaPropsFinal> {
         this.inputEl = null;
     }
 
-    componentDidMount() {
+    public componentDidMount() {
         if (this.props.shouldFocus && this.inputEl) {
             this.inputEl.focus();
         }
     }
 
-    render() {
+    public render() {
         const { label, name, validation, placeholder, value, disabled, update, validate, groupName, errorMessage } = this.props;
 
         return (

@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { equals, map } from 'fputils';
 import {
-    CustomComponentProps, FieldType, UpdateActionType, UpdateAndValidateActionType,
-    ValidateActionType
+    CustomComponentProps, UpdateActionType, UpdateAndValidateActionType,
+    ValidateActionType,
 } from './fields/types';
 import { FormData, Optional } from '../types';
 import { Input, Textarea, Checkbox, Button, Submit, Group, Select } from './index';
-import { hasError } from '../export';
+import { FieldType, hasError } from '../export';
 import { getFormData, shouldComponentFocus, update, updateAndValidate, validate, validateForm } from '../utils/utils';
 
 export type Props = {
@@ -33,16 +33,16 @@ class Form extends React.Component<Props, State> {
         };
     }
 
-    componentWillReceiveProps(nextProps: Props) {
+    public componentWillReceiveProps(nextProps: Props) {
         if (!equals(JSON.stringify(this.props), JSON.stringify(nextProps))) { // todo: came up with some deepEqual implementation
             this.setState({ fields: nextProps.fields || [] });
         }
     }
 
-    update = ({ name, value, groupName }: UpdateActionType) => {
+    public update = ({ name, value, groupName }: UpdateActionType) => {
         this.setState({
             fields: update({ name, value, groupName }, this.state.fields),
-            lastEditedFieldName: name
+            lastEditedFieldName: name,
         },            () => {
             if (this.props.onUpdate) {
                 this.props.onUpdate(getFormData(this.state.fields));
@@ -50,14 +50,14 @@ class Form extends React.Component<Props, State> {
         });
     }
 
-    validate = ({ name }: ValidateActionType) => {
+    public validate = ({ name }: ValidateActionType) => {
         this.setState({
             fields: validate({ name }, this.state.fields),
             lastEditedFieldName: name,
         });
     }
 
-    updateAndValidate = ({ name, value, groupName }: UpdateAndValidateActionType) => {
+    public updateAndValidate = ({ name, value, groupName }: UpdateAndValidateActionType) => {
         this.setState({
             fields: updateAndValidate({ name, value, groupName }, this.state.fields),
             lastEditedFieldName: name,
@@ -68,13 +68,13 @@ class Form extends React.Component<Props, State> {
         });
     }
 
-    onButtonClick = (field: FieldType) => {
+    public onButtonClick = (field: FieldType) => {
         if (this.props.onButtonClick) {
             this.props.onButtonClick(field, this.state.fields);
         }
     }
 
-    onSubmit = (event: { preventDefault: () => void }) => {
+    public onSubmit = (event: { preventDefault: () => void }) => {
         event.preventDefault();
 
         const fields = validateForm(this.state.fields);
@@ -87,7 +87,7 @@ class Form extends React.Component<Props, State> {
 
     }
 
-    getComponent = (field: FieldType, groupName?: string): JSX.Element | null => {
+    public getComponent = (field: FieldType, groupName?: string): JSX.Element | null => {
         const { customComponents } = this.props;
 
         const shouldFocus = shouldComponentFocus(this.state.fields, field.name, this.state.lastEditedFieldName);
@@ -103,7 +103,7 @@ class Form extends React.Component<Props, State> {
                 update: this.update,
                 validate: this.validate,
                 onButtonClick: () => this.onButtonClick(field),
-                updateAndValidate: this.updateAndValidate
+                updateAndValidate: this.updateAndValidate,
             };
             return React.createElement(component, props);
         }
@@ -136,7 +136,7 @@ class Form extends React.Component<Props, State> {
         }
     }
 
-    render() {
+    public render() {
         return (
             <form id={this.props.id} onSubmit={this.onSubmit}>
                 {map(this.getComponent, this.state.fields)}

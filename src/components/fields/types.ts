@@ -1,3 +1,4 @@
+import { FieldType } from '../../export';
 import { Validation } from '../../validation/types';
 import { Value } from '../../types';
 
@@ -83,8 +84,6 @@ export interface CustomComponentProps extends CommonProps {
     children?: (JSX.Element | null)[];
     key: string;
 }
-
-export type FieldType = InputProps | TextAreaProps | CheckboxProps | SelectProps | ButtonProps | SubmitProps | GroupProps;
 
 export interface InputPropsFinal extends InputProps {
     update: (object: UpdateActionType) => void;

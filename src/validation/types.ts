@@ -2,47 +2,47 @@ import { Value } from '../types';
 
 export type Required = {
     type: 'required',
-    rules: { message: string } []
+    rules: { message: string } [],
 };
 
 export type MinLength = {
     type: 'minlength',
-    rules: { value: number, message: string }[]
+    rules: { value: number, message: string }[],
 };
 
 export type MaxLength = {
     type: 'maxlength',
-    rules: { value: number, message: string }[]
+    rules: { value: number, message: string }[],
 };
 
 export type MustBeEqual = {
     type: 'mustbeequal',
-    rules: { value: boolean, message: string } []
+    rules: { value: boolean, message: string } [],
 };
 
 export type InList = {
     type: 'inlist',
-    rules: { value: Value[], message: string } []
+    rules: { value: Value[], message: string } [],
 };
 
 export type Pattern = {
     type: 'pattern',
-    rules: { value: string, message: string } []
+    rules: { value: string, message: string } [],
 };
 
 export type NotPattern = {
     type: 'notpattern',
-    rules: { value: string, message: string } []
+    rules: { value: string, message: string } [],
 };
 
 export type MustMatch = {
     type: 'mustmatch',
-    rules: { value: string, message: string } []
+    rules: { value: string, message: string } [],
 };
 
 export type MustMatchCaseInsensitive = {
     type: 'mustmatchcaseinsensitive',
-    rules: { value: string, message: string } []
+    rules: { value: string, message: string } [],
 };
 
 export type Validation =

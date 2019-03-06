@@ -180,7 +180,7 @@ describe('validate', () => {
                             value: '^[a-zA-Z \\\'-]+$',
                             message: 'Sorry, your name can only include letters and spaces',
                         },
-                        { value: '^\\S*$', message }
+                        { value: '^\\S*$', message },
                     ],
                 },
             ];
@@ -235,7 +235,7 @@ describe('validate', () => {
                         {
                             value: '^\\S*$',
                             message,
-                        }
+                        },
                     ],
                 },
             ];

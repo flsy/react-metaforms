@@ -1,6 +1,10 @@
+import { ButtonProps, CheckboxProps, GroupProps, InputProps, SelectProps, SubmitProps, TextAreaProps } from './components/fields/types';
+
 export { default } from './components/Form';
 
-export { FieldType } from './components/fields/types';
+// export { FieldType } from './components/fields/types';
+
+export type FieldType = InputProps | TextAreaProps | CheckboxProps | SelectProps | ButtonProps | SubmitProps | GroupProps;
 
 export {
 //     validateField,

@@ -1,3 +1,4 @@
+import { FieldType } from '../export';
 import {
     Required,
     MinLength,
@@ -10,7 +11,6 @@ import {
     MustMatchCaseInsensitive,
 } from './types';
 import { FormData, Optional, Value } from '../types';
-import { FieldType } from '../components/fields/types';
 
 const isEmpty = (value: Value, rule: Required): Optional<string> => {
     const errorMessage = rule.rules[0].message;

@@ -1,3 +1,4 @@
+import { FieldType } from '../../export';
 import {
     isRequired,
     hasError,
@@ -14,7 +15,6 @@ import {
     validate,
 } from '../utils';
 import { Required, Validation } from '../../validation/types';
-import { FieldType } from '../../components/fields/types';
 
 describe('utils', () => {
     describe('isRequired', () => {
@@ -53,7 +53,7 @@ describe('utils', () => {
                 { name: 'groupA', type: 'group', fields: [
                         { name: 'c', type: 'text', value: 'valueC' },
                         { name: 'd', type: 'text' },
-                    ]
+                    ],
                 },
             ];
 
@@ -96,7 +96,7 @@ describe('utils', () => {
                 { name: 'groupA', type: 'group', fields: [
                         { name: 'c', type: 'text', validation: [required] },
                         { name: 'd', type: 'text' },
-                    ]
+                    ],
                 },
             ];
 
@@ -171,7 +171,7 @@ describe('utils', () => {
                 { name: 'groupA', type: 'group', fields: [
                         { name: 'c', type: 'text' },
                         { name: 'd', type: 'text' },
-                    ]
+                    ],
                 },
             ];
 
@@ -181,7 +181,7 @@ describe('utils', () => {
                 { name: 'groupA', type: 'group', fields: [
                         { name: 'c', type: 'text', value },
                         { name: 'd', type: 'text' },
-                    ]
+                    ],
                 },
             ];
 
@@ -196,9 +196,9 @@ describe('utils', () => {
                         { name: 'groupD', type: 'group', fields: [
                             { name: 'e', type: 'text' },
                             { name: 'f', type: 'text' },
-                            ]
+                            ],
                         },
-                    ]
+                    ],
                 },
             ];
 
@@ -210,9 +210,9 @@ describe('utils', () => {
                         { name: 'groupD', type: 'group', fields: [
                                 { name: 'e', type: 'text' },
                                 { name: 'f', type: 'text', value },
-                            ]
+                            ],
                         },
-                    ]
+                    ],
                 },
             ];
 
@@ -226,8 +226,8 @@ describe('utils', () => {
                 { name: 'a', type: 'text', value: 'a value' },
                 { name: 'b', type: 'text' },
                 { name: 'c', type: 'group', fields: [
-                        { name: 'd', value: 'd value', type: 'text' }
-                    ]}
+                        { name: 'd', value: 'd value', type: 'text' },
+                    ]},
             ];
 
             expect(getFieldValue<string>('a', fields)).toEqual('a value');
@@ -243,9 +243,9 @@ describe('utils', () => {
             {
                 type: 'required',
                 rules: [
-                    { message: errorMessage }
-                ]
-            }
+                    { message: errorMessage },
+                ],
+            },
         ];
 
         it('validates a structure', () => {
@@ -260,7 +260,7 @@ describe('utils', () => {
                 { name: 'groupA', type: 'group', fields: [
                         { name: 'c', type: 'text' },
                         { name: 'd', type: 'text', validation },
-                    ] as FieldType[]
+                    ] as FieldType[],
                 },
             ];
 
@@ -269,7 +269,7 @@ describe('utils', () => {
                 { name: 'groupA', type: 'group', fields: [
                         { name: 'c', type: 'text' },
                         { name: 'd', type: 'text', validation, errorMessage },
-                    ] as FieldType[]
+                    ] as FieldType[],
                 },
             ];
 

@@ -1,10 +1,6 @@
 import * as React from 'react';
-import { mount, configure } from 'enzyme';
+import { mount } from 'enzyme';
 import { spy } from 'sinon';
-
-import * as Adapter from 'enzyme-adapter-react-16';
-
-configure({ adapter: new Adapter() });
 
 import { Input, Form } from '../index';
 import { FieldType } from '../../export';
@@ -34,7 +30,7 @@ describe('<Form />', () => {
                 name: 'name',
                 type: 'text',
                 label: 'Name',
-                value: 'some default value'
+                value: 'some default value',
             },
         ] as FieldType[];
         const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={() => null} />);
@@ -107,8 +103,8 @@ describe('<Form />', () => {
             },
             {
                 name: 'submit',
-                type: 'submit'
-            }
+                type: 'submit',
+            },
         ] as FieldType[];
         const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={onSubmit} />);
         expect(wrapper.find(Checkbox).prop('errorMessage')).toEqual(undefined);
@@ -148,8 +144,8 @@ describe('<Form />', () => {
             },
             {
                 name: 'submit',
-                type: 'submit'
-            }
+                type: 'submit',
+            },
         ] as FieldType[];
         const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={onSubmit} />);
         expect(wrapper.find(Textarea).prop('errorMessage')).toEqual(undefined);
@@ -199,7 +195,7 @@ describe('<Form />', () => {
     });
 
     it('should set the error message after submission', () => {
-        interface Props {}
+        type Props = {};
         interface State { fields: FieldType[]; }
         class App extends React.Component<Props, State> {
             constructor(props: Props) {
@@ -217,11 +213,11 @@ describe('<Form />', () => {
                 };
             }
 
-            setErrorMessage() {
+            public setErrorMessage() {
                 this.setState({ fields: this.state.fields.map(x => (x.name === 'name' ? { ...x, value: 'b' } as FieldType : x)) });
             }
 
-            render() {
+            public render() {
                 return (<Form id="testFormId" fields={this.state.fields} onSubmit={this.setErrorMessage} />);
             }
         }
@@ -297,7 +293,7 @@ describe('<Form />', () => {
         ] as FieldType[];
         const customComponents = {
             text: (props: CustomComponentProps) =>
-                <input name="testNameInput" defaultValue={props.value as string} onChange={e => props.update({ name: props.name, value: e.target.value })} />
+                <input name="testNameInput" defaultValue={props.value as string} onChange={e => props.update({ name: props.name, value: e.target.value })} />,
         };
         const onSubmit = spy();
         const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={onSubmit} customComponents={customComponents} />);

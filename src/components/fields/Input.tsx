@@ -11,13 +11,13 @@ class Input extends React.Component<InputPropsFinal, {}> {
         this.inputEl = null;
     }
 
-    componentDidMount() {
+    public componentDidMount() {
         if (this.props.shouldFocus && this.inputEl) {
             this.inputEl.focus();
         }
     }
 
-    render() {
+    public render() {
         return (
             <div>
                 {this.props.label ? (<Label fieldId={this.props.name} label={this.props.label} isRequired={isRequired(this.props.validation)} />) : null}

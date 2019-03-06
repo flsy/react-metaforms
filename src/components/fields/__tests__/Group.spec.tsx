@@ -1,9 +1,6 @@
 import * as React from 'react';
-import { mount, configure, ReactWrapper } from 'enzyme';
+import { mount, ReactWrapper } from 'enzyme';
 import { spy } from 'sinon';
-
-import * as Adapter from 'enzyme-adapter-react-16';
-configure({ adapter: new Adapter() });
 
 import { Input, Group } from '../../index';
 import { GroupPropsFinal } from '../types';
@@ -11,7 +8,7 @@ import { GroupPropsFinal } from '../types';
 const defaultProps: GroupPropsFinal = {
     name: 'first-group',
     type: 'group',
-    children: []
+    children: [],
 };
 
 describe('<Group />', () => {
@@ -35,7 +32,7 @@ describe('<Group />', () => {
         const update = spy();
         const name = 'group-input';
         const children = [
-            <Input key="uno" update={update} validate={() => null} type="text" name={name} />
+            <Input key="uno" update={update} validate={() => null} type="text" name={name} />,
         ];
         wrapper.setProps({ children });
 
