@@ -22,7 +22,6 @@ export type CommonProps = {
     name: string;
 
     validation?: Validation[];
-    shouldFocus?: boolean;
     label?: string;
     disabled?: boolean;
     errorMessage?: string;

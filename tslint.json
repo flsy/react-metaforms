@@ -5,6 +5,7 @@
         "arrow-parens": false,
         "max-line-length": [true, 300],
         "quotemark": [true, "single", "jsx-double"],
+        "semicolon": false,
 
         /* enable these */
         "interface-over-type-literal": false,

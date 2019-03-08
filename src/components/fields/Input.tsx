@@ -3,40 +3,25 @@ import { Label, ErrorMessage } from '../index';
 import { InputPropsFinal } from './types';
 import { isRequired } from '../../utils/utils';
 
-class Input extends React.Component<InputPropsFinal, {}> {
-    private inputEl: HTMLInputElement | null;
+const Input = React.forwardRef((props: InputPropsFinal, ref: React.Ref<HTMLInputElement>) => {
+    return (
+        <div>
+            {props.label ? (<Label fieldId={props.name} label={props.label} isRequired={isRequired(props.validation)}/>) : null}
+            <input
+                ref={ref}
+                id={props.name}
+                type={props.type}
+                name={props.name}
+                placeholder={props.placeholder}
+                value={props.value || ''}
+                disabled={props.disabled}
+                onChange={e => props.update({ name: props.name, value: e.target.value, groupName: props.groupName })}
+                onBlur={() => props.validate({ name: props.name })}
 
-    constructor(props: InputPropsFinal) {
-        super(props);
-        this.inputEl = null;
-    }
-
-    public componentDidMount() {
-        if (this.props.shouldFocus && this.inputEl) {
-            this.inputEl.focus();
-        }
-    }
-
-    public render() {
-        return (
-            <div>
-                {this.props.label ? (<Label fieldId={this.props.name} label={this.props.label} isRequired={isRequired(this.props.validation)} />) : null}
-                <input
-                    ref={(node) => { this.inputEl = node; }}
-                    id={this.props.name}
-                    type={this.props.type}
-                    name={this.props.name}
-                    placeholder={this.props.placeholder}
-                    value={this.props.value || ''}
-                    disabled={this.props.disabled}
-                    onChange={e => this.props.update({ name: this.props.name, value: e.target.value, groupName: this.props.groupName })}
-                    onBlur={() => this.props.validate({ name: this.props.name })}
-
-                />
-                {this.props.errorMessage ? <ErrorMessage message={this.props.errorMessage}/> : null}
-            </div>
-        );
-    }
-}
+            />
+            {props.errorMessage ? <ErrorMessage message={props.errorMessage}/> : null}
+        </div>
+    );
+});
 
 export default Input;

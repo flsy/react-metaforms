@@ -4,7 +4,7 @@ import {
     CustomComponentProps, UpdateActionType, UpdateAndValidateActionType,
     ValidateActionType,
 } from './fields/types';
-import { FormData, Optional } from '../types';
+import { FormData } from '../types';
 import { Input, Textarea, Checkbox, Button, Submit, Group, Select } from './index';
 import { FieldType, hasError } from '../export';
 import { getFormData, shouldComponentFocus, update, updateAndValidate, validate, validateForm } from '../utils/utils';
@@ -20,59 +20,68 @@ export type Props = {
 
 export type State = {
     fields: FieldType[];
-    lastEditedFieldName: Optional<string>;
 };
 
 class Form extends React.Component<Props, State> {
 
+    private readonly inputRefs: { [name: string]: any } | {};
+
     constructor(props: Props) {
         super(props);
+        this.inputRefs = {};
         this.state = {
             fields: this.props.fields || [],
-            lastEditedFieldName: undefined,
         };
+    }
+
+    public componentDidMount(): void {
+        this.resolveFocusedField();
+    }
+
+    public resolveFocusedField() {
+        const focused = shouldComponentFocus(this.state.fields);
+        if (focused && this.inputRefs[focused] && this.inputRefs[focused].current) {
+            this.inputRefs[focused].current.focus();
+        }
     }
 
     public componentWillReceiveProps(nextProps: Props) {
         if (!equals(JSON.stringify(this.props), JSON.stringify(nextProps))) { // todo: came up with some deepEqual implementation
-            this.setState({ fields: nextProps.fields || [] });
+            this.setState({ fields: nextProps.fields || [] }, this.resolveFocusedField);
         }
     }
 
     public update = ({ name, value, groupName }: UpdateActionType) => {
         this.setState({
             fields: update({ name, value, groupName }, this.state.fields),
-            lastEditedFieldName: name,
-        },            () => {
+        }, () => {
             if (this.props.onUpdate) {
                 this.props.onUpdate(getFormData(this.state.fields));
             }
         });
-    }
+    };
 
     public validate = ({ name }: ValidateActionType) => {
         this.setState({
             fields: validate({ name }, this.state.fields),
-            lastEditedFieldName: name,
         });
-    }
+    };
 
     public updateAndValidate = ({ name, value, groupName }: UpdateAndValidateActionType) => {
         this.setState({
             fields: updateAndValidate({ name, value, groupName }, this.state.fields),
-            lastEditedFieldName: name,
-        },            () => {
+        }, () => {
             if (this.props.onUpdate) {
                 this.props.onUpdate(getFormData(this.state.fields));
             }
         });
-    }
+    };
 
     public onButtonClick = (field: FieldType) => {
         if (this.props.onButtonClick) {
             this.props.onButtonClick(field, this.state.fields);
         }
-    }
+    };
 
     public onSubmit = (event: { preventDefault: () => void }) => {
         event.preventDefault();
@@ -85,19 +94,16 @@ class Form extends React.Component<Props, State> {
             }
         });
 
-    }
+    };
 
     public getComponent = (field: FieldType, groupName?: string): JSX.Element | null => {
         const { customComponents } = this.props;
-
-        const shouldFocus = shouldComponentFocus(this.state.fields, field.name, this.state.lastEditedFieldName);
 
         const component = customComponents && customComponents[field.type];
         if (component) {
             const props: CustomComponentProps = {
                 ...field,
                 groupName,
-                shouldFocus,
                 key: field.name,
                 children: field.fields ? map((c) => this.getComponent(c, field.name), field.fields) : [],
                 update: this.update,
@@ -108,22 +114,24 @@ class Form extends React.Component<Props, State> {
             return React.createElement(component, props);
         }
 
+        this.inputRefs[field.name] = React.createRef();
+
         switch (field.type) {
             case 'text':
             case 'email':
             case 'password':
-                return <Input key={field.name} {...field} groupName={groupName} shouldFocus={shouldFocus} update={this.update} validate={this.validate} />;
+                return <Input key={field.name} {...field} ref={this.inputRefs[field.name]} groupName={groupName} update={this.update} validate={this.validate}/>;
             case 'textarea':
-                return <Textarea key={field.name} {...field} groupName={groupName} shouldFocus={shouldFocus} update={this.update} validate={this.validate} />;
+                return <Textarea key={field.name} {...field} ref={this.inputRefs[field.name]} groupName={groupName} update={this.update} validate={this.validate}/>;
             case 'checkbox':
-                return <Checkbox key={field.name} {...field} groupName={groupName} shouldFocus={shouldFocus} updateAndValidate={this.updateAndValidate} />;
+                return <Checkbox key={field.name} {...field} ref={this.inputRefs[field.name]} groupName={groupName} updateAndValidate={this.updateAndValidate}/>;
             case 'select':
-                return <Select key={field.name} {...field} groupName={groupName} shouldFocus={shouldFocus} updateAndValidate={this.updateAndValidate} />;
+                return <Select key={field.name} {...field} ref={this.inputRefs[field.name]} groupName={groupName} updateAndValidate={this.updateAndValidate}/>;
 
             case 'button':
-                return <Button key={field.name} {...field} groupName={groupName} shouldFocus={shouldFocus} onButtonClick={() => this.onButtonClick(field)} />;
+                return <Button key={field.name} {...field} groupName={groupName} onButtonClick={() => this.onButtonClick(field)}/>;
             case 'submit':
-                return <Submit key={field.name} {...field} groupName={groupName} shouldFocus={shouldFocus} />;
+                return <Submit key={field.name} {...field} groupName={groupName}/>;
 
             case 'group':
                 return (
@@ -134,7 +142,7 @@ class Form extends React.Component<Props, State> {
             default:
                 return null;
         }
-    }
+    };
 
     public render() {
         return (

@@ -13,7 +13,7 @@ import {
     find,
 } from 'fputils';
 import { FieldType } from '../export';
-import { FormData, Optional, Value } from '../types';
+import { FormData, Optional } from '../types';
 import { Validation } from '../validation/types';
 import {
     UpdateActionType, UpdateAndValidateActionType,
@@ -33,20 +33,15 @@ const hasFieldError = (field: FieldType): boolean => !!prop('errorMessage', fiel
 
 const findFieldWithError = (fields: FieldType[]) => find(hasFieldError, fields);
 
-export const shouldComponentFocus = (fields: FieldType[], name: string, lastEditedFieldName: Value): boolean => {
-    // stay on last edited field
-    if (lastEditedFieldName === name) {
-        return true;
-    }
-
+export const shouldComponentFocus = (fields: FieldType[]): Optional<string> => {
     const errorField = findFieldWithError(fields);
-    if (errorField && errorField.name === name) {
-        return true;
+    if (errorField) {
+        return errorField.name;
     }
 
     // todo: find first empty field
     const firstField = head(fields);
-    return firstField ? firstField.name === name : false;
+    return firstField && firstField.name;
 };
 
 export const getFormData = (fields: FieldType[]): FormData =>

@@ -26,8 +26,9 @@ const fields1 = [
         type: 'button',
     },
     {
-        name: 'agree?',
+        name: 'agree',
         type: 'checkbox',
+        label: 'Agree ?',
     },
     {
         name: 'mess',
