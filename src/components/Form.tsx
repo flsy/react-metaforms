@@ -4,96 +4,77 @@ import {
     CustomComponentProps, UpdateActionType, UpdateAndValidateActionType,
     ValidateActionType,
 } from './fields/types';
-import { FormData } from '../types';
 import { Input, Textarea, Checkbox, Button, Submit, Group, Select } from './index';
-import { FieldType, hasError } from '../export';
-import { getFormData, shouldComponentFocus, update, updateAndValidate, validate, validateForm } from '../utils/utils';
+import { FieldType, FormState, hasError } from '../export';
+import { shouldComponentFocus, update, updateAndValidate, validate, validateForm } from '../utils/utils';
 
 export type Props = {
     id: string;
+    state: FormState;
+    onStateChange: (state: FormState) => void;
+
     fields?: FieldType[];
     customComponents?: {};
     onButtonClick?: (field: FieldType, fields: FieldType[]) => void;
     onSubmit: (fields: FieldType[]) => void;
-    onUpdate?: (formData: FormData) => void;
 };
 
-export type State = {
-    fields: FieldType[];
-};
-
-class Form extends React.Component<Props, State> {
+class Form extends React.Component<Props> {
 
     private readonly inputRefs: { [name: string]: any } | {};
 
     constructor(props: Props) {
         super(props);
         this.inputRefs = {};
-        this.state = {
-            fields: this.props.fields || [],
-        };
     }
 
     public componentDidMount(): void {
+        this.updateState(this.props.fields || []);
         this.resolveFocusedField();
     }
 
     public resolveFocusedField() {
-        const focused = shouldComponentFocus(this.state.fields);
+        const focused = shouldComponentFocus(this.getState());
         if (focused && this.inputRefs[focused] && this.inputRefs[focused].current) {
             this.inputRefs[focused].current.focus();
         }
     }
 
     public componentWillReceiveProps(nextProps: Props) {
-        if (!equals(JSON.stringify(this.props), JSON.stringify(nextProps))) { // todo: came up with some deepEqual implementation
-            this.setState({ fields: nextProps.fields || [] }, this.resolveFocusedField);
+        if (!equals(JSON.stringify(this.props.fields), JSON.stringify(nextProps.fields))) { // todo: came up with some deepEqual implementation
+            this.updateState(nextProps.fields || []);
+            this.resolveFocusedField()
         }
     }
 
     public update = ({ name, value, groupName }: UpdateActionType) => {
-        this.setState({
-            fields: update({ name, value, groupName }, this.state.fields),
-        }, () => {
-            if (this.props.onUpdate) {
-                this.props.onUpdate(getFormData(this.state.fields));
-            }
-        });
+        this.updateState(update({ name, value, groupName }, this.getState()));
     };
 
     public validate = ({ name }: ValidateActionType) => {
-        this.setState({
-            fields: validate({ name }, this.state.fields),
-        });
+        this.updateState(validate({ name }, this.getState()))
     };
 
     public updateAndValidate = ({ name, value, groupName }: UpdateAndValidateActionType) => {
-        this.setState({
-            fields: updateAndValidate({ name, value, groupName }, this.state.fields),
-        }, () => {
-            if (this.props.onUpdate) {
-                this.props.onUpdate(getFormData(this.state.fields));
-            }
-        });
+        this.updateState(updateAndValidate({ name, value, groupName }, this.getState()))
     };
 
     public onButtonClick = (field: FieldType) => {
         if (this.props.onButtonClick) {
-            this.props.onButtonClick(field, this.state.fields);
+            this.props.onButtonClick(field, this.getState());
         }
     };
 
     public onSubmit = (event: { preventDefault: () => void }) => {
         event.preventDefault();
 
-        const fields = validateForm(this.state.fields);
+        const fields = validateForm(this.getState());
 
-        this.setState({ fields }, () => {
-            if (!hasError(fields)) {
-                this.props.onSubmit(fields);
-            }
-        });
+        this.updateState(fields);
 
+        if (!hasError(fields)) {
+            this.props.onSubmit(fields);
+        }
     };
 
     public getComponent = (field: FieldType, groupName?: string): JSX.Element | null => {
@@ -147,9 +128,18 @@ class Form extends React.Component<Props, State> {
     public render() {
         return (
             <form id={this.props.id} onSubmit={this.onSubmit}>
-                {map(this.getComponent, this.state.fields)}
+                {map(this.getComponent, this.getState())}
             </form>
         );
+    }
+
+    private getState(): FieldType[] {
+        return this.props.state.get(this.props.id);
+    }
+
+    private updateState(fields: FieldType[]): void {
+        const state = this.props.state.update(this.props.id, fields);
+        this.props.onStateChange(state);
     }
 }
 

@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { FieldType } from '../../export';
 import { Validation } from '../../validation/types';
 import { Value } from '../../types';
@@ -110,5 +111,5 @@ export interface GroupPropsFinal {
     type: 'group';
     name: string;
     legend?: string;
-    children: (JSX.Element | null)[];
+    children: React.ReactNode;
 }

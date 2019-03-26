@@ -30,29 +30,29 @@
     "prepublishOnly": "npm run transpile"
   },
   "peerDependencies": {
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "react": "*",
+    "react-dom": "*"
   },
   "dependencies": {
+    "@types/react": "16.*",
     "fputils": "1.0.11",
-    "react": "^16.2.0"
+    "react": "16.*"
   },
   "devDependencies": {
-    "@types/enzyme": "3.9.0",
+    "@types/enzyme": "3.9.1",
     "@types/enzyme-adapter-react-16": "1.0.5",
-    "@types/jest": "24.0.9",
-    "@types/node": "11.10.4",
-    "@types/react": "16.8.6",
-    "@types/react-dom": "16.8.2",
-    "@types/sinon": "7.0.9",
+    "@types/jest": "24.0.11",
+    "@types/node": "11.11.8",
+    "@types/react-dom": "16.8.3",
+    "@types/sinon": "7.0.10",
     "enzyme": "3.9.0",
-    "enzyme-adapter-react-16": "1.10.0",
-    "react-dom": "16.8.4",
+    "enzyme-adapter-react-16": "1.11.2",
+    "react-dom": "16.8.5",
     "react-scripts": "2.1.8",
-    "sinon": "7.2.7",
-    "tslint": "5.13.1",
+    "sinon": "7.3.0",
+    "tslint": "5.14.0",
     "tslint-react": "3.6.0",
-    "typescript": "3.3.3333"
+    "typescript": "3.3.4000"
   },
   "browserslist": [
     ">0.2%",

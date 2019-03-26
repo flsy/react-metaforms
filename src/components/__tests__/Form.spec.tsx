@@ -3,12 +3,42 @@ import { mount } from 'enzyme';
 import { spy } from 'sinon';
 
 import { Input, Form } from '../index';
-import { FieldType } from '../../export';
+import { FieldType, FormState } from '../../export';
 import { CustomComponentProps } from '../fields/types';
 import Checkbox from '../fields/Checkbox';
 import Textarea from '../fields/Textarea';
 
 describe('<Form />', () => {
+
+    let wrapper: any = null;
+    beforeEach(() => {
+        type Props = {
+            id: string;
+            fields: FieldType[];
+            onSubmit: (fields: FieldType[]) => void;
+        };
+        interface State { formState: FormState; }
+
+        class App extends React.Component<Props, State> {
+            constructor(props: Props) {
+                super(props);
+                this.state = {
+                    formState: FormState.createEmpty(),
+                };
+            }
+
+            public render() {
+                return (<Form state={this.state.formState} onStateChange={(formState) => this.setState({ formState })} {...this.props} />);
+            }
+        }
+
+        wrapper = mount(<App onSubmit={() => null} fields={[]} id="testFormId" />);
+    });
+
+    afterEach(() => {
+        wrapper.unmount();
+    });
+
     it('should render and update a field', () => {
         const fields = [
             {
@@ -17,7 +47,8 @@ describe('<Form />', () => {
                 label: 'Name',
             },
         ] as FieldType[];
-        const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={() => null} />);
+        wrapper.setProps({ fields });
+
         const newValue = 'My new value';
         wrapper.find('input').simulate('change', { target: { value: newValue } });
 
@@ -33,7 +64,7 @@ describe('<Form />', () => {
                 value: 'some default value',
             },
         ] as FieldType[];
-        const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={() => null} />);
+        wrapper.setProps({ fields });
         wrapper.find('input').simulate('change', { target: { value: 'ee' } });
 
         expect(wrapper.find('input').props().value).toEqual('ee');
@@ -54,7 +85,7 @@ describe('<Form />', () => {
                 type: 'submit',
             },
         ] as FieldType[];
-        const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={onSubmit} />);
+        wrapper.setProps({ fields, onSubmit });
 
         wrapper.find('form').simulate('submit');
         expect(onSubmit.calledWith(fields)).toEqual(true);
@@ -78,7 +109,9 @@ describe('<Form />', () => {
                 ],
             },
         ] as FieldType[];
-        const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={() => null} />);
+
+        wrapper.setProps({ fields });
+
         wrapper.find('input').simulate('blur');
 
         expect(wrapper.find(Input).prop('errorMessage')).toEqual('Please choose a username');
@@ -106,7 +139,8 @@ describe('<Form />', () => {
                 type: 'submit',
             },
         ] as FieldType[];
-        const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={onSubmit} />);
+        wrapper.setProps({ fields, onSubmit });
+
         expect(wrapper.find(Checkbox).prop('errorMessage')).toEqual(undefined);
 
         wrapper.find('form').simulate('submit');
@@ -147,7 +181,9 @@ describe('<Form />', () => {
                 type: 'submit',
             },
         ] as FieldType[];
-        const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={onSubmit} />);
+
+        wrapper.setProps({ fields, onSubmit });
+
         expect(wrapper.find(Textarea).prop('errorMessage')).toEqual(undefined);
 
         wrapper.find('form').simulate('submit');
@@ -185,7 +221,7 @@ describe('<Form />', () => {
                 ],
             },
         ] as FieldType[];
-        const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={() => null} />);
+        wrapper.setProps({ fields });
 
         expect(wrapper.find(Input).props().errorMessage).toEqual(fields[0].errorMessage);
 
@@ -195,37 +231,34 @@ describe('<Form />', () => {
     });
 
     it('should set the error message after submission', () => {
-        type Props = {};
-        interface State { fields: FieldType[]; }
-        class App extends React.Component<Props, State> {
-            constructor(props: Props) {
-                super(props);
-                this.setErrorMessage = this.setErrorMessage.bind(this);
-                this.state = {
-                    fields: [
-                        {
-                            name: 'name',
-                            type: 'text',
-                            label: 'Name',
-                            value: 'a',
-                        },
-                    ] as FieldType[],
-                };
-            }
+        const fields = [
+            {
+                name: 'name',
+                type: 'text',
+                label: 'Name',
+                value: 'a',
+            },
+        ] as FieldType[];
+        wrapper.setProps({ fields });
 
-            public setErrorMessage() {
-                this.setState({ fields: this.state.fields.map(x => (x.name === 'name' ? { ...x, value: 'b' } as FieldType : x)) });
-            }
-
-            public render() {
-                return (<Form id="testFormId" fields={this.state.fields} onSubmit={this.setErrorMessage} />);
-            }
-        }
-
-        const wrapper = mount(<App />);
         expect(wrapper.find(Input).props().value).toEqual('a');
-        wrapper.find('form').simulate('submit');
+
+        wrapper.find('input[name="name"]').simulate('change', { target: { value: 'b' } });
         expect(wrapper.find(Input).props().value).toEqual('b');
+
+        wrapper.find('form').simulate('submit');
+
+        const fieldsB = [
+            {
+                name: 'name',
+                type: 'text',
+                label: 'Name',
+                value: 'c',
+            },
+        ] as FieldType[];
+        wrapper.setProps({ fields: fieldsB });
+
+        expect(wrapper.find(Input).props().value).toEqual('c');
     });
 
     it('should not submit the form with invalid values', () => {
@@ -247,7 +280,8 @@ describe('<Form />', () => {
             },
         ] as FieldType[];
         const onSubmit = spy();
-        const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={onSubmit} />);
+        wrapper.setProps({ fields, onSubmit });
+
         wrapper.find('form').simulate('submit');
 
         expect(wrapper.find(Input).props().errorMessage).toEqual('Please choose a username');
@@ -272,7 +306,9 @@ describe('<Form />', () => {
             },
         ] as FieldType[];
         const onSubmit = spy();
-        const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={onSubmit} />);
+
+        wrapper.setProps({ fields, onSubmit });
+
         wrapper.find('input[name="name"]').simulate('change', { target: { value: 'ok value' } });
 
         wrapper.find('form').simulate('submit');
@@ -296,7 +332,9 @@ describe('<Form />', () => {
                 <input name="testNameInput" defaultValue={props.value as string} onChange={e => props.update({ name: props.name, value: e.target.value })} />,
         };
         const onSubmit = spy();
-        const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={onSubmit} customComponents={customComponents} />);
+
+        wrapper.setProps({ fields, customComponents, onSubmit });
+
         wrapper.find('input[name="testNameInput"]').simulate('change', { target: { value: 'ok value' } });
 
         wrapper.find('form').simulate('submit');
@@ -337,7 +375,8 @@ describe('<Form />', () => {
         const onButtonClick = spy();
 
         const onSubmit = spy();
-        const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={onSubmit} customComponents={customComponents} onButtonClick={onButtonClick} />);
+
+        wrapper.setProps({ fields, customComponents, onSubmit, onButtonClick });
 
         expect(wrapper.find('h2').text()).toEqual('My Custom Group');
         expect(wrapper.find('button').prop('children')).toEqual('Click me');
@@ -364,8 +403,9 @@ describe('<Form />', () => {
                 type: 'button',
             },
         ] as FieldType[];
-        const onClick = spy();
-        const wrapper = mount(<Form id="testFormId" fields={fields} onSubmit={() => null} onButtonClick={onClick} />);
+        const onButtonClick = spy();
+
+        wrapper.setProps({ fields, onButtonClick });
 
         wrapper.find('input[name="test-name"]').simulate('change', { target: { value: 'some test value' } });
 
@@ -373,6 +413,6 @@ describe('<Form />', () => {
 
         const expectedFormFields = fields.map(f => (f.name === 'test-name' ? { ...f, value: 'some test value' } : f));
 
-        expect(onClick.calledWith(fields[1], expectedFormFields)).toEqual(true);
+        expect(onButtonClick.calledWith(fields[1], expectedFormFields)).toEqual(true);
     });
 });

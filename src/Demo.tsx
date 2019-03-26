@@ -1,8 +1,7 @@
 /* tslint:disable:no-console */
 
 import * as React from 'react';
-import Form, { FieldType } from './export';
-import { CustomComponentProps } from './components/fields/types';
+import Form, { FormState, FieldType } from './export';
 
 const fields1 = [
     {
@@ -91,6 +90,7 @@ const fields2 = [
 
 export interface State {
     fields: {}[];
+    formState: FormState;
 }
 
 class Demo extends React.Component<{}, State> {
@@ -98,19 +98,11 @@ class Demo extends React.Component<{}, State> {
         super(props);
         this.state = {
             fields: fields1,
+            formState: FormState.createEmpty(),
         };
     }
 
     public render() {
-
-        const customComponents = {
-            group: (props: CustomComponentProps) => {
-                return (
-                    <div style={{ background: 'lightblue' }}>
-                        {props.children}
-                    </div>);
-            },
-        };
 
         return (
             <div className="App">
@@ -119,12 +111,13 @@ class Demo extends React.Component<{}, State> {
                 <hr/>
                 <Form
                     id="demo-form"
+                    state={this.state.formState}
+                    onStateChange={(formState) => this.setState({ formState })}
                     fields={this.state.fields as FieldType[]}
                     onSubmit={(formData) => console.log('onSubmit', formData)}
-                    customComponents={customComponents}
                     onButtonClick={(field, fields) => console.log('onButtonClick', field, fields)}
-                    onUpdate={(formData) => console.log('onUpdate', formData)}
                 />
+                <pre>{JSON.stringify(this.state.formState, null, 2)}</pre>
             </div>
         );
     }

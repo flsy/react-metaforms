@@ -20,3 +20,6 @@ export {
     validateForm,
     hasError,
 } from './utils/utils';
+
+export { FormState } from './state';
+export * from './types';
