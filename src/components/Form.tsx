@@ -65,7 +65,7 @@ class Form extends React.Component<Props> {
         }
     };
 
-    public onSubmit = (event: { preventDefault: () => void }) => {
+    public onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         const fields = validateForm(this.getState());

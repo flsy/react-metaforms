@@ -50,7 +50,8 @@ describe('utils', () => {
             const fields: FieldType[] = [
                 { name: 'a', type: 'text' },
                 { name: 'b', type: 'text', value: 'valueB' },
-                { name: 'groupA', type: 'group', fields: [
+                {
+                    name: 'groupA', type: 'group', fields: [
                         { name: 'c', type: 'text', value: 'valueC' },
                         { name: 'd', type: 'text' },
                     ],
@@ -88,12 +89,38 @@ describe('utils', () => {
             expect(validateForm(fields)[1].errorMessage).toEqual(undefined);
         });
 
+        it('validates a field with more validations', () => {
+            const fields = [
+                {
+                    name: 'name',
+                    value: 'v',
+                    validation: [
+                        {
+                            type: 'required',
+                            rules: [{ message: 'is required' }],
+                        },
+                        {
+                            type: 'minlength',
+                            rules: [
+                                {
+                                    value: 3,
+                                    message: 'min 3 characters',
+                                },
+                            ],
+                        }],
+                },
+            ] as FieldType[];
+
+            expect(validateForm(fields)[0].errorMessage).toEqual('min 3 characters');
+        });
+
         it('validates a nested fields', () => {
-            const required: Required = { type: 'required', rules: [{message}]};
+            const required: Required = { type: 'required', rules: [{ message }] };
             const fields: FieldType[] = [
                 { name: 'a', type: 'text', validation: [] },
                 { name: 'b', type: 'text', validation: [required] },
-                { name: 'groupA', type: 'group', fields: [
+                {
+                    name: 'groupA', type: 'group', fields: [
                         { name: 'c', type: 'text', validation: [required] },
                         { name: 'd', type: 'text' },
                     ],
@@ -130,10 +157,12 @@ describe('utils', () => {
         it('sets a value on nested fields', () => {
             const fields = [
                 { name: 'a' },
-                { name: 'b' , fields: [
-                    { name: 'c' },
-                    { name: 'd' },
-                    ]},
+                {
+                    name: 'b', fields: [
+                        { name: 'c' },
+                        { name: 'd' },
+                    ]
+                },
             ] as FieldType[];
 
             const updated = setFieldValue('c', 'value C', fields);
@@ -168,7 +197,8 @@ describe('utils', () => {
         it('updates a grouped structure', () => {
             const fields: FieldType[] = [
                 { name: 'a', type: 'text' },
-                { name: 'groupA', type: 'group', fields: [
+                {
+                    name: 'groupA', type: 'group', fields: [
                         { name: 'c', type: 'text' },
                         { name: 'd', type: 'text' },
                     ],
@@ -178,7 +208,8 @@ describe('utils', () => {
             const value = 'value X';
             const expected: FieldType[] = [
                 { name: 'a', type: 'text' },
-                { name: 'groupA', type: 'group', fields: [
+                {
+                    name: 'groupA', type: 'group', fields: [
                         { name: 'c', type: 'text', value },
                         { name: 'd', type: 'text' },
                     ],
@@ -191,11 +222,13 @@ describe('utils', () => {
         it('updates a nested grouped structure', () => {
             const fields: FieldType[] = [
                 { name: 'a', type: 'text' },
-                { name: 'groupA', type: 'group', fields: [
+                {
+                    name: 'groupA', type: 'group', fields: [
                         { name: 'c', type: 'text' },
-                        { name: 'groupD', type: 'group', fields: [
-                            { name: 'e', type: 'text' },
-                            { name: 'f', type: 'text' },
+                        {
+                            name: 'groupD', type: 'group', fields: [
+                                { name: 'e', type: 'text' },
+                                { name: 'f', type: 'text' },
                             ],
                         },
                     ],
@@ -205,9 +238,11 @@ describe('utils', () => {
             const value = 'value Y';
             const expected: FieldType[] = [
                 { name: 'a', type: 'text' },
-                { name: 'groupA', type: 'group', fields: [
+                {
+                    name: 'groupA', type: 'group', fields: [
                         { name: 'c', type: 'text' },
-                        { name: 'groupD', type: 'group', fields: [
+                        {
+                            name: 'groupD', type: 'group', fields: [
                                 { name: 'e', type: 'text' },
                                 { name: 'f', type: 'text', value },
                             ],
@@ -225,9 +260,11 @@ describe('utils', () => {
             const fields: FieldType[] = [
                 { name: 'a', type: 'text', value: 'a value' },
                 { name: 'b', type: 'text' },
-                { name: 'c', type: 'group', fields: [
+                {
+                    name: 'c', type: 'group', fields: [
                         { name: 'd', value: 'd value', type: 'text' },
-                    ]},
+                    ]
+                },
             ];
 
             expect(getFieldValue<string>('a', fields)).toEqual('a value');
@@ -257,7 +294,8 @@ describe('utils', () => {
         it('validates a nested structure', () => {
             const fields: FieldType[] = [
                 { name: 'a', type: 'text' },
-                { name: 'groupA', type: 'group', fields: [
+                {
+                    name: 'groupA', type: 'group', fields: [
                         { name: 'c', type: 'text' },
                         { name: 'd', type: 'text', validation },
                     ] as FieldType[],
@@ -266,7 +304,8 @@ describe('utils', () => {
 
             const expected: FieldType[] = [
                 { name: 'a', type: 'text' },
-                { name: 'groupA', type: 'group', fields: [
+                {
+                    name: 'groupA', type: 'group', fields: [
                         { name: 'c', type: 'text' },
                         { name: 'd', type: 'text', validation, errorMessage },
                     ] as FieldType[],

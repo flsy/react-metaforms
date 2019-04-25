@@ -1,6 +1,7 @@
 /* tslint:disable:no-console */
 
 import * as React from 'react';
+import { ButtonPropsFinal } from './components/fields/types';
 import Form, { FormState, FieldType } from './export';
 
 const fields1 = [
@@ -93,6 +94,8 @@ export interface State {
     formState: FormState;
 }
 
+const submit = (props: ButtonPropsFinal) => (<button type="submit">ok</button>);
+
 class Demo extends React.Component<{}, State> {
     constructor(props: {}) {
         super(props);
@@ -116,6 +119,9 @@ class Demo extends React.Component<{}, State> {
                     fields={this.state.fields as FieldType[]}
                     onSubmit={(formData) => console.log('onSubmit', formData)}
                     onButtonClick={(field, fields) => console.log('onButtonClick', field, fields)}
+                    customComponents={{
+                        submit,
+                    }}
                 />
                 <pre>{JSON.stringify(this.state.formState, null, 2)}</pre>
             </div>

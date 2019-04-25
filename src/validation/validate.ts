@@ -130,7 +130,7 @@ const validate = (formData: FormData, field: FieldType): Optional<string> => {
                     return undefined;
             }
         })
-        .filter(error => error !== null);
+        .filter(error => error && error !== null);
 
     return errorMessages.length > 0 ? errorMessages[0] : undefined;
 };
