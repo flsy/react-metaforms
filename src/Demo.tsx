@@ -119,9 +119,7 @@ class Demo extends React.Component<{}, State> {
                     fields={this.state.fields as FieldType[]}
                     onSubmit={(formData) => console.log('onSubmit', formData)}
                     onButtonClick={(field, fields) => console.log('onButtonClick', field, fields)}
-                    customComponents={{
-                        submit,
-                    }}
+                    customComponents={{ submit }}
                 />
                 <pre>{JSON.stringify(this.state.formState, null, 2)}</pre>
             </div>

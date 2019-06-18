@@ -161,7 +161,7 @@ describe('utils', () => {
                     name: 'b', fields: [
                         { name: 'c' },
                         { name: 'd' },
-                    ]
+                    ],
                 },
             ] as FieldType[];
 
@@ -263,7 +263,7 @@ describe('utils', () => {
                 {
                     name: 'c', type: 'group', fields: [
                         { name: 'd', value: 'd value', type: 'text' },
-                    ]
+                    ],
                 },
             ];
 
