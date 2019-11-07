@@ -77,7 +77,7 @@ class Form extends React.Component<Props> {
         }
     };
 
-    public getComponent = (field: FieldType, groupName?: string): JSX.Element | null => {
+    public getComponent = (field: FieldType, groupName?: string) => {
         const { customComponents } = this.props;
 
         const component = customComponents && customComponents[field.type];
@@ -118,7 +118,8 @@ class Form extends React.Component<Props> {
                 return (
                     <Group key={field.name} name={field.name} type="group" legend={field.legend}>
                         {map((c) => this.getComponent(c, field.name), field.fields)}
-                    </Group>);
+                    </Group>
+                );
 
             default:
                 return null;

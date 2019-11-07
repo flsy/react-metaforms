@@ -81,7 +81,7 @@ export interface CustomComponentProps extends CommonProps {
     validate: (o: ValidateActionType) => void;
     updateAndValidate: (o: UpdateAndValidateActionType) => void;
     onButtonClick: () => void;
-    children?: (JSX.Element | null)[];
+    children?: (any | null)[];
     key: string;
 }
 
