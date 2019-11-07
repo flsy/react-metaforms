@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { mount } from 'enzyme';
 import { spy } from 'sinon';
+import { FieldType } from 'metaforms';
 
 import { Input, Form } from '../index';
-import { FieldType, FormState } from '../../export';
+import { FormState } from '../../state';
 import { CustomComponentProps } from '../fields/types';
 import Checkbox from '../fields/Checkbox';
 import Textarea from '../fields/Textarea';

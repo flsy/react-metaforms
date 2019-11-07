@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Label, ErrorMessage } from '../index';
 import { InputPropsFinal } from './types';
-import { isRequired } from '../../utils/utils';
+import { isRequired } from 'metaforms';
 
 const Input = React.forwardRef((props: InputPropsFinal, ref: React.Ref<HTMLInputElement>) => {
     return (

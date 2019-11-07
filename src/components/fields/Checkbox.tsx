@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { Label, ErrorMessage } from '../index';
-import { isRequired } from '../../utils/utils';
+import { isRequired } from 'metaforms';
 import { CheckBoxPropsFinal } from './types';
 
 const Checkbox = React.forwardRef((props: CheckBoxPropsFinal, ref: React.Ref<HTMLInputElement>) => {

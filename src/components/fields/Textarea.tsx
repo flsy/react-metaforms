@@ -2,7 +2,7 @@ import * as React from 'react';
 import { TextAreaPropsFinal } from './types';
 import { ErrorMessage, Label } from '../index';
 
-import { isRequired } from '../../utils/utils';
+import { isRequired } from 'metaforms';
 
 const Textarea = React.forwardRef((props: TextAreaPropsFinal, ref: React.Ref<HTMLTextAreaElement>) => {
     const { label, name, validation, placeholder, value, disabled, update, validate, groupName, errorMessage } = props;

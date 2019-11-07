@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { equals, map } from 'fputils';
+import { hasError, validateForm, updateAndValidate, validate, update, shouldComponentFocus, FieldType } from 'metaforms';
 import {
     CustomComponentProps, UpdateActionType, UpdateAndValidateActionType,
     ValidateActionType,
 } from './fields/types';
 import { Input, Textarea, Checkbox, Button, Submit, Group, Select } from './index';
-import { FieldType, FormState, hasError } from '../export';
-import { shouldComponentFocus, update, updateAndValidate, validate, validateForm } from '../utils/utils';
+import { FormState } from '../state';
 
 export type Props = {
     id: string;

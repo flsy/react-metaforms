@@ -1,4 +1,4 @@
-import { FieldType } from './export';
+import { FieldType } from 'metaforms';
 
 export class FormState {
 

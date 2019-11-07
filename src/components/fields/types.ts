@@ -1,7 +1,5 @@
 import * as React from 'react';
-import { FieldType } from '../../export';
-import { Validation } from '../../validation/types';
-import { Value } from '../../types';
+import { Validation, FieldType, Value } from 'metaforms';
 
 export type UpdateActionType = {
     name: string;
