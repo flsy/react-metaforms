@@ -3,10 +3,10 @@ import { mount, shallow } from 'enzyme';
 import { spy } from 'sinon';
 
 import { Input, Label, ErrorMessage } from '../../index';
-import { InputPropsFinal } from '../types';
+import { InputProps } from '../../../export';
 
 const name = 'test_field_name';
-const defaultProps: InputPropsFinal = {
+const defaultProps: InputProps = {
     name,
     type: 'text',
     update: () => null,

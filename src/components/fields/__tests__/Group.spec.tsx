@@ -3,9 +3,9 @@ import { mount, ReactWrapper } from 'enzyme';
 import { spy } from 'sinon';
 
 import { Input, Group } from '../../index';
-import { GroupPropsFinal } from '../types';
+import { GroupProps } from '../../../export';
 
-const defaultProps: GroupPropsFinal = {
+const defaultProps: GroupProps = {
     name: 'first-group',
     type: 'group',
     children: [],

@@ -1,11 +1,9 @@
 import * as React from 'react';
-
-import { Label, ErrorMessage } from '../index';
 import { isRequired } from 'metaforms';
+import { Label, ErrorMessage } from '../index';
+import { SelectProps } from '../../export';
 
-import { SelectPropsFinal } from './types';
-
-const Select = React.forwardRef((props: SelectPropsFinal, ref: React.Ref<HTMLSelectElement>) => {
+const Select = React.forwardRef((props: SelectProps, ref: React.Ref<HTMLSelectElement>) => {
     return (
         <div>
             {props.label ? <Label fieldId={props.name} label={props.label} isRequired={isRequired(props.validation)}/> : null}

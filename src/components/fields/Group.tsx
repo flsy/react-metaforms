@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { GroupPropsFinal } from './types';
+import { GroupProps } from '../../export';
 
-const Group = ({ legend, children }: GroupPropsFinal) => {
+const Group: React.FC<GroupProps> = ({ legend, children }) => {
     // console.log(1, children)
     return (
         <div>

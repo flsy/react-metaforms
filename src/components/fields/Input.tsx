@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Label, ErrorMessage } from '../index';
-import { InputPropsFinal } from './types';
 import { isRequired } from 'metaforms';
+import { InputProps } from '../../export';
 
-const Input = React.forwardRef((props: InputPropsFinal, ref: React.Ref<HTMLInputElement>) => {
+const Input = React.forwardRef((props: InputProps, ref: React.Ref<HTMLInputElement>) => {
     return (
         <div>
             {props.label ? (<Label fieldId={props.name} label={props.label} isRequired={isRequired(props.validation)}/>) : null}

@@ -3,9 +3,9 @@ import { mount, shallow } from 'enzyme';
 import { spy } from 'sinon';
 
 import { Checkbox, Label, ErrorMessage } from '../../index';
-import { CheckBoxPropsFinal } from '../types';
+import { CheckBoxProps } from '../../../export';
 
-const props: CheckBoxPropsFinal = {
+const props: CheckBoxProps = {
     name: 'checkboxName',
     type: 'checkbox',
     updateAndValidate: () => null,

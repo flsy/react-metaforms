@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { TextAreaPropsFinal } from './types';
 import { ErrorMessage, Label } from '../index';
-
 import { isRequired } from 'metaforms';
+import { TextAreaProps } from '../../export';
 
-const Textarea = React.forwardRef((props: TextAreaPropsFinal, ref: React.Ref<HTMLTextAreaElement>) => {
+const Textarea = React.forwardRef((props: TextAreaProps, ref: React.Ref<HTMLTextAreaElement>) => {
     const { label, name, validation, placeholder, value, disabled, update, validate, groupName, errorMessage } = props;
 
     return (

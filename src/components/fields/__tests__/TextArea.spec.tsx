@@ -4,10 +4,10 @@ import { spy } from 'sinon';
 
 import Textarea from '../Textarea';
 import { Label, ErrorMessage } from '../../index';
-import { TextAreaPropsFinal } from '../types';
+import { TextAreaProps } from '../../../export';
 
 const name = 'some field name';
-const defaultProps: TextAreaPropsFinal = {
+const defaultProps: TextAreaProps = {
     name,
     type: 'textarea',
     update: () => null,

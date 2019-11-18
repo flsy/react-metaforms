@@ -1,10 +1,9 @@
 import * as React from 'react';
-
+import { CheckBoxProps } from '../../export';
 import { Label, ErrorMessage } from '../index';
 import { isRequired } from 'metaforms';
-import { CheckBoxPropsFinal } from './types';
 
-const Checkbox = React.forwardRef((props: CheckBoxPropsFinal, ref: React.Ref<HTMLInputElement>) => {
+const Checkbox = React.forwardRef((props: CheckBoxProps, ref: React.Ref<HTMLInputElement>) => {
     return (
         <div>
             {props.label ? <Label fieldId={props.name} label={props.label} isRequired={isRequired(props.validation)}/> : null}
