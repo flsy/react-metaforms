@@ -1,14 +1,15 @@
 import * as React from 'react';
-import { GroupProps } from '../../export';
+import { GroupProps } from 'metaforms';
 
-const Group: React.FC<GroupProps> = ({ legend, children }) => {
-    // console.log(1, children)
-    return (
-        <div>
-            <div>{legend ? legend : null}</div>
-            {children}
-        </div>
-    );
+export type Props = Omit<GroupProps, 'fields'>;
+
+const Group: React.FC<Props> = ({ legend, children }) => {
+  return (
+    <div>
+      <div>{legend ? legend : null}</div>
+      {children}
+    </div>
+  );
 };
 
 export default Group;

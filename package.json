@@ -24,10 +24,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\" \"src/**/*.{js,jsx}\"",
     "lint": "tslint -c ./tslint.json './src/**/*.{ts,tsx}'",
     "transpile": "rm -rf ./lib && tsc --p tsconfig_transpile.json",
-    "verify": "npm run format && npm run lint && npm test -- --coverage && npm run transpile",
+    "verify": "npm run format && npm run lint && CI=true npm test && npm run transpile",
     "prepublishOnly": "npm run transpile"
   },
   "peerDependencies": {
@@ -36,26 +36,26 @@
   },
   "dependencies": {
     "fputils": "1.0.10",
-    "metaforms": "0.0.3",
+    "metaforms": "0.0.7",
     "react": "16.*"
   },
   "devDependencies": {
-    "@types/enzyme": "~3.10.3",
+    "@types/enzyme": "3.10.4",
     "@types/enzyme-adapter-react-16": "1.0.5",
-    "@types/jest": "24.0.22",
-    "@types/node": "12.12.6",
-    "@types/react": "16.9.11",
+    "@types/jest": "24.0.23",
+    "@types/node": "12.12.17",
+    "@types/react": "16.9.16",
     "@types/react-dom": "16.9.4",
-    "@types/sinon": "7.5.0",
+    "@types/sinon": "7.5.1",
     "enzyme": "3.10.0",
     "enzyme-adapter-react-16": "1.15.1",
     "prettier": "1.19.1",
-    "react-dom": "16.11.0",
-    "react-scripts": "3.2.0",
+    "react-dom": "16.12.0",
+    "react-scripts": "3.3.0",
     "sinon": "7.5.0",
     "tslint": "5.20.1",
     "tslint-react": "4.1.0",
-    "typescript": "3.7.2"
+    "typescript": "3.7.3"
   },
   "browserslist": [
     ">0.2%",

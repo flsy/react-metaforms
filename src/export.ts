@@ -50,10 +50,3 @@ export interface CheckBoxProps extends CheckboxPropsInternal {
 export interface ButtonProps extends ButtonPropsInternal {
   onButtonClick: () => void;
 }
-
-export interface GroupProps {
-  type: 'group';
-  name: string;
-  legend?: string;
-  children: any;
-}

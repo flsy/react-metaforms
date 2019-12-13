@@ -1,9 +1,9 @@
 import * as React from 'react';
 
 type Props = {
-    message: string;
+  message: string;
 };
 
-const ErrorMessage = ({ message }: Props) => (<div className="error-message">{message}</div>);
+const ErrorMessage = ({ message }: Props) => <div className="error-message">{message}</div>;
 
 export default ErrorMessage;
