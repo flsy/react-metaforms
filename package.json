@@ -21,9 +21,7 @@
   ],
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
     "format": "prettier --write \"src/**/*.{ts,tsx}\" \"src/**/*.{js,jsx}\"",
     "lint": "tslint -c ./tslint.json './src/**/*.{ts,tsx}'",
     "transpile": "rm -rf ./lib && tsc --p tsconfig_transpile.json",
