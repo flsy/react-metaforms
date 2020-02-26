@@ -1,4 +1,4 @@
-# Forms
+# React-Metaforms
 
 [![CircleCI](https://circleci.com/gh/flsy/react-metaforms/tree/master.svg?style=svg)](https://circleci.com/gh/flsy/react-metaforms/tree/master)
 
