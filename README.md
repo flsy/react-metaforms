@@ -5,9 +5,10 @@
 ## Basic Usage
 
 ```jsx
-import Form, { FormState } from 'react-metaforms';
+import Form, { getFormData, FieldType } from 'react-metaforms';
 
-const fields = [
+// This could be loaded from server
+const form = [
     {
         "name": "username",
         "label": "Username",
@@ -18,16 +19,17 @@ const fields = [
     }
 ];
 
-state = {
-    formState: FormState.createEmpty(),
-};
+const [fields, setFields] = React.useState<FieldType[]>(form);
 
 <Form
-  id="formId"
+  id="my-form"
   fields={fields}
-  onSubmit={onSubmit}
-  state={this.state.formState}
-  onStateChange={(formState) => this.setState({ formState })}
+  onFieldsChange={setFields}
+  onSubmit={(values) => {
+    const { username } = getFormData(values)
+    
+    console.log('username:', username);
+  }}
 />  
 ```
 
