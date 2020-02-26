@@ -3,6 +3,7 @@
 import * as React from 'react';
 import Form, { ButtonProps, FieldType } from './export';
 import { getFormData } from 'metaforms';
+// import { getFormData } from 'metaforms';
 
 const fields1: FieldType[] = [
   {
@@ -81,6 +82,24 @@ const fields2: FieldType[] = [
   },
 ];
 
+const fields3: FieldType[] = [
+  {
+    name: 'name',
+    label: 'Name',
+    type: 'text',
+    value: 'banana',
+  },
+  {
+    name: 'groups',
+    type: 'select',
+    options: [{ value: 'first' }, { value: 2, label: 'Second' }],
+  },
+  {
+    name: 'submit',
+    type: 'submit',
+  },
+];
+
 const submit = (props: ButtonProps) => (
   <button type="submit" style={{ margin: '10px 0' }}>
     {props.label} [OK] Custom button
@@ -88,12 +107,13 @@ const submit = (props: ButtonProps) => (
 );
 
 const Demo = () => {
-  const [fields, onFieldsChange] = React.useState<FieldType[]>(fields1);
+  const [fields, onFieldsChange] = React.useState<FieldType[]>(fields3);
 
   return (
     <div>
       <button onClick={() => onFieldsChange(fields1)}>form 1</button>
       <button onClick={() => onFieldsChange(fields2)}>form 2</button>
+      <button onClick={() => onFieldsChange(fields3)}>form 3</button>
 
       <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid' }}>
         <div style={{ padding: '10px' }}>

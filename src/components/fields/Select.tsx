@@ -18,9 +18,9 @@ const Select = React.forwardRef((props: SelectProps, ref: React.Ref<HTMLSelectEl
         }
       >
         {props.placeholder ? <option value="">{props.placeholder}</option> : null}
-        {props.options.map((option, index) => (
-          <option value={option} key={index}>
-            {option}
+        {(props.options || []).map(option => (
+          <option value={option.value} key={option.value}>
+            {option.label || option.value}
           </option>
         ))}
       </select>
