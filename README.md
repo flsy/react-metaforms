@@ -19,8 +19,10 @@ const form = [
     }
 ];
 
+// Store form's changes localy
 const [fields, setFields] = React.useState<FieldType[]>(form);
 
+// Render it!
 <Form
   id="my-form"
   fields={fields}
