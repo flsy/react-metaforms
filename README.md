@@ -39,9 +39,8 @@ const [fields, setFields] = React.useState<FieldType[]>(form);
 
 * **id** - id of form.
 * **fields** - array of objects rendered by metaform.
-* **state**
+* **onFieldsChange**
 * **onSubmit** - Function called after submitting form. Returns same structure as provided into ```fields``` property and adds value to each field.
-* **onStateChange**
 
 Optional:
 * **customComponents** - object containing custom components provided to metaform in following structure: ```{ fieldType: Component }``` where ```fieldType``` is unique type name, which is matched against value provided in ```fields``` property.
