@@ -33,8 +33,8 @@
     "react-dom": "*"
   },
   "dependencies": {
-    "fputils": "1.0.10",
-    "metaforms": "0.0.9",
+    "fputils": "1.0.12",
+    "metaforms": "0.0.10",
     "react": "16.*"
   },
   "devDependencies": {
