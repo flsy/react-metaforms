@@ -1,5 +1,7 @@
 # React-Metaforms
 
+![Node.js CI](https://github.com/flsy/react-metaforms/workflows/Node.js%20CI/badge.svg?branch=master)
+
 ## Basic Usage
 
 ```jsx
