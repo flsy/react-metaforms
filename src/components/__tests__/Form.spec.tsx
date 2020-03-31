@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { mount } from 'enzyme';
-import { spy } from 'sinon';
 import { FieldType } from 'metaforms';
 
 import { Form, Input } from '../index';
@@ -61,7 +60,7 @@ describe('<Form />', () => {
   });
 
   it('should submit the default values', () => {
-    const onSubmit = spy();
+    const onSubmit = jest.fn();
     const fields = [
       {
         name: 'name',
@@ -78,7 +77,7 @@ describe('<Form />', () => {
     const wrapper = app(fields, onSubmit);
 
     wrapper.find('form').simulate('submit');
-    expect(onSubmit.calledWith(fields)).toEqual(true);
+    expect(onSubmit).toHaveBeenCalledWith(fields);
     wrapper.unmount();
   });
 
@@ -109,7 +108,7 @@ describe('<Form />', () => {
   });
 
   it('should updateAndValidate', () => {
-    const onSubmit = spy();
+    const onSubmit = jest.fn();
     const message = 'Check this checkbox';
     const fields = [
       {
@@ -134,7 +133,7 @@ describe('<Form />', () => {
     expect(wrapper.find(Checkbox).prop('errorMessage')).toEqual(undefined);
 
     wrapper.find('form').simulate('submit');
-    expect(onSubmit.calledOnce).toEqual(false);
+    expect(onSubmit).not.toHaveBeenCalled();
 
     expect(wrapper.find(Checkbox).prop('errorMessage')).toEqual(message);
 
@@ -143,13 +142,13 @@ describe('<Form />', () => {
     expect(wrapper.find(Checkbox).prop('errorMessage')).toEqual(undefined);
 
     wrapper.find('form').simulate('submit');
-    expect(onSubmit.calledOnce).toEqual(true);
-    expect(onSubmit.calledWith(fields.map(d => (d.name === 'name' ? { ...d, value: true } : d)))).toEqual(true);
+    expect(onSubmit).toHaveBeenCalledTimes(1);
+    expect(onSubmit).toHaveBeenCalledWith(fields.map(d => (d.name === 'name' ? { ...d, value: true } : d)));
     wrapper.unmount();
   });
 
   it('should render textarea', () => {
-    const onSubmit = spy();
+    const onSubmit = jest.fn();
     const message = 'Fill this textarea';
     const value = 'some content';
     const fields = [
@@ -175,7 +174,7 @@ describe('<Form />', () => {
     expect(wrapper.find(Textarea).prop('errorMessage')).toEqual(undefined);
 
     wrapper.find('form').simulate('submit');
-    expect(onSubmit.calledOnce).toEqual(false);
+    expect(onSubmit).not.toHaveBeenCalled();
 
     expect(wrapper.find(Textarea).prop('errorMessage')).toEqual(message);
 
@@ -185,8 +184,8 @@ describe('<Form />', () => {
     expect(wrapper.find(Textarea).prop('errorMessage')).toEqual(undefined);
 
     wrapper.find('form').simulate('submit');
-    expect(onSubmit.calledOnce).toEqual(true);
-    expect(onSubmit.calledWith(fields.map(d => (d.name === 'name' ? { ...d, value } : d)))).toEqual(true);
+    expect(onSubmit).toHaveBeenCalledTimes(1);
+    expect(onSubmit).toHaveBeenCalledWith(fields.map(d => (d.name === 'name' ? { ...d, value } : d)));
     wrapper.unmount();
   });
 
@@ -271,7 +270,7 @@ describe('<Form />', () => {
         ],
       },
     ] as FieldType[];
-    const onSubmit = spy();
+    const onSubmit = jest.fn();
 
     const wrapper = app(fields, onSubmit);
 
@@ -299,7 +298,7 @@ describe('<Form />', () => {
         ],
       },
     ] as FieldType[];
-    const onSubmit = spy();
+    const onSubmit = jest.fn();
 
     const wrapper = app(fields, onSubmit);
 
@@ -309,7 +308,7 @@ describe('<Form />', () => {
 
     const expected = fields.map(field => (field.name === 'name' ? { ...field, value: 'ok value' } : field));
 
-    expect(onSubmit.calledWith(expected)).toEqual(true);
+    expect(onSubmit).toHaveBeenCalledWith(expected);
     wrapper.unmount();
   });
 
@@ -331,7 +330,7 @@ describe('<Form />', () => {
         />
       ),
     };
-    const onSubmit = spy();
+    const onSubmit = jest.fn();
 
     const wrapper = app(fields, onSubmit, customComponents);
 
@@ -373,9 +372,9 @@ describe('<Form />', () => {
         </div>
       ),
     };
-    const onButtonClick = spy();
+    const onButtonClick = jest.fn();
 
-    const onSubmit = spy();
+    const onSubmit = jest.fn();
 
     const wrapper = app(fields, onSubmit, customComponents, onButtonClick);
 
@@ -385,10 +384,10 @@ describe('<Form />', () => {
     wrapper.find('button').simulate('click');
 
     expect(wrapper.find('input').prop('name')).toEqual('input');
-    expect(onButtonClick.calledWith(groupFields[0], fields)).toEqual(true);
+    expect(onButtonClick).toHaveBeenCalledWith(groupFields[0], fields);
 
     wrapper.find('form').simulate('submit');
-    expect(onSubmit.calledWith(fields)).toEqual(true);
+    expect(onSubmit).toHaveBeenCalledWith(fields);
     wrapper.unmount();
   });
 
@@ -405,7 +404,7 @@ describe('<Form />', () => {
         type: 'button',
       },
     ] as FieldType[];
-    const onButtonClick = spy();
+    const onButtonClick = jest.fn();
 
     const wrapper = app(fields, null, null, onButtonClick);
 
@@ -418,7 +417,7 @@ describe('<Form />', () => {
 
     const expectedFormFields = fields.map(f => (f.name === 'test-name' ? { ...f, value: 'some test value' } : f));
 
-    expect(onButtonClick.calledWith(fields[1], expectedFormFields)).toEqual(true);
+    expect(onButtonClick).toHaveBeenCalledWith(fields[1], expectedFormFields);
     wrapper.unmount();
   });
 });

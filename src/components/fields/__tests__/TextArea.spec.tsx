@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { mount, shallow } from 'enzyme';
-import { spy } from 'sinon';
 
 import Textarea from '../Textarea';
 import { Label, ErrorMessage } from '../../index';
@@ -37,19 +36,19 @@ describe('<Textarea />', () => {
   });
 
   it('should call update method on change', () => {
-    const update = spy();
+    const update = jest.fn();
     const value = 'aaa value';
     const wrapper = shallow(<Textarea {...defaultProps} update={update} />);
 
     wrapper.find('textarea').simulate('change', { target: { value } });
-    expect(update.calledWith({ name, value, groupName: undefined })).toEqual(true);
+    expect(update).toHaveBeenCalledWith({ name, value, groupName: undefined });
   });
 
   it('should call validate method on blur', () => {
-    const validate = spy();
+    const validate = jest.fn();
     const wrapper = shallow(<Textarea {...defaultProps} validate={validate} groupName="testGroupId" />);
 
     wrapper.find('textarea').simulate('blur');
-    expect(validate.calledWith({ name })).toEqual(true);
+    expect(validate).toHaveBeenCalledWith({ name });
   });
 });

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { mount, ReactWrapper } from 'enzyme';
-import { spy } from 'sinon';
 
 import { Group, Input } from '../../index';
 import { Props } from '../Group';
@@ -27,13 +26,13 @@ describe('<Group />', () => {
   });
 
   it('renders a input and button element as a child', () => {
-    const update = spy();
+    const update = jest.fn();
     const name = 'group-input';
     const children = [<Input key="uno" update={update} validate={() => null} type="text" name={name} />];
     wrapper.setProps({ children });
 
     const value = 'a value';
     wrapper.find('input').simulate('change', { target: { value } });
-    expect(update.calledWith({ name, value, groupName: undefined })).toEqual(true);
+    expect(update).toHaveBeenCalledWith({ name, value, groupName: undefined });
   });
 });
