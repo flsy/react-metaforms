@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { mount, shallow } from 'enzyme';
-import { spy } from 'sinon';
 
 import { Checkbox, Label, ErrorMessage } from '../../index';
 import { CheckBoxProps } from '../../../export';
@@ -45,13 +44,13 @@ describe('<Checkbox />', () => {
   });
 
   it('should call updateAndValidate when checked', () => {
-    const updateAndValidate = spy();
+    const updateAndValidate = jest.fn();
     const wrapper = shallow(<Checkbox {...props} updateAndValidate={updateAndValidate} />);
 
     wrapper.find('input').simulate('change', { target: { checked: true } });
-    expect(updateAndValidate.calledWith({ name: props.name, value: true, groupName: undefined })).toEqual(true);
+    expect(updateAndValidate).toHaveBeenCalledWith({ name: props.name, value: true, groupName: undefined });
 
     wrapper.find('input').simulate('change', { target: { checked: false } });
-    expect(updateAndValidate.calledWith({ name: props.name, value: false, groupName: undefined })).toEqual(true);
+    expect(updateAndValidate).toHaveBeenCalledWith({ name: props.name, value: false, groupName: undefined });
   });
 });
