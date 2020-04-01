@@ -28,7 +28,7 @@
     "verify": "npm run format && npm run lint && CI=true npm test && npm run build",
     "prepublishOnly": "npm run build",
     "predeploy": "react-scripts build",
-    "deploy": "gh-pages -d build"
+    "deploy": "NODE_DEBUG=gh-pages gh-pages -d build"
   },
   "peerDependencies": {
     "react": "*",
