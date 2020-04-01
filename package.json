@@ -51,7 +51,7 @@
     "react-scripts": "3.4.1",
     "tslint": "6.1.0",
     "tslint-react": "4.2.0",
-    "typescript": "3.8.2"
+    "typescript": "3.8.3"
   },
   "browserslist": [
     ">0.2%",
