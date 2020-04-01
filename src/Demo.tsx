@@ -111,6 +111,7 @@ const Demo = () => {
 
   return (
     <div>
+      <h1>react-metaforms demo</h1>
       <button onClick={() => onFieldsChange(fields1)}>form 1</button>
       <button onClick={() => onFieldsChange(fields2)}>form 2</button>
       <button onClick={() => onFieldsChange(fields3)}>form 3</button>

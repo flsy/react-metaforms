@@ -15,7 +15,7 @@ jobs:
       - name: Install Packages
         run: npm ci
 
-      - name: Deploy to Gihub Pages
+      - name: Deploy to Github Pages
         run: |
           git config --global user.email ${{ secrets.access_github_email }}
           git config --global user.name ${{ secrets.access_github_username }}
