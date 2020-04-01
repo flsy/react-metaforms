@@ -15,7 +15,7 @@
   "bugs": {
     "url": "https://github.com/flsy/react-metaforms/issues"
   },
-  "homepage": "https://react-metaforms.herokuapp.com",
+  "homepage": "http://flsy.github.io/react-metaforms",
   "files": [
     "lib"
   ],
@@ -26,7 +26,9 @@
     "lint": "tslint -c ./tslint.json './src/**/*.{ts,tsx}'",
     "build": "rm -rf ./lib && tsc --p tsconfig_build.json",
     "verify": "npm run format && npm run lint && CI=true npm test && npm run build",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "predeploy": "react-scripts build",
+    "deploy": "gh-pages -d build"
   },
   "peerDependencies": {
     "react": "*",
@@ -46,6 +48,7 @@
     "@types/react-dom": "16.9.6",
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.2",
+    "gh-pages": "2.2.0",
     "prettier": "2.0.2",
     "react-dom": "16.13.1",
     "react-scripts": "3.4.1",
