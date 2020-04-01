@@ -1,8 +1,6 @@
 name: Build and Deploy to Github pages
 
 on:
-#  release:
-#    types: [created]
   push:
     branches: [ master ]
 
@@ -14,5 +12,5 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Build
+      - name: Deploy
         run: npm run deploy
