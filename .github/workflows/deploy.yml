@@ -14,7 +14,7 @@ jobs:
 
       - name: Deploy to Gihub Pages
         run: |
-          git config --global user.email "${{ secrets.access_github_email }}"
-          git config --global user.name "${{ secrets.access_github_username }}"
+          git config --global user.email ${{ secrets.access_github_email }}
+          git config --global user.name ${{ secrets.access_github_username }}
           git remote set-url origin https://${{ secrets.access_token }}>@github.com/flsy/react-metaforms.git
           npm run deploy
