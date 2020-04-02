@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.js": "/metacharts/static/js/main.e0e1ebbb.chunk.js",
-    "main.js.map": "/metacharts/static/js/main.e0e1ebbb.chunk.js.map",
+    "main.js": "/metacharts/static/js/main.5e003261.chunk.js",
+    "main.js.map": "/metacharts/static/js/main.5e003261.chunk.js.map",
     "runtime-main.js": "/metacharts/static/js/runtime-main.7b7eeb46.js",
     "runtime-main.js.map": "/metacharts/static/js/runtime-main.7b7eeb46.js.map",
-    "static/js/2.37f04151.chunk.js": "/metacharts/static/js/2.37f04151.chunk.js",
-    "static/js/2.37f04151.chunk.js.map": "/metacharts/static/js/2.37f04151.chunk.js.map",
+    "static/js/2.d5fe60a2.chunk.js": "/metacharts/static/js/2.d5fe60a2.chunk.js",
+    "static/js/2.d5fe60a2.chunk.js.map": "/metacharts/static/js/2.d5fe60a2.chunk.js.map",
     "index.html": "/metacharts/index.html",
-    "precache-manifest.d4f93ce1f43396780a7ea5700851cf7b.js": "/metacharts/precache-manifest.d4f93ce1f43396780a7ea5700851cf7b.js",
+    "precache-manifest.50fc1f9e56064c70c46f1fcb3eb9644b.js": "/metacharts/precache-manifest.50fc1f9e56064c70c46f1fcb3eb9644b.js",
     "service-worker.js": "/metacharts/service-worker.js",
-    "static/js/2.37f04151.chunk.js.LICENSE.txt": "/metacharts/static/js/2.37f04151.chunk.js.LICENSE.txt"
+    "static/js/2.d5fe60a2.chunk.js.LICENSE.txt": "/metacharts/static/js/2.d5fe60a2.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.7b7eeb46.js",
-    "static/js/2.37f04151.chunk.js",
-    "static/js/main.e0e1ebbb.chunk.js"
+    "static/js/2.d5fe60a2.chunk.js",
+    "static/js/main.5e003261.chunk.js"
   ]
 }
