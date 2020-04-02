@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.js": "/react-metaforms/static/js/main.b90533e1.chunk.js",
-    "main.js.map": "/react-metaforms/static/js/main.b90533e1.chunk.js.map",
-    "runtime-main.js": "/react-metaforms/static/js/runtime-main.5a3231d2.js",
-    "runtime-main.js.map": "/react-metaforms/static/js/runtime-main.5a3231d2.js.map",
-    "static/js/2.7b956a00.chunk.js": "/react-metaforms/static/js/2.7b956a00.chunk.js",
-    "static/js/2.7b956a00.chunk.js.map": "/react-metaforms/static/js/2.7b956a00.chunk.js.map",
-    "index.html": "/react-metaforms/index.html",
-    "precache-manifest.fbd687e95e32194c80a00ec2302b59af.js": "/react-metaforms/precache-manifest.fbd687e95e32194c80a00ec2302b59af.js",
-    "service-worker.js": "/react-metaforms/service-worker.js",
-    "static/js/2.7b956a00.chunk.js.LICENSE.txt": "/react-metaforms/static/js/2.7b956a00.chunk.js.LICENSE.txt"
+    "main.js": "/metacharts/static/js/main.a1f1be01.chunk.js",
+    "main.js.map": "/metacharts/static/js/main.a1f1be01.chunk.js.map",
+    "runtime-main.js": "/metacharts/static/js/runtime-main.7b7eeb46.js",
+    "runtime-main.js.map": "/metacharts/static/js/runtime-main.7b7eeb46.js.map",
+    "static/js/2.73bc44de.chunk.js": "/metacharts/static/js/2.73bc44de.chunk.js",
+    "static/js/2.73bc44de.chunk.js.map": "/metacharts/static/js/2.73bc44de.chunk.js.map",
+    "index.html": "/metacharts/index.html",
+    "precache-manifest.1ceeee941ea0d05f1c6ff4a17311b5cf.js": "/metacharts/precache-manifest.1ceeee941ea0d05f1c6ff4a17311b5cf.js",
+    "service-worker.js": "/metacharts/service-worker.js",
+    "static/js/2.73bc44de.chunk.js.LICENSE.txt": "/metacharts/static/js/2.73bc44de.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.5a3231d2.js",
-    "static/js/2.7b956a00.chunk.js",
-    "static/js/main.b90533e1.chunk.js"
+    "static/js/runtime-main.7b7eeb46.js",
+    "static/js/2.73bc44de.chunk.js",
+    "static/js/main.a1f1be01.chunk.js"
   ]
 }
