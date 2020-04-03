@@ -29,7 +29,7 @@ const Form: React.FC<Props> = ({ id, fields = [], onButtonClick, customComponent
 
   React.useEffect(() => {
     resolveFocusedField();
-    // tslint:disable-next-line
+    // eslint-disable-next-line
   }, []);
 
   const resolveFocusedField = () => {
