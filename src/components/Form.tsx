@@ -27,16 +27,16 @@ export type Props = {
 const Form: React.FC<Props> = ({ id, fields = [], onButtonClick, customComponents, onFieldsChange, onSubmit }) => {
   const inputRefs: { [name: string]: any } | {} = {};
 
-  React.useEffect(() => {
-    resolveFocusedField();
-  }, []);
-
   const resolveFocusedField = () => {
     const focused = shouldComponentFocus(fields);
     if (focused && inputRefs[focused] && inputRefs[focused].current) {
       inputRefs[focused].current.focus();
     }
   };
+
+  React.useEffect(() => {
+    resolveFocusedField();
+  }, [resolveFocusedField]);
 
   const thisUpdate = ({ name, value, groupName }: UpdateActionType) => {
     onFieldsChange(update({ name, value, groupName }, fields));
@@ -75,7 +75,7 @@ const Form: React.FC<Props> = ({ id, fields = [], onButtonClick, customComponent
         ...field,
         groupName,
         key: field.name,
-        children: field.fields ? map(c => getComponent(c, field.name), field.fields) : [],
+        children: field.fields ? map((c) => getComponent(c, field.name), field.fields) : [],
         update: thisUpdate,
         validate: thisValidate,
         onButtonClick: () => thisOnButtonClick(field),
@@ -144,7 +144,7 @@ const Form: React.FC<Props> = ({ id, fields = [], onButtonClick, customComponent
       case 'group':
         return (
           <Group key={field.name} name={field.name} type="group" legend={field.legend}>
-            {map(c => getComponent(c, field.name), field.fields)}
+            {map((c) => getComponent(c, field.name), field.fields)}
           </Group>
         );
 
