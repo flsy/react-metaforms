@@ -27,16 +27,17 @@ export type Props = {
 const Form: React.FC<Props> = ({ id, fields = [], onButtonClick, customComponents, onFieldsChange, onSubmit }) => {
   const inputRefs: { [name: string]: any } | {} = {};
 
+  React.useEffect(() => {
+    resolveFocusedField();
+    // tslint:disable-next-line
+  }, []);
+
   const resolveFocusedField = () => {
     const focused = shouldComponentFocus(fields);
     if (focused && inputRefs[focused] && inputRefs[focused].current) {
       inputRefs[focused].current.focus();
     }
   };
-
-  React.useEffect(() => {
-    resolveFocusedField();
-  }, [resolveFocusedField]);
 
   const thisUpdate = ({ name, value, groupName }: UpdateActionType) => {
     onFieldsChange(update({ name, value, groupName }, fields));
