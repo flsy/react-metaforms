@@ -29,6 +29,7 @@ const Form: React.FC<Props> = ({ id, fields = [], onButtonClick, customComponent
 
   React.useEffect(() => {
     resolveFocusedField();
+    // eslint-disable-next-line
   }, []);
 
   const resolveFocusedField = () => {
@@ -75,7 +76,7 @@ const Form: React.FC<Props> = ({ id, fields = [], onButtonClick, customComponent
         ...field,
         groupName,
         key: field.name,
-        children: field.fields ? map(c => getComponent(c, field.name), field.fields) : [],
+        children: field.fields ? map((c) => getComponent(c, field.name), field.fields) : [],
         update: thisUpdate,
         validate: thisValidate,
         onButtonClick: () => thisOnButtonClick(field),
@@ -144,7 +145,7 @@ const Form: React.FC<Props> = ({ id, fields = [], onButtonClick, customComponent
       case 'group':
         return (
           <Group key={field.name} name={field.name} type="group" legend={field.legend}>
-            {map(c => getComponent(c, field.name), field.fields)}
+            {map((c) => getComponent(c, field.name), field.fields)}
           </Group>
         );
 
