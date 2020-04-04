@@ -1,17 +1,16 @@
 {
   "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "isolatedModules": false,
+    "noEmit": false,
+    "jsx": "react",
     "outDir": "lib",
-    "module": "esnext",
-    "declaration": false,
     "strict": true,
     "target": "es5",
-    "lib": [
-      "es6",
-      "dom"
-    ],
+    "lib": ["es6", "dom"],
     "sourceMap": true,
     "allowJs": false,
-    "jsx": "preserve",
     "moduleResolution": "node",
     "rootDir": "src",
     "forceConsistentCasingInFileNames": true,
@@ -24,12 +23,11 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true
+    "resolveJsonModule": true
   },
   "exclude": [
     "src/**/*.spec.ts",
+    "src/**/*.stories.tsx",
     "node_modules",
     "coverage",
     "__tests__",
@@ -40,7 +38,5 @@
     "jest",
     "src/setupTests.ts"
   ],
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }
