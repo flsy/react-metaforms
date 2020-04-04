@@ -17,7 +17,7 @@ describe('<Form />', () => {
       onSubmit: (fields: FieldType[]) => void;
     };
 
-    const App: React.FC<Props> = props => {
+    const App: React.FC<Props> = (props) => {
       const [stateFields, onFieldsChange] = React.useState<FieldType[]>(props.fields);
       return <Form onFieldsChange={onFieldsChange} {...props} fields={stateFields} />;
     };
@@ -143,7 +143,7 @@ describe('<Form />', () => {
 
     wrapper.find('form').simulate('submit');
     expect(onSubmit).toHaveBeenCalledTimes(1);
-    expect(onSubmit).toHaveBeenCalledWith(fields.map(d => (d.name === 'name' ? { ...d, value: true } : d)));
+    expect(onSubmit).toHaveBeenCalledWith(fields.map((d) => (d.name === 'name' ? { ...d, value: true } : d)));
     wrapper.unmount();
   });
 
@@ -185,7 +185,7 @@ describe('<Form />', () => {
 
     wrapper.find('form').simulate('submit');
     expect(onSubmit).toHaveBeenCalledTimes(1);
-    expect(onSubmit).toHaveBeenCalledWith(fields.map(d => (d.name === 'name' ? { ...d, value } : d)));
+    expect(onSubmit).toHaveBeenCalledWith(fields.map((d) => (d.name === 'name' ? { ...d, value } : d)));
     wrapper.unmount();
   });
 
@@ -306,7 +306,7 @@ describe('<Form />', () => {
 
     wrapper.find('form').simulate('submit');
 
-    const expected = fields.map(field => (field.name === 'name' ? { ...field, value: 'ok value' } : field));
+    const expected = fields.map((field) => (field.name === 'name' ? { ...field, value: 'ok value' } : field));
 
     expect(onSubmit).toHaveBeenCalledWith(expected);
     wrapper.unmount();
@@ -326,7 +326,7 @@ describe('<Form />', () => {
         <input
           name="testNameInput"
           defaultValue={props.value as string}
-          onChange={e => props.update({ name: props.name, value: e.target.value })}
+          onChange={(e) => props.update({ name: props.name, value: e.target.value })}
         />
       ),
     };
@@ -410,12 +410,9 @@ describe('<Form />', () => {
 
     wrapper.find('input[name="test-name"]').simulate('change', { target: { value: 'some test value' } });
 
-    wrapper
-      .find('form')
-      .find('button[type="button"]')
-      .simulate('click');
+    wrapper.find('form').find('button[type="button"]').simulate('click');
 
-    const expectedFormFields = fields.map(f => (f.name === 'test-name' ? { ...f, value: 'some test value' } : f));
+    const expectedFormFields = fields.map((f) => (f.name === 'test-name' ? { ...f, value: 'some test value' } : f));
 
     expect(onButtonClick).toHaveBeenCalledWith(fields[1], expectedFormFields);
     wrapper.unmount();

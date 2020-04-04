@@ -1,14 +1,17 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "esnext",
     "declaration": true,
-    "isolatedModules": false,
-    "noEmit": false,
+    "isolatedModules": true,
+    "noEmit": true,
     "jsx": "react",
     "outDir": "lib",
     "strict": true,
     "target": "es5",
-    "lib": ["es6", "dom"],
+    "lib": [
+      "es6",
+      "dom"
+    ],
     "sourceMap": true,
     "allowJs": false,
     "moduleResolution": "node",
@@ -38,5 +41,7 @@
     "jest",
     "src/setupTests.ts"
   ],
-  "include": ["src"]
+  "include": [
+    "src"
+  ]
 }
