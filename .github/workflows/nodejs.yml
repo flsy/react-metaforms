@@ -30,7 +30,7 @@ jobs:
         npm run build --if-present
         npm run predeploy
         npm run test
-        npm prettier
-        npm lint
+        npm run prettier
+        npm run lint
       env:
           CI: true
