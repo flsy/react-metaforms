@@ -23,6 +23,7 @@
     "start": "react-scripts start",
     "test": "react-scripts test",
     "format": "prettier --write \"src/**/*.{ts,tsx}\" \"src/**/*.{js,jsx}\"",
+    "prettier": "prettier --check \"src/**/*.{ts,tsx}\"",
     "lint": "tslint -c ./tslint.json './src/**/*.{ts,tsx}'",
     "build": "rm -rf ./lib && tsc --p tsconfig.json",
     "verify": "npm run format && npm run lint && CI=true npm test && npm run build",
