@@ -23,12 +23,14 @@
     "start": "react-scripts start",
     "test": "react-scripts test",
     "format": "prettier --write \"src/**/*.{ts,tsx}\" \"src/**/*.{js,jsx}\"",
+    "prettier": "prettier --check \"src/**/*.{ts,tsx}\"",
     "lint": "tslint -c ./tslint.json './src/**/*.{ts,tsx}'",
-    "build": "rm -rf ./lib && tsc --p tsconfig_build.json",
+    "build": "rm -rf ./lib && tsc --p tsconfig.json",
     "verify": "npm run format && npm run lint && CI=true npm test && npm run build",
     "prepublishOnly": "npm run build",
-    "predeploy": "react-scripts build",
-    "deploy": "NODE_DEBUG=gh-pages gh-pages -d build"
+    "predeploy": "build-storybook -s public",
+    "deploy": "NODE_DEBUG=gh-pages gh-pages -d storybook-static",
+    "storybook": "start-storybook -p 9009 -s public"
   },
   "peerDependencies": {
     "react": "*",
@@ -40,6 +42,11 @@
     "react": "16.*"
   },
   "devDependencies": {
+    "@storybook/addon-actions": "5.3.18",
+    "@storybook/addon-links": "5.3.18",
+    "@storybook/addons": "5.3.18",
+    "@storybook/preset-create-react-app": "2.1.1",
+    "@storybook/react": "5.3.18",
     "@types/enzyme": "3.10.5",
     "@types/enzyme-adapter-react-16": "1.0.6",
     "@types/jest": "25.1.5",

@@ -13,12 +13,12 @@ const Select = React.forwardRef((props: SelectProps, ref: React.Ref<HTMLSelectEl
         name={props.name}
         disabled={props.disabled}
         defaultValue={props.value || ''}
-        onChange={event =>
+        onChange={(event) =>
           props.updateAndValidate({ name: props.name, value: event.target.value, groupName: props.groupName })
         }
       >
         {props.placeholder ? <option value="">{props.placeholder}</option> : null}
-        {(props.options || []).map(option => (
+        {(props.options || []).map((option) => (
           <option value={option.value} key={option.value}>
             {option.label || option.value}
           </option>

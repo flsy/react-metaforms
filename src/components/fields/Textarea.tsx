@@ -16,7 +16,7 @@ const Textarea = React.forwardRef((props: TextAreaProps, ref: React.Ref<HTMLText
         placeholder={placeholder}
         defaultValue={value}
         disabled={disabled}
-        onChange={e => update({ name, value: e.target.value, groupName })}
+        onChange={(e) => update({ name, value: e.target.value, groupName })}
         onBlur={() => validate({ name })}
       />
       {errorMessage ? <ErrorMessage message={errorMessage} /> : null}

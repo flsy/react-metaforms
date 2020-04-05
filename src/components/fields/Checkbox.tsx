@@ -14,7 +14,7 @@ const Checkbox = React.forwardRef((props: CheckBoxProps, ref: React.Ref<HTMLInpu
         type="checkbox"
         disabled={props.disabled}
         defaultChecked={props.value || false}
-        onChange={event =>
+        onChange={(event) =>
           props.updateAndValidate({ name: props.name, value: event.target.checked, groupName: props.groupName })
         }
       />

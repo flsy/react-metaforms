@@ -27,7 +27,7 @@ const Input = React.forwardRef((props: InputProps, ref: React.Ref<HTMLInputEleme
         placeholder={props.placeholder}
         value={getValue(props.value)}
         disabled={props.disabled}
-        onChange={e => props.update({ name: props.name, value: e.target.value, groupName: props.groupName })}
+        onChange={(e) => props.update({ name: props.name, value: e.target.value, groupName: props.groupName })}
         onBlur={() => props.validate({ name: props.name })}
         inputMode={props.inputMode}
       />

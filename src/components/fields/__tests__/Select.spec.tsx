@@ -18,13 +18,7 @@ describe('<Select />', () => {
 
   it('should render the default option with placeholder', () => {
     const wrapper = mount(<Select {...defaultProps} placeholder="Select..." />);
-    expect(
-      wrapper
-        .find('select')
-        .find('option')
-        .at(0)
-        .text(),
-    ).toEqual('Select...');
+    expect(wrapper.find('select').find('option').at(0).text()).toEqual('Select...');
     wrapper.unmount();
   });
 

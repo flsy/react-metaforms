@@ -1,11 +1,10 @@
-/* tslint:disable:no-console */
-
-import * as React from 'react';
-import Form, { ButtonProps, FieldType } from './export';
+import Form, { ButtonProps, FieldType } from '../export';
+import React from 'react';
+import { action } from '@storybook/addon-actions';
 import { getFormData } from 'metaforms';
-// import { getFormData } from 'metaforms';
+import { storiesOf } from '@storybook/react';
 
-const fields1: FieldType[] = [
+export const fields1: FieldType[] = [
   {
     name: 'name',
     label: 'Name',
@@ -69,7 +68,7 @@ const fields1: FieldType[] = [
   },
 ];
 
-const fields2: FieldType[] = [
+export const fields2: FieldType[] = [
   {
     name: 'name',
     label: 'Name',
@@ -82,7 +81,7 @@ const fields2: FieldType[] = [
   },
 ];
 
-const fields3: FieldType[] = [
+export const fields3: FieldType[] = [
   {
     name: 'name',
     label: 'Name',
@@ -106,33 +105,31 @@ const submit = (props: ButtonProps) => (
   </button>
 );
 
-const Demo = () => {
-  const [fields, onFieldsChange] = React.useState<FieldType[]>(fields3);
+interface IProps {
+  fieldsDefault: FieldType[];
+}
+
+const FormStory = ({ fieldsDefault }: IProps) => {
+  const [fields, onFieldsChange] = React.useState<FieldType[]>(fieldsDefault);
+
+  const handleFieldChange = (state: FieldType[]) => {
+    action('onFieldsChange')(getFormData(fields));
+    onFieldsChange(state);
+  };
 
   return (
-    <div>
-      <h1>react-metaforms demo</h1>
-      <button onClick={() => onFieldsChange(fields1)}>form 1</button>
-      <button onClick={() => onFieldsChange(fields2)}>form 2</button>
-      <button onClick={() => onFieldsChange(fields3)}>form 3</button>
-
-      <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid' }}>
-        <div style={{ padding: '10px' }}>
-          <Form
-            id="demo-form"
-            fields={fields}
-            onFieldsChange={onFieldsChange}
-            onSubmit={formData => console.log('onSubmit', formData)}
-            onButtonClick={(field, fs) => console.log('onButtonClick', field, fs)}
-            customComponents={{ submit }}
-          />
-        </div>
-        <div style={{ padding: '10px', borderLeft: '1px solid' }}>
-          <pre>{JSON.stringify(getFormData(fields), null, 2)}</pre>
-        </div>
-      </div>
-    </div>
+    <Form
+      id="demo-form"
+      fields={fields}
+      onFieldsChange={handleFieldChange}
+      onSubmit={action('submit')}
+      onButtonClick={action('button click')}
+      customComponents={{ submit }}
+    />
   );
 };
 
-export default Demo;
+storiesOf('Form', module)
+  .add('example 1', () => <FormStory fieldsDefault={fields1} />)
+  .add('example 2', () => <FormStory fieldsDefault={fields2} />)
+  .add('example 3', () => <FormStory fieldsDefault={fields3} />);
