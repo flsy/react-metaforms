@@ -3,7 +3,7 @@
     "module": "esnext",
     "declaration": true,
     "isolatedModules": true,
-    "noEmit": true,
+    "noEmit": false,
     "jsx": "react",
     "outDir": "lib",
     "strict": true,
