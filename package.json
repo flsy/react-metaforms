@@ -67,6 +67,9 @@
     "typescript": "3.8.3"
   },
   "jest": {
+    "testPathIgnorePatterns" : [
+      "<rootDir>/lib"
+    ],
     "preset": "ts-jest",
     "testEnvironment": "jsdom",
     "setupFilesAfterEnv": [
