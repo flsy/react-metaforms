@@ -1,11 +1,6 @@
 import * as React from 'react';
 
-const Asterisk = () => (
-  <abbr title="This field is required" aria-hidden="true">
-    {' '}
-    *
-  </abbr>
-);
+const Asterisk = () => <span> *</span>;
 
 type Props = {
   fieldId: string;
