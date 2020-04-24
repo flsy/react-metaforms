@@ -1,6 +1,6 @@
 {
   "name": "react-metaforms",
-  "version": "2.0.10",
+  "version": "2.0.11",
   "main": "lib/export",
   "typings": "lib/export",
   "repository": {
