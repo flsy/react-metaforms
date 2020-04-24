@@ -67,7 +67,7 @@
     "typescript": "3.8.3"
   },
   "jest": {
-    "testPathIgnorePatterns" : [
+    "testPathIgnorePatterns": [
       "<rootDir>/lib"
     ],
     "preset": "ts-jest",
