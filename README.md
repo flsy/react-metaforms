@@ -2,6 +2,8 @@
 
 ![Node.js CI](https://github.com/flsy/react-metaforms/workflows/Node.js%20CI/badge.svg?branch=master)
 
+There is a nice [how to use](https://medium.com/@kolebaba/reactjs-json-based-form-7dd3e03fd690) tutorial.
+
 ## Basic Usage
 
 ```jsx
