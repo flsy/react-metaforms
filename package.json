@@ -63,7 +63,7 @@
     "react-dom": "16.13.1",
     "ts-jest": "25.5.1",
     "tslint": "6.1.2",
-    "tslint-react": "4.2.0",
+    "tslint-react": "5.0.0",
     "typescript": "3.8.3"
   },
   "jest": {
