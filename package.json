@@ -1,6 +1,6 @@
 {
   "name": "react-metaforms",
-  "version": "2.0.11",
+  "version": "2.1.0",
   "main": "lib/export",
   "typings": "lib/export",
   "repository": {
@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "fputils": "1.0.12",
-    "metaforms": "0.0.11",
+    "metaforms": "0.1.0",
     "react": "16.*"
   },
   "devDependencies": {
@@ -45,14 +45,14 @@
     "@storybook/addon-actions": "5.3.18",
     "@storybook/addon-links": "5.3.18",
     "@storybook/addons": "5.3.18",
-    "@storybook/preset-create-react-app": "2.1.1",
+    "@storybook/preset-create-react-app": "2.1.2",
     "@storybook/react": "5.3.18",
     "@types/enzyme": "3.10.5",
     "@types/enzyme-adapter-react-16": "1.0.6",
     "@types/jest": "25.2.1",
     "@types/node": "13.13.5",
-    "@types/react": "16.9.34",
-    "@types/react-dom": "16.9.7",
+    "@types/react": "16.9.35",
+    "@types/react-dom": "16.9.8",
     "babel-loader": "8.1.0",
     "babel-preset-react-app": "9.1.2",
     "enzyme": "3.11.0",
@@ -61,7 +61,7 @@
     "jest": "25.5.4",
     "prettier": "2.0.4",
     "react-dom": "16.13.1",
-    "ts-jest": "25.3.1",
+    "ts-jest": "25.5.1",
     "tslint": "6.1.2",
     "tslint-react": "4.2.0",
     "typescript": "3.8.3"

@@ -13,11 +13,7 @@ export const fieldConfig: FieldType[][] = [
       validation: [
         {
           type: 'required',
-          rules: [
-            {
-              message: 'This field is required.',
-            },
-          ],
+          message: 'This field is required.',
         },
       ],
     },
