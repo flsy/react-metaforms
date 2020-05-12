@@ -12,11 +12,7 @@ export const fields1: FieldType[] = [
     validation: [
       {
         type: 'required',
-        rules: [
-          {
-            message: 'This field is required.',
-          },
-        ],
+        message: 'This field is required.',
       },
     ],
   },
@@ -52,11 +48,7 @@ export const fields1: FieldType[] = [
         validation: [
           {
             type: 'required',
-            rules: [
-              {
-                message: 'Please choose a inline text value',
-              },
-            ],
+            message: 'Please choose a inline text value',
           },
         ],
       },
