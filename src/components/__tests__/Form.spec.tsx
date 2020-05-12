@@ -90,11 +90,7 @@ describe('<Form />', () => {
         validation: [
           {
             type: 'required',
-            rules: [
-              {
-                message: 'Please choose a username',
-              },
-            ],
+            message: 'Please choose a username',
           },
         ],
       },
@@ -118,7 +114,7 @@ describe('<Form />', () => {
         validation: [
           {
             type: 'required',
-            rules: [{ message }],
+            message,
           },
         ],
       },
@@ -159,7 +155,7 @@ describe('<Form />', () => {
         validation: [
           {
             type: 'required',
-            rules: [{ message }],
+            message,
           },
         ],
       },
@@ -200,11 +196,7 @@ describe('<Form />', () => {
         validation: [
           {
             type: 'required',
-            rules: [
-              {
-                message,
-              },
-            ],
+            message,
           },
         ],
       },
@@ -261,11 +253,7 @@ describe('<Form />', () => {
         validation: [
           {
             type: 'required',
-            rules: [
-              {
-                message: 'Please choose a username',
-              },
-            ],
+            message: 'Please choose a username',
           },
         ],
       },
@@ -289,11 +277,7 @@ describe('<Form />', () => {
         validation: [
           {
             type: 'required',
-            rules: [
-              {
-                message: 'Please choose a username X',
-              },
-            ],
+            message: 'Please choose a username X',
           },
         ],
       },

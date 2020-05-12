@@ -63,11 +63,7 @@ Optional:
         "validation": [
             {
                 "type": "required",
-                "rules": [
-                {
-                    "message": "Please choose a username"
-                }
-              ]
+                "message": "Please choose a username"
             }
         ]
     },
