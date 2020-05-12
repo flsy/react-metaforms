@@ -41,7 +41,7 @@
     "react": "16.*"
   },
   "devDependencies": {
-    "@babel/core": "7.9.0",
+    "@babel/core": "7.9.6",
     "@storybook/addon-actions": "5.3.18",
     "@storybook/addon-links": "5.3.18",
     "@storybook/addons": "5.3.18",
@@ -63,7 +63,7 @@
     "react-dom": "16.13.1",
     "ts-jest": "25.5.1",
     "tslint": "6.1.2",
-    "tslint-react": "4.2.0",
+    "tslint-react": "5.0.0",
     "typescript": "3.8.3"
   },
   "jest": {
