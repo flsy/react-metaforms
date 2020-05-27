@@ -46,7 +46,7 @@
     "@storybook/addon-links": "5.3.18",
     "@storybook/addons": "5.3.18",
     "@storybook/preset-create-react-app": "3.0.0",
-    "@storybook/react": "5.3.18",
+    "@storybook/react": "5.3.19",
     "@types/enzyme": "3.10.5",
     "@types/enzyme-adapter-react-16": "1.0.6",
     "@types/jest": "25.2.3",
