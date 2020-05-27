@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@babel/core": "7.10.0",
-    "@storybook/addon-actions": "5.3.18",
+    "@storybook/addon-actions": "5.3.19",
     "@storybook/addon-links": "5.3.19",
     "@storybook/addons": "5.3.19",
     "@storybook/preset-create-react-app": "3.0.0",
