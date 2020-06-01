@@ -1,6 +1,6 @@
 {
   "name": "react-metaforms",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "main": "lib/export",
   "typings": "lib/export",
   "repository": {
@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "fputils": "1.0.12",
-    "metaforms": "0.1.0",
+    "metaforms": "0.1.1",
     "react": "16.*"
   },
   "devDependencies": {
