@@ -23,7 +23,7 @@ export type Props = {
   onSubmit: (fields: FieldType[]) => void;
 };
 
-const Form: React.FC<Props> = ({ id, fields = [], onFieldsChange, onSubmit, ...props }) => {
+const Form: React.FC<Props> = (props) => {
   const inputRefs: { [name: string]: any } | {} = {};
 
   React.useEffect(() => {
@@ -32,39 +32,39 @@ const Form: React.FC<Props> = ({ id, fields = [], onFieldsChange, onSubmit, ...p
   }, []);
 
   const resolveFocusedField = () => {
-    const focused = shouldComponentFocus(fields);
+    const focused = shouldComponentFocus(props.fields || []);
     if (focused && inputRefs[focused] && inputRefs[focused].current) {
       inputRefs[focused].current.focus();
     }
   };
 
   const thisUpdate = ({ name, value, groupName }: UpdateActionType) => {
-    onFieldsChange(update({ name, value, groupName }, fields));
+    props.onFieldsChange(update({ name, value, groupName }, props.fields || []));
   };
 
   const thisValidate = ({ name }: ValidateActionType) => {
-    onFieldsChange(validate({ name }, fields));
+    props.onFieldsChange(validate({ name }, props.fields || []));
   };
 
   const thisUpdateAndValidate = ({ name, value, groupName }: UpdateAndValidateActionType) => {
-    onFieldsChange(updateAndValidate({ name, value, groupName }, fields));
+    props.onFieldsChange(updateAndValidate({ name, value, groupName }, props.fields || []));
   };
 
   const thisOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const validated = validateForm(fields);
+    const validated = validateForm(props.fields || []);
 
-    onFieldsChange(validated);
+    props.onFieldsChange(validated);
 
     if (!hasError(validated)) {
-      onSubmit(validated);
+      props.onSubmit(validated);
     }
   };
 
   const getComponent = (field: FieldType, groupName?: string) => {
     if (props.getComponent) {
-      const customProps: CustomComponentProps = {
+      const component = props.getComponent({
         ...field,
         groupName,
         key: field.name,
@@ -72,8 +72,8 @@ const Form: React.FC<Props> = ({ id, fields = [], onFieldsChange, onSubmit, ...p
         update: thisUpdate,
         validate: thisValidate,
         updateAndValidate: thisUpdateAndValidate,
-      };
-      const component = props.getComponent(customProps);
+      });
+
       if (component) {
         return component;
       }
@@ -145,8 +145,8 @@ const Form: React.FC<Props> = ({ id, fields = [], onFieldsChange, onSubmit, ...p
   };
 
   return (
-    <form id={id} onSubmit={thisOnSubmit}>
-      {map(getComponent, fields)}
+    <form id={props.id} onSubmit={thisOnSubmit}>
+      {map(getComponent, props.fields || [])}
     </form>
   );
 };
