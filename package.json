@@ -64,7 +64,7 @@
     "ts-jest": "25.5.1",
     "tslint": "6.1.2",
     "tslint-react": "5.0.0",
-    "typescript": "3.9.3"
+    "typescript": "3.9.5"
   },
   "jest": {
     "testPathIgnorePatterns": [
