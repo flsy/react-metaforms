@@ -6,11 +6,6 @@ import { storiesOf } from '@storybook/react';
 
 export const form: FieldType[] = [
   {
-    name: 'name',
-    label: 'Name',
-    type: 'text',
-  },
-  {
     name: 'surname',
     label: 'Surname',
     // @ts-ignore
@@ -25,7 +20,7 @@ export const form: FieldType[] = [
 interface IProps extends CustomComponentProps {
   logme: (message: string) => void;
 }
-const Tags = (props: IProps) => {
+const Tags = React.forwardRef((props: IProps, ref: any) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
   const update = (value: string) => {
@@ -37,6 +32,7 @@ const Tags = (props: IProps) => {
     <div>
       <label>{props.label}</label>
       <input
+        ref={ref}
         name={props.name}
         value={props.value as string}
         onFocus={() => setIsOpen(true)}
@@ -55,7 +51,7 @@ const Tags = (props: IProps) => {
       </div>
     </div>
   );
-};
+});
 
 const FormStory: React.FC = () => {
   const [fields, onFieldsChange] = React.useState<FieldType[]>(form);
@@ -74,9 +70,9 @@ const FormStory: React.FC = () => {
       fields={fields}
       onFieldsChange={handleFieldChange}
       onSubmit={action('submit')}
-      getComponent={(props) => {
+      getComponent={(props, ref) => {
         if (props.type === 'tags') {
-          return <Tags {...props} logme={logme} />;
+          return <Tags {...props} ref={ref} logme={logme} />;
         }
         return;
       }}

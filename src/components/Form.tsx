@@ -20,7 +20,7 @@ export type Props = {
   id: string;
   onFieldsChange: (state: FieldType[]) => void;
   fields?: FieldType[];
-  getComponent?: (props: CustomComponentProps) => Optional<React.ReactNode>;
+  getComponent?: (props: CustomComponentProps, ref: React.Ref<any>) => Optional<React.ReactNode>;
   onSubmit: (fields: FieldType[]) => void;
 };
 
@@ -64,23 +64,26 @@ const Form: React.FC<Props> = (props) => {
   };
 
   const getComponent = (field: FieldType, groupName?: string) => {
+    inputRefs[field.name] = React.createRef();
+
     if (props.getComponent) {
-      const component = props.getComponent({
-        ...field,
-        groupName,
-        key: field.name,
-        children: field.fields ? map((c) => getComponent(c, field.name), field.fields) : [],
-        update: thisUpdate,
-        validate: thisValidate,
-        updateAndValidate: thisUpdateAndValidate,
-      });
+      const component = props.getComponent(
+        {
+          ...field,
+          groupName,
+          key: field.name,
+          children: field.fields ? map((c) => getComponent(c, field.name), field.fields) : [],
+          update: thisUpdate,
+          validate: thisValidate,
+          updateAndValidate: thisUpdateAndValidate,
+        },
+        inputRefs[field.name],
+      );
 
       if (component) {
         return component;
       }
     }
-
-    inputRefs[field.name] = React.createRef();
 
     switch (field.type) {
       case 'text':
