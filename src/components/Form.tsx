@@ -10,7 +10,8 @@ import {
   FieldType,
   UpdateActionType,
   ValidateActionType,
-  UpdateAndValidateActionType, Optional,
+  UpdateAndValidateActionType,
+  Optional,
 } from 'metaforms';
 import { Input, Textarea, Checkbox, Submit, Group, Select } from './index';
 import { CustomComponentProps } from '../export';
