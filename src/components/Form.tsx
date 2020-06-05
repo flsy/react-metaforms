@@ -11,20 +11,20 @@ import {
   UpdateActionType,
   ValidateActionType,
   UpdateAndValidateActionType,
+  Optional,
 } from 'metaforms';
-import { Input, Textarea, Checkbox, Button, Submit, Group, Select } from './index';
+import { Input, Textarea, Checkbox, Submit, Group, Select } from './index';
 import { CustomComponentProps } from '../export';
 
 export type Props = {
   id: string;
   onFieldsChange: (state: FieldType[]) => void;
   fields?: FieldType[];
-  customComponents?: {};
-  onButtonClick?: (field: FieldType, fields: FieldType[]) => void;
+  getComponent?: (props: CustomComponentProps) => Optional<React.ReactNode>;
   onSubmit: (fields: FieldType[]) => void;
 };
 
-const Form: React.FC<Props> = ({ id, fields = [], onButtonClick, customComponents, onFieldsChange, onSubmit }) => {
+const Form: React.FC<Props> = (props) => {
   const inputRefs: { [name: string]: any } | {} = {};
 
   React.useEffect(() => {
@@ -33,56 +33,51 @@ const Form: React.FC<Props> = ({ id, fields = [], onButtonClick, customComponent
   }, []);
 
   const resolveFocusedField = () => {
-    const focused = shouldComponentFocus(fields);
+    const focused = shouldComponentFocus(props.fields || []);
     if (focused && inputRefs[focused] && inputRefs[focused].current) {
       inputRefs[focused].current.focus();
     }
   };
 
   const thisUpdate = ({ name, value, groupName }: UpdateActionType) => {
-    onFieldsChange(update({ name, value, groupName }, fields));
+    props.onFieldsChange(update({ name, value, groupName }, props.fields || []));
   };
 
   const thisValidate = ({ name }: ValidateActionType) => {
-    onFieldsChange(validate({ name }, fields));
+    props.onFieldsChange(validate({ name }, props.fields || []));
   };
 
   const thisUpdateAndValidate = ({ name, value, groupName }: UpdateAndValidateActionType) => {
-    onFieldsChange(updateAndValidate({ name, value, groupName }, fields));
-  };
-
-  const thisOnButtonClick = (field: FieldType) => {
-    if (onButtonClick) {
-      onButtonClick(field, fields);
-    }
+    props.onFieldsChange(updateAndValidate({ name, value, groupName }, props.fields || []));
   };
 
   const thisOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const validated = validateForm(fields);
+    const validated = validateForm(props.fields || []);
 
-    onFieldsChange(validated);
+    props.onFieldsChange(validated);
 
     if (!hasError(validated)) {
-      onSubmit(validated);
+      props.onSubmit(validated);
     }
   };
 
   const getComponent = (field: FieldType, groupName?: string) => {
-    const component = customComponents && customComponents[field.type];
-    if (component) {
-      const props: CustomComponentProps = {
+    if (props.getComponent) {
+      const component = props.getComponent({
         ...field,
         groupName,
         key: field.name,
         children: field.fields ? map((c) => getComponent(c, field.name), field.fields) : [],
         update: thisUpdate,
         validate: thisValidate,
-        onButtonClick: () => thisOnButtonClick(field),
         updateAndValidate: thisUpdateAndValidate,
-      };
-      return React.createElement(component, props);
+      });
+
+      if (component) {
+        return component;
+      }
     }
 
     inputRefs[field.name] = React.createRef();
@@ -135,10 +130,6 @@ const Form: React.FC<Props> = ({ id, fields = [], onButtonClick, customComponent
           />
         );
 
-      case 'button':
-        return (
-          <Button key={field.name} {...field} groupName={groupName} onButtonClick={() => thisOnButtonClick(field)} />
-        );
       case 'submit':
         return <Submit key={field.name} {...field} groupName={groupName} />;
 
@@ -155,8 +146,8 @@ const Form: React.FC<Props> = ({ id, fields = [], onButtonClick, customComponent
   };
 
   return (
-    <form id={id} onSubmit={thisOnSubmit}>
-      {map(getComponent, fields)}
+    <form id={props.id} onSubmit={thisOnSubmit}>
+      {map(getComponent, props.fields || [])}
     </form>
   );
 };
