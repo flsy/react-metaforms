@@ -44,10 +44,6 @@ const [fields, setFields] = React.useState<FieldType[]>(form);
 * **onFieldsChange**
 * **onSubmit** - Function called after submitting form. Returns same structure as provided into ```fields``` property and adds value to each field.
 
-Optional:
-* **customComponents** - object containing custom components provided to metaform in following structure: ```{ fieldType: Component }``` where ```fieldType``` is unique type name, which is matched against value provided in ```fields``` property.
-* **onButtonClick** - Function called after clicking on any button. Returns whole button definition.
-
 ## Sample Fields
 
 ```json
@@ -80,9 +76,13 @@ Optional:
 ```jsx
 <Form
     ...
-    customComponents={{
-        myInput: ({ name }) => <input name={name} className="my-awesome-input" />,
-        myButton: () => <button>Hello</button>,
+    getComponent={(props) => {
+        if (props.type === 'myInput') {
+            return <input {...props} className="my-awesome-input" />
+        }
+        if (props.type === 'button') {
+            return <button>Hello</button>
+        }
     }}
 />
 ```

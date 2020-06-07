@@ -24,7 +24,6 @@ export interface CustomComponentProps extends CommonProps {
   update: (object: UpdateActionType) => void;
   validate: (o: ValidateActionType) => void;
   updateAndValidate: (o: UpdateAndValidateActionType) => void;
-  onButtonClick: () => void;
   children?: (any | null)[];
   key: string;
 }
