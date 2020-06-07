@@ -8,12 +8,15 @@ import Textarea from '../fields/Textarea';
 import { CustomComponentProps } from '../../export';
 
 describe('<Form />', () => {
-  const app = (fields: FieldType[], onSubmit: any = () => null, customComponents?: any, onButtonClick?: any) => {
+  const app = (
+    fields: FieldType[],
+    onSubmit: any = () => null,
+    getComponent?: (props: CustomComponentProps) => React.ReactNode,
+  ) => {
     type Props = {
       id: string;
       fields: FieldType[];
-      customComponents?: {};
-      onButtonClick?: (field: FieldType, fields: FieldType[]) => void;
+      getComponent?: (props: CustomComponentProps) => React.ReactNode;
       onSubmit: (fields: FieldType[]) => void;
     };
 
@@ -22,7 +25,7 @@ describe('<Form />', () => {
       return <Form onFieldsChange={onFieldsChange} {...props} fields={stateFields} />;
     };
 
-    return mount(<App id="testFormId" {...{ onButtonClick, customComponents, fields, onSubmit }} />);
+    return mount(<App id="testFormId" {...{ getComponent, fields, onSubmit }} />);
   };
 
   it('should render and update a field', () => {
@@ -90,6 +93,7 @@ describe('<Form />', () => {
         validation: [
           {
             type: 'required',
+
             message: 'Please choose a username',
           },
         ],
@@ -196,6 +200,7 @@ describe('<Form />', () => {
         validation: [
           {
             type: 'required',
+
             message,
           },
         ],
@@ -253,6 +258,7 @@ describe('<Form />', () => {
         validation: [
           {
             type: 'required',
+
             message: 'Please choose a username',
           },
         ],
@@ -277,6 +283,7 @@ describe('<Form />', () => {
         validation: [
           {
             type: 'required',
+
             message: 'Please choose a username X',
           },
         ],
@@ -305,16 +312,16 @@ describe('<Form />', () => {
         validation: [],
       },
     ] as FieldType[];
-    const customComponents = {
-      text: (props: CustomComponentProps) => (
+    const onSubmit = jest.fn();
+
+    const customComponents = (props: CustomComponentProps) =>
+      props.type === 'text' ? (
         <input
           name="testNameInput"
           defaultValue={props.value as string}
           onChange={(e) => props.update({ name: props.name, value: e.target.value })}
         />
-      ),
-    };
-    const onSubmit = jest.fn();
+      ) : undefined;
 
     const wrapper = app(fields, onSubmit, customComponents);
 
@@ -328,11 +335,6 @@ describe('<Form />', () => {
 
   it('should render custom group component', () => {
     const groupFields = [
-      {
-        type: 'button',
-        name: 'button',
-        label: 'Click me',
-      },
       {
         type: 'text',
         name: 'input',
@@ -348,57 +350,23 @@ describe('<Form />', () => {
         fields: groupFields,
       },
     ] as FieldType[];
-    const customComponents = {
-      group: (props: CustomComponentProps) => (
+    const customComponents = (props: CustomComponentProps) =>
+      props.type === 'group' ? (
         <div>
           <h2>My Custom Group</h2>
           {props.children}
         </div>
-      ),
-    };
-    const onButtonClick = jest.fn();
-
+      ) : undefined;
     const onSubmit = jest.fn();
 
-    const wrapper = app(fields, onSubmit, customComponents, onButtonClick);
+    const wrapper = app(fields, onSubmit, customComponents);
 
     expect(wrapper.find('h2').text()).toEqual('My Custom Group');
-    expect(wrapper.find('button').prop('children')).toEqual('Click me');
-
-    wrapper.find('button').simulate('click');
 
     expect(wrapper.find('input').prop('name')).toEqual('input');
-    expect(onButtonClick).toHaveBeenCalledWith(groupFields[0], fields);
 
     wrapper.find('form').simulate('submit');
     expect(onSubmit).toHaveBeenCalledWith(fields);
-    wrapper.unmount();
-  });
-
-  it('should return fields when clicked on button', () => {
-    const fields = [
-      {
-        name: 'test-name',
-        type: 'text',
-        label: 'Name',
-      },
-      {
-        name: '?',
-        label: 'just-a-button',
-        type: 'button',
-      },
-    ] as FieldType[];
-    const onButtonClick = jest.fn();
-
-    const wrapper = app(fields, null, null, onButtonClick);
-
-    wrapper.find('input[name="test-name"]').simulate('change', { target: { value: 'some test value' } });
-
-    wrapper.find('form').find('button[type="button"]').simulate('click');
-
-    const expectedFormFields = fields.map((f) => (f.name === 'test-name' ? { ...f, value: 'some test value' } : f));
-
-    expect(onButtonClick).toHaveBeenCalledWith(fields[1], expectedFormFields);
     wrapper.unmount();
   });
 });
