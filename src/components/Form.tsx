@@ -13,7 +13,7 @@ import {
   UpdateAndValidateActionType,
   Optional,
 } from 'metaforms';
-import { Input, Textarea, Checkbox, Submit, Group, Select } from './index';
+import { Input, NumberInput, Textarea, Checkbox, Submit, Group, Select } from './index';
 import { CustomComponentProps } from '../export';
 
 export type Props = {
@@ -88,7 +88,6 @@ const Form: React.FC<Props> = (props) => {
     switch (field.type) {
       case 'text':
       case 'email':
-      case 'number':
       case 'datetime-local':
       case 'password':
         return (
@@ -101,6 +100,19 @@ const Form: React.FC<Props> = (props) => {
             validate={thisValidate}
           />
         );
+
+      case 'number':
+        return (
+          <NumberInput
+            key={field.name}
+            {...field}
+            ref={inputRefs[field.name]}
+            groupName={groupName}
+            update={thisUpdate}
+            validate={thisValidate}
+          />
+        );
+
       case 'textarea':
         return (
           <Textarea

@@ -1,34 +1,37 @@
 import * as React from 'react';
 import { ErrorMessage, Label } from '../index';
 import { isRequired, Optional, Value } from 'metaforms';
-import { InputProps } from '../../export';
-import { isBoolean, isDate, isNumber } from './utils';
+import { NumberProps } from '../../export';
+import { isBoolean, isDate, isString } from './utils';
 
-const getValue = (value: Value): Optional<string> => {
+const getValue = (value: Value): Optional<number> => {
   if (isDate(value)) {
-    return value.toISOString();
+    return value.getTime();
+  }
+
+  if (isString(value)) {
+    return parseInt(value, 10);
   }
 
   if (isBoolean(value)) {
-    return value ? 'true' : 'false';
-  }
-  if (isNumber(value)) {
-    return `${value}`;
+    return value ? 1 : 0;
   }
 
   return value;
 };
 
-const Input = React.forwardRef((props: InputProps, ref: React.Ref<HTMLInputElement>) => {
+const NumberInput = React.forwardRef((props: NumberProps, ref: React.Ref<HTMLInputElement>) => {
   return (
     <div>
       {props.label && <Label fieldId={props.name} label={props.label} isRequired={isRequired(props.validation)} />}
       <input
         ref={ref}
         id={props.name}
-        type={props.type}
+        type="number"
         name={props.name}
         placeholder={props.placeholder}
+        min={props.min}
+        max={props.max}
         value={getValue(props.value)}
         disabled={props.disabled}
         onChange={(e) => props.update({ name: props.name, value: e.target.value, groupName: props.groupName })}
@@ -40,4 +43,4 @@ const Input = React.forwardRef((props: InputProps, ref: React.Ref<HTMLInputEleme
   );
 });
 
-export default Input;
+export default NumberInput;

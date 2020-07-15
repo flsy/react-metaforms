@@ -4,6 +4,7 @@ import {
   CommonProps,
   FieldType,
   InputProps as InputPropsInternal,
+  NumberProps as NumberPropsInternal,
   SelectProps as SelectPropsInternal,
   TextAreaProps as TextAreaPropsInternal,
   UpdateActionType,
@@ -29,6 +30,11 @@ export interface CustomComponentProps extends CommonProps {
 }
 
 export interface InputProps extends InputPropsInternal {
+  update: (object: UpdateActionType) => void;
+  validate: (o: ValidateActionType) => void;
+}
+
+export interface NumberProps extends NumberPropsInternal {
   update: (object: UpdateActionType) => void;
   validate: (o: ValidateActionType) => void;
 }
