@@ -13,11 +13,11 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install Packages
-        run: npm ci
+        run: yarn install
 
       - name: Deploy to Github Pages
         run: |
           git config --global user.email ${{ secrets.access_github_email }}
           git config --global user.name ${{ secrets.access_github_username }}
           git remote set-url origin https://${{ secrets.access_token }}@github.com/flsy/react-metaforms.git
-          npm run deploy
+          yarn deploy
