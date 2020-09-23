@@ -1,30 +1,33 @@
 import * as React from 'react';
-import { map } from 'fputils';
 import {
-  hasError,
-  validateForm,
-  updateAndValidate,
-  validate,
-  update,
   shouldComponentFocus,
-  FieldType,
-  UpdateActionType,
-  ValidateActionType,
-  UpdateAndValidateActionType,
   Optional,
+  IForm,
+  Field,
+  validateForm,
+  hasError,
+  update,
+  validate,
+  updateAndValidate,
 } from 'metaforms';
-import { Input, NumberInput, Textarea, Checkbox, Submit, Group, Select } from './index';
-import { CustomComponentProps } from '../export';
 
-export type Props = {
-  id: string;
-  onFieldsChange: (state: FieldType[]) => void;
-  fields?: FieldType[];
-  getComponent?: (props: CustomComponentProps, ref: React.Ref<any>) => Optional<React.ReactNode>;
-  onSubmit: (fields: FieldType[]) => void;
+type ValueOf<T> = T[keyof T];
+
+export type Components<T> = (props: {
+  name: keyof T;
+  component: ValueOf<T>;
+  ref: React.Ref<any>;
+  actions: { update: any; validate: any; updateAndValidate: any };
+}) => Optional<React.ReactNode>;
+
+export type Props<T extends Field> = {
+  onFormChange: (state: IForm<T>) => void;
+  form: IForm<T>;
+  components: Components<T>;
+  onSubmit: (form: IForm<T>) => void;
 };
 
-const Form: React.FC<Props> = (props) => {
+const Form = <T extends Field>(props: Props<T>) => {
   const inputRefs: { [name: string]: any } | {} = {};
 
   React.useEffect(() => {
@@ -33,138 +36,49 @@ const Form: React.FC<Props> = (props) => {
   }, []);
 
   const resolveFocusedField = () => {
-    const focused = shouldComponentFocus(props.fields || []);
+    const focused = shouldComponentFocus(props.form || {});
     if (focused && inputRefs[focused] && inputRefs[focused].current) {
       inputRefs[focused].current.focus();
     }
   };
 
-  const thisUpdate = ({ name, value, groupName }: UpdateActionType) => {
-    props.onFieldsChange(update({ name, value, groupName }, props.fields || []));
-  };
-
-  const thisValidate = ({ name }: ValidateActionType) => {
-    props.onFieldsChange(validate({ name }, props.fields || []));
-  };
-
-  const thisUpdateAndValidate = ({ name, value, groupName }: UpdateAndValidateActionType) => {
-    props.onFieldsChange(updateAndValidate({ name, value, groupName }, props.fields || []));
-  };
-
-  const thisOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const validated = validateForm(props.fields || []);
+    const validated = validateForm(props.form);
 
-    props.onFieldsChange(validated);
-
+    props.onFormChange(validated);
     if (!hasError(validated)) {
       props.onSubmit(validated);
     }
   };
 
-  const getComponent = (field: FieldType, groupName?: string) => {
-    inputRefs[field.name] = React.createRef();
+  const getComponent = ([name, component]: [string, ValueOf<T>]): React.ReactNode => {
+    inputRefs[name] = React.createRef();
 
-    if (props.getComponent) {
-      const component = props.getComponent(
-        {
-          ...field,
-          groupName,
-          key: field.name,
-          children: field.fields ? map((c) => getComponent(c, field.name), field.fields) : [],
-          update: thisUpdate,
-          validate: thisValidate,
-          updateAndValidate: thisUpdateAndValidate,
+    if (component.fields) {
+      return Object.entries(component.fields).map(([nestedName, nestedComponent]) => {
+        return getComponent([[name, nestedName], nestedComponent] as any);
+      });
+    }
+
+    return props.components({
+      name,
+      component,
+      ref: inputRefs[name],
+      actions: {
+        update: (path: string | string[], value: ValueOf<T>['value']) => {
+          const updated = update(path, value, props.form);
+          props.onFormChange(updated as any);
         },
-        inputRefs[field.name],
-      );
-
-      if (component) {
-        return component;
-      }
-    }
-
-    switch (field.type) {
-      case 'text':
-      case 'email':
-      case 'datetime-local':
-      case 'password':
-        return (
-          <Input
-            key={field.name}
-            {...field}
-            ref={inputRefs[field.name]}
-            groupName={groupName}
-            update={thisUpdate}
-            validate={thisValidate}
-          />
-        );
-
-      case 'number':
-        return (
-          <NumberInput
-            key={field.name}
-            {...field}
-            ref={inputRefs[field.name]}
-            groupName={groupName}
-            update={thisUpdate}
-            validate={thisValidate}
-          />
-        );
-
-      case 'textarea':
-        return (
-          <Textarea
-            key={field.name}
-            {...field}
-            ref={inputRefs[field.name]}
-            groupName={groupName}
-            update={thisUpdate}
-            validate={thisValidate}
-          />
-        );
-      case 'checkbox':
-        return (
-          <Checkbox
-            key={field.name}
-            {...field}
-            ref={inputRefs[field.name]}
-            groupName={groupName}
-            updateAndValidate={thisUpdateAndValidate}
-          />
-        );
-      case 'select':
-        return (
-          <Select
-            key={field.name}
-            {...field}
-            ref={inputRefs[field.name]}
-            groupName={groupName}
-            updateAndValidate={thisUpdateAndValidate}
-          />
-        );
-
-      case 'submit':
-        return <Submit key={field.name} {...field} groupName={groupName} />;
-
-      case 'group':
-        return (
-          <Group key={field.name} name={field.name} type="group" legend={field.legend}>
-            {map((c) => getComponent(c, field.name), field.fields)}
-          </Group>
-        );
-
-      default:
-        return null;
-    }
+        validate: (path: string | string[]) => props.onFormChange(validate(path, props.form) as any),
+        updateAndValidate: (path: string | string[], value: ValueOf<T>['value']) =>
+          props.onFormChange(updateAndValidate(path, value, props.form) as any),
+      },
+    });
   };
 
-  return (
-    <form id={props.id} onSubmit={thisOnSubmit}>
-      {map(getComponent, props.fields || [])}
-    </form>
-  );
+  return <form onSubmit={onSubmit}>{Object.entries(props.form).map(getComponent as any)}</form>;
 };
 
 export default Form;

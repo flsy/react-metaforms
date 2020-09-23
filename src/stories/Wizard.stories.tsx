@@ -1,15 +1,19 @@
-import Form, { ButtonProps, FieldType } from '../export';
+import Form from '../export';
 import React from 'react';
-import { action } from '@storybook/addon-actions';
-import { getFormData } from 'metaforms';
+import { getFormData, IForm } from 'metaforms';
 import { storiesOf } from '@storybook/react';
+import { CheckboxField, SubmitField, TextField } from './interfaces';
+import { Checkbox, Input, Submit } from './components';
 
-export const fieldConfig: FieldType[][] = [
-  [
-    {
-      name: 'name',
-      label: 'Name',
+type Form1 = IForm<{ name: TextField; hasAddress: CheckboxField; submit: SubmitField }>;
+type Form2 = IForm<{ street: TextField; city: TextField; submit: SubmitField }>;
+type Form3 = IForm<{ companyName: TextField; submit: SubmitField }>;
+
+export const fieldConfig: [Form1, Form2, Form3] = [
+  {
+    name: {
       type: 'text',
+      label: 'Name',
       validation: [
         {
           type: 'required',
@@ -17,66 +21,53 @@ export const fieldConfig: FieldType[][] = [
         },
       ],
     },
-    {
-      name: 'hasAddress',
+    hasAddress: {
       type: 'checkbox',
       label: 'I want to enter my address',
       value: false,
     },
-    {
-      name: 'submit',
+    submit: {
       label: 'Continue',
       type: 'submit',
     },
-  ],
-  [
-    {
-      name: 'street',
+  },
+  {
+    street: {
       label: 'Street',
       type: 'text',
     },
-    {
-      name: 'city',
+    city: {
       label: 'City',
       type: 'text',
     },
-    {
-      name: 'submit',
+    submit: {
       label: 'Continue',
       type: 'submit',
     },
-  ],
-  [
-    {
-      name: 'companyName',
+  },
+  {
+    companyName: {
       label: 'Company Name',
       type: 'text',
       value: 'banana',
     },
-    {
-      name: 'submit',
+    submit: {
       label: 'Finish',
       type: 'submit',
     },
-  ],
+  },
 ];
-
-const submit = (props: ButtonProps) => (
-  <button type="submit" style={{ margin: '10px 0' }}>
-    {props.label}
-  </button>
-);
 
 const WizardStory = () => {
   const [values, setValues] = React.useState<object>([]);
   const [step, setStep] = React.useState<number>(0);
-  const [fields, onFieldsChange] = React.useState<FieldType[]>(fieldConfig[step]);
+  const [fields, onFieldsChange] = React.useState<any>(fieldConfig[step]);
 
-  const handleFieldChange = (state: FieldType[]) => {
+  const handleFieldChange = (state: IForm<any>) => {
     onFieldsChange(state);
   };
 
-  const onSubmit = (f: FieldType[]) => {
+  const onSubmit = (f: IForm<any>) => {
     let nextStep = step + 1;
 
     if (getFormData(f).hasAddress === false) {
@@ -99,13 +90,20 @@ const WizardStory = () => {
   }
 
   return (
-    <Form
-      id="demo-form"
-      fields={fields}
-      onFieldsChange={handleFieldChange}
+    <Form<Form1>
+      form={fields}
+      onFormChange={handleFieldChange}
       onSubmit={onSubmit}
-      onButtonClick={action('button click')}
-      customComponents={{ submit }}
+      components={({ name, component, ref, actions }) => {
+        switch (component.type) {
+          case 'text':
+            return <Input ref={ref} name={name} {...component} {...actions} />;
+          case 'checkbox':
+            return <Checkbox ref={ref} name={name} {...component} {...actions} />;
+          case 'submit':
+            return <Submit name={name} {...component} {...actions} />;
+        }
+      }}
     />
   );
 };

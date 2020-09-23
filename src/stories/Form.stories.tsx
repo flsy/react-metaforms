@@ -1,14 +1,32 @@
-import Form, { ButtonProps, FieldType } from '../export';
+import Form from '../export';
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { getFormData } from 'metaforms';
+import { getFormData, IForm } from 'metaforms';
 import { storiesOf } from '@storybook/react';
+import {
+  ButtonField,
+  CheckboxField,
+  GroupField,
+  SelectField,
+  SubmitField,
+  TextAreaField,
+  TextField,
+} from './interfaces';
+import { Checkbox, Group, Input, Submit, Textarea } from './components';
 
-export const fields1: FieldType[] = [
-  {
-    name: 'name',
-    label: 'Name',
+type Form1 = IForm<{
+  name: TextField;
+  button: ButtonField;
+  agree: CheckboxField;
+  'my-textarea': TextAreaField;
+  'first-group': GroupField<{ 'inline-button': ButtonField; 'inline-input': TextField }>;
+  submit: SubmitField;
+}>;
+
+export const fields1: Form1 = {
+  name: {
     type: 'text',
+    label: 'Name',
     validation: [
       {
         type: 'required',
@@ -16,34 +34,28 @@ export const fields1: FieldType[] = [
       },
     ],
   },
-  {
-    name: 'button',
+  button: {
     label: 'Button example',
     type: 'button',
   },
-  {
-    name: 'agree',
+  agree: {
     type: 'checkbox',
     label: 'Agree ?',
   },
-  {
-    name: 'my-textarea',
+  'my-textarea': {
     type: 'textarea',
     value: 'Text area',
   },
-  {
+  'first-group': {
     type: 'group',
-    name: 'first-group',
-    legend: 'Inline group', // optional
-    fields: [
-      {
-        name: 'inline-button',
-        label: 'Inline Button',
+    legend: 'Inline group',
+    fields: {
+      'inline-button': {
         type: 'button',
+        label: 'Inline Button',
       },
-      {
+      'inline-input': {
         type: 'text',
-        name: 'inline-input',
         label: 'Inline Input',
         validation: [
           {
@@ -52,76 +64,79 @@ export const fields1: FieldType[] = [
           },
         ],
       },
-    ],
+    },
   },
-  {
-    name: 'submit',
+  submit: {
+    label: 'Submit',
     type: 'submit',
   },
-];
+};
 
-export const fields2: FieldType[] = [
-  {
-    name: 'name',
+export const fields2: IForm<{ name: TextField; submit: SubmitField }> = {
+  name: {
     label: 'Name',
     type: 'text',
     value: 'banana',
   },
-  {
-    name: 'submit',
+  submit: {
     type: 'submit',
   },
-];
+};
 
-export const fields3: FieldType[] = [
-  {
-    name: 'name',
+export const fields3: IForm<{ name: TextField; groups: SelectField; submit: SubmitField }> = {
+  name: {
     label: 'Name',
     type: 'text',
     value: 'banana',
   },
-  {
-    name: 'groups',
+  groups: {
     type: 'select',
-    options: [{ value: 'first' }, { value: 2, label: 'Second' }],
+    options: [{ value: 'first' }, { value: 'second', label: 'Second' }],
   },
-  {
-    name: 'submit',
+  submit: {
+    label: 'Submit',
     type: 'submit',
   },
-];
-
-const submit = (props: ButtonProps) => (
-  <button type="submit" style={{ margin: '10px 0' }}>
-    {props.label} [OK] Custom button
-  </button>
-);
+};
 
 interface IProps {
-  fieldsDefault: FieldType[];
+  form: IForm<any>;
 }
 
-const FormStory = ({ fieldsDefault }: IProps) => {
-  const [fields, onFieldsChange] = React.useState<FieldType[]>(fieldsDefault);
+const FormStory = ({ form }: IProps) => {
+  const [fields, onFieldsChange] = React.useState(form);
 
-  const handleFieldChange = (state: FieldType[]) => {
-    action('onFieldsChange')(getFormData(fields));
+  const handleFieldChange = (state: IProps['form']) => {
+    action('onFieldsChange')(getFormData(state));
     onFieldsChange(state);
   };
 
   return (
-    <Form
-      id="demo-form"
-      fields={fields}
-      onFieldsChange={handleFieldChange}
-      onSubmit={action('submit')}
-      onButtonClick={action('button click')}
-      customComponents={{ submit }}
+    <Form<Form1>
+      form={fields}
+      onFormChange={handleFieldChange}
+      onSubmit={(data) => action('submit')(getFormData(data))}
+      components={({ name, component, ref, actions }) => {
+        switch (component.type) {
+          case 'text':
+            return <Input ref={ref} name={name} {...component} {...actions} />;
+          case 'submit':
+            return <Submit name={name} {...component} {...actions} />;
+          case 'group':
+            return <Group {...component} />;
+          case 'checkbox':
+            return <Checkbox ref={ref} name={name} {...component} {...actions} />;
+          case 'button':
+            return <button>{component.label}</button>;
+          case 'textarea':
+            return <Textarea ref={ref} name={name} {...component} {...actions} />;
+        }
+      }}
     />
   );
 };
 
 storiesOf('Form', module)
-  .add('example 1', () => <FormStory fieldsDefault={fields1} />)
-  .add('example 2', () => <FormStory fieldsDefault={fields2} />)
-  .add('example 3', () => <FormStory fieldsDefault={fields3} />);
+  .add('example 1', () => <FormStory form={fields1} />)
+  .add('example 2', () => <FormStory form={fields2} />)
+  .add('example 3', () => <FormStory form={fields3} />);

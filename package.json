@@ -26,8 +26,8 @@
     "prettier": "prettier --check \"src/**/*.{ts,tsx}\"",
     "lint": "tslint -c ./tslint.json './src/**/*.{ts,tsx}'",
     "build": "rm -rf ./lib && tsc --p tsconfig.json",
-    "verify": "npm run format && npm run lint && CI=true npm test && npm run build",
-    "prepublishOnly": "npm run build",
+    "verify": "yarn format && yarn lint && yarn test && yarn build",
+    "prepublishOnly": "yarn build",
     "predeploy": "build-storybook",
     "deploy": "NODE_DEBUG=gh-pages gh-pages -d storybook-static"
   },
@@ -36,44 +36,42 @@
     "react-dom": "*"
   },
   "dependencies": {
-    "fputils": "1.0.12",
-    "metaforms": "0.2.2",
-    "react": "16.*"
+    "fputils": "^1.0.12",
+    "metaforms": "^1.0.1",
+    "react": "^16.*"
   },
   "devDependencies": {
-    "@babel/core": "7.10.3",
-    "@storybook/addon-actions": "6.0.12",
-    "@storybook/addon-links": "6.0.19",
-    "@storybook/addons": "6.0.19",
-    "@storybook/preset-create-react-app": "3.1.3",
-    "@storybook/react": "6.0.16",
-    "@types/enzyme": "3.10.5",
-    "@types/enzyme-adapter-react-16": "1.0.6",
-    "@types/jest": "26.0.9",
-    "@types/node": "14.0.27",
-    "@types/react": "16.9.43",
-    "@types/react-dom": "16.9.8",
-    "babel-loader": "8.1.0",
-    "babel-preset-react-app": "9.1.2",
-    "enzyme": "3.11.0",
-    "enzyme-adapter-react-16": "1.15.2",
+    "@babel/core": "^7.11.6",
+    "@storybook/addon-actions": "^6.0.21",
+    "@storybook/addon-links": "^6.0.21",
+    "@storybook/addons": "^6.0.21",
+    "@storybook/preset-create-react-app": "^3.1.4",
+    "@storybook/react": "^6.0.21",
+    "@types/enzyme": "^3.10.6",
+    "@types/enzyme-adapter-react-16": "^1.0.6",
+    "@types/jest": "^26.0.14",
+    "@types/node": "^14.11.2",
+    "@types/react": "^16.9.49",
+    "@types/react-dom": "^16.9.8",
+    "babel-loader": "^8.1.0",
+    "babel-preset-react-app": "^9.1.2",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.4",
     "gh-pages": "3.1.0",
-    "jest": "25.5.4",
-    "prettier": "2.0.5",
-    "react-dom": "16.13.1",
-    "ts-jest": "25.5.1",
-    "tslint": "6.1.3",
-    "tslint-react": "5.0.0",
-    "typescript": "3.9.6"
+    "jest": "^26.4.2",
+    "prettier": "^2.1.2",
+    "react-dom": "^16.13.1",
+    "ts-jest": "^26.4.0",
+    "tslint": "^6.1.3",
+    "tslint-react": "^5.0.0",
+    "typescript": "^4.0.3"
   },
   "jest": {
-    "testPathIgnorePatterns": [
-      "<rootDir>/lib"
-    ],
+    "rootDir": "src",
     "preset": "ts-jest",
     "testEnvironment": "jsdom",
     "setupFilesAfterEnv": [
-      "<rootDir>/src/setupTests.js"
+      "<rootDir>/setupTests.js"
     ]
   }
 }
