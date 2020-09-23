@@ -7,85 +7,72 @@ There is a nice [how to use](https://medium.com/@kolebaba/reactjs-json-based-for
 ## Basic Usage
 
 ```jsx
-import Form, { getFormData, FieldType } from 'react-metaforms';
+import Form, { getFormData, IForm } from 'react-metaforms';
 
 // This could be loaded from server
-const form = [
-    {
-        "name": "username",
-        "label": "Username",
-        "type": "text"
+const loginForm = {
+    username: {
+        type: "text",
+        label: "Username"
     },
-    {
-        "type": "submit"
+    submit: {
+        "type": "submit",
+        "label": "Submit"
     }
-];
+};
 
 // Store form's changes localy
-const [fields, setFields] = React.useState<FieldType[]>(form);
+const [form, setForm] = React.useState<IForm>(loginForm);
 
-// Render it!
+// Render it
 <Form
-  id="my-form"
-  fields={fields}
-  onFieldsChange={setFields}
-  onSubmit={(values) => {
-    const { username } = getFormData(values)
+  form={form}
+  onFormChange={setForm}
+  onSubmit={(submitted) => {
+    const { username } = getFormData(submitted)
     
     console.log('username:', username);
   }}
+  components={({ name, component, actions }) => {
+    switch (component.type) {
+        case 'text':
+            return <TextInput name={name} {...component} {...actions} />
+        case 'submit':
+            return <button type="submit">{component.label}</button> 
+    }  
+}}
 />  
 ```
 
 ## Properties
 
-* **id** - id of form.
-* **fields** - array of objects rendered by metaform.
-* **onFieldsChange**
+* **form** - array of objects rendered by metaform.
+* **onFormChange**
 * **onSubmit** - Function called after submitting form. Returns same structure as provided into ```fields``` property and adds value to each field.
 
 ## Sample Fields
 
 ```json
-[
-    {
-        "name": "username",
-        "label": "Username",
-        "type": "text",
-        "value": "field value",
-        "disabled": false,
-        "placeholder": "",
-        "errorMessage": "",
-        "validation": [
-            {
-                "type": "required",
-                "message": "Please choose a username"
-            }
-        ]
-    },
-    {
-        "name": "submitBtn",
-        "label": "Save",
-        "type": "submit"
-    }
-]
+{
+  "username": {
+    "label": "Username",
+    "type": "text",
+    "value": "field value",
+    "disabled": false,
+    "placeholder": "",
+    "errorMessage": "",
+    "validation": [
+      {
+        "type": "required",
+        "message": "Please choose a username"
+      }
+    ]
+  },
+  "submit": {
+    "label": "Save",
+    "type": "submit"
+  }
+}
 ```
-
-## Custom fields
-
-```jsx
-<Form
-    ...
-    getComponent={(props) => {
-        if (props.type === 'myInput') {
-            return <input {...props} className="my-awesome-input" />
-        }
-        if (props.type === 'button') {
-            return <button>Hello</button>
-        }
-    }}
-/>
-```
-
 
 [Validation rules](/docs/validation_rules.md)
