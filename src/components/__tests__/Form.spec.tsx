@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import { Field, IForm } from 'metaforms';
 import Form from '../../export';
 import { Checkbox, Group, Input, Submit, Textarea } from '../../stories/components';
-import { Components } from '../Form';
+import { Components } from '../../interfaces';
 
 describe('<Form />', () => {
   const components: Components<any> = ({ name, component, ref, actions }) => {

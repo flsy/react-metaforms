@@ -1,33 +1,17 @@
 import * as React from 'react';
 import {
   shouldComponentFocus,
-  Optional,
-  IForm,
   Field,
   validateForm,
   hasError,
   update,
   validate,
   updateAndValidate,
+  ValueOf,
 } from 'metaforms';
+import { FormProps } from '../interfaces';
 
-type ValueOf<T> = T[keyof T];
-
-export type Components<T> = (props: {
-  name: keyof T;
-  component: ValueOf<T>;
-  ref: React.Ref<any>;
-  actions: { update: any; validate: any; updateAndValidate: any };
-}) => Optional<React.ReactNode>;
-
-export type Props<T extends Field> = {
-  onFormChange: (state: IForm<T>) => void;
-  form: IForm<T>;
-  components: Components<T>;
-  onSubmit: (form: IForm<T>) => void;
-};
-
-const Form = <T extends Field>(props: Props<T>) => {
+const Form = <T extends Field>(props: FormProps<T>) => {
   const inputRefs: { [name: string]: any } | {} = {};
 
   React.useEffect(() => {
