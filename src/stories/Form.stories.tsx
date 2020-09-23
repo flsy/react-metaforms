@@ -1,7 +1,7 @@
 import Form from '../export';
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { getFormData, Form as FormInterface } from 'metaforms';
+import { getFormData, IForm } from 'metaforms';
 import { storiesOf } from '@storybook/react';
 import {
   ButtonField,
@@ -14,7 +14,7 @@ import {
 } from './interfaces';
 import { Checkbox, Group, Input, Submit, Textarea } from './components';
 
-type Form1 = FormInterface<{
+type Form1 = IForm<{
   name: TextField;
   button: ButtonField;
   agree: CheckboxField;
@@ -72,7 +72,7 @@ export const fields1: Form1 = {
   },
 };
 
-export const fields2: FormInterface<{ name: TextField; submit: SubmitField }> = {
+export const fields2: IForm<{ name: TextField; submit: SubmitField }> = {
   name: {
     label: 'Name',
     type: 'text',
@@ -83,7 +83,7 @@ export const fields2: FormInterface<{ name: TextField; submit: SubmitField }> = 
   },
 };
 
-export const fields3: FormInterface<{ name: TextField; groups: SelectField; submit: SubmitField }> = {
+export const fields3: IForm<{ name: TextField; groups: SelectField; submit: SubmitField }> = {
   name: {
     label: 'Name',
     type: 'text',
@@ -100,7 +100,7 @@ export const fields3: FormInterface<{ name: TextField; groups: SelectField; subm
 };
 
 interface IProps {
-  form: FormInterface<any>;
+  form: IForm<any>;
 }
 
 const FormStory = ({ form }: IProps) => {

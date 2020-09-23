@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "fputils": "^1.0.12",
-    "metaforms": "^1.0.0",
+    "metaforms": "^1.0.1",
     "react": "^16.*"
   },
   "devDependencies": {

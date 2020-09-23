@@ -2,7 +2,7 @@ import * as React from 'react';
 import {
   shouldComponentFocus,
   Optional,
-  Form as FormInterface,
+  IForm,
   Field,
   validateForm,
   hasError,
@@ -21,10 +21,10 @@ export type Components<T> = (props: {
 }) => Optional<React.ReactNode>;
 
 export type Props<T extends Field> = {
-  onFormChange: (state: FormInterface<T>) => void;
-  form: FormInterface<T>;
+  onFormChange: (state: IForm<T>) => void;
+  form: IForm<T>;
   components: Components<T>;
-  onSubmit: (form: FormInterface<T>) => void;
+  onSubmit: (form: IForm<T>) => void;
 };
 
 const Form = <T extends Field>(props: Props<T>) => {

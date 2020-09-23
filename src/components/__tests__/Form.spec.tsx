@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { mount } from 'enzyme';
-import { Field, Form as FormInterface } from 'metaforms';
+import { Field, IForm } from 'metaforms';
 import Form from '../../export';
 import { Checkbox, Group, Input, Submit, Textarea } from '../../stories/components';
 import { Components } from '../Form';
@@ -25,7 +25,7 @@ describe('<Form />', () => {
     }
   };
 
-  const app = <T extends Field>(form: FormInterface<T>, onSubmit?: any) => {
+  const app = <T extends Field>(form: IForm<T>, onSubmit?: any) => {
     const App: React.FC<any> = (props) => {
       const [stateForm, onFormChange] = React.useState(props.form);
 

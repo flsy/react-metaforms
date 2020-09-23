@@ -1,13 +1,13 @@
 import Form from '../export';
 import React from 'react';
-import { getFormData, Form as FormInterface } from 'metaforms';
+import { getFormData, IForm } from 'metaforms';
 import { storiesOf } from '@storybook/react';
 import { CheckboxField, SubmitField, TextField } from './interfaces';
 import { Checkbox, Input, Submit } from './components';
 
-type Form1 = FormInterface<{ name: TextField; hasAddress: CheckboxField; submit: SubmitField }>;
-type Form2 = FormInterface<{ street: TextField; city: TextField; submit: SubmitField }>;
-type Form3 = FormInterface<{ companyName: TextField; submit: SubmitField }>;
+type Form1 = IForm<{ name: TextField; hasAddress: CheckboxField; submit: SubmitField }>;
+type Form2 = IForm<{ street: TextField; city: TextField; submit: SubmitField }>;
+type Form3 = IForm<{ companyName: TextField; submit: SubmitField }>;
 
 export const fieldConfig: [Form1, Form2, Form3] = [
   {
@@ -63,11 +63,11 @@ const WizardStory = () => {
   const [step, setStep] = React.useState<number>(0);
   const [fields, onFieldsChange] = React.useState<any>(fieldConfig[step]);
 
-  const handleFieldChange = (state: FormInterface<any>) => {
+  const handleFieldChange = (state: IForm<any>) => {
     onFieldsChange(state);
   };
 
-  const onSubmit = (f: FormInterface<any>) => {
+  const onSubmit = (f: IForm<any>) => {
     let nextStep = step + 1;
 
     if (getFormData(f).hasAddress === false) {
