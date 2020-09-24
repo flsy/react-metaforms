@@ -3,17 +3,17 @@ import { mount } from 'enzyme';
 import { Field, IForm } from 'metaforms';
 import Form from '../../export';
 import { Checkbox, Group, Input, Submit, Textarea } from '../../stories/components';
-import { Components } from '../Form';
+import { Components } from '../../interfaces';
 
 describe('<Form />', () => {
-  const components: Components<any> = ({ name, component, ref, actions }) => {
+  const components: Components<any> = ({ name, component, ref, actions, groupChildren }) => {
     switch (component.type) {
       case 'text':
         return <Input key={name} ref={ref} name={name} {...component} {...actions} />;
       case 'submit':
         return <Submit key={name} name={name} {...component} {...actions} />;
       case 'group':
-        return <Group key={name} {...component} />;
+        return <Group key={name} {...component} children={groupChildren} />;
       case 'checkbox':
         return <Checkbox ref={ref} key={name} name={name} {...component} {...actions} />;
       case 'textarea':
@@ -86,7 +86,9 @@ describe('<Form />', () => {
     const wrapper = app(fields, onSubmit);
 
     wrapper.find('form').simulate('submit');
-    expect(onSubmit).toHaveBeenCalledWith(fields);
+
+    const formData = { name: 'some default value' };
+    expect(onSubmit).toHaveBeenCalledWith(fields, formData);
     wrapper.unmount();
   });
 
@@ -146,22 +148,25 @@ describe('<Form />', () => {
 
     wrapper.find('form').simulate('submit');
     expect(onSubmit).toHaveBeenCalledTimes(1);
-    expect(onSubmit).toHaveBeenCalledWith({
-      name: {
-        label: 'Name',
-        type: 'checkbox',
-        validation: [
-          {
-            message: 'Check this checkbox',
-            type: 'required',
-          },
-        ],
-        value: true,
+    expect(onSubmit).toHaveBeenCalledWith(
+      {
+        name: {
+          label: 'Name',
+          type: 'checkbox',
+          validation: [
+            {
+              message: 'Check this checkbox',
+              type: 'required',
+            },
+          ],
+          value: true,
+        },
+        submit: {
+          type: 'submit',
+        },
       },
-      submit: {
-        type: 'submit',
-      },
-    });
+      { name: true },
+    );
     wrapper.unmount();
   });
 
@@ -201,22 +206,25 @@ describe('<Form />', () => {
 
     wrapper.find('form').simulate('submit');
     expect(onSubmit).toHaveBeenCalledTimes(1);
-    expect(onSubmit).toHaveBeenCalledWith({
-      name: {
-        label: 'Name',
-        type: 'textarea',
-        validation: [
-          {
-            message: 'Fill this textarea',
-            type: 'required',
-          },
-        ],
-        value: 'some content',
+    expect(onSubmit).toHaveBeenCalledWith(
+      {
+        name: {
+          label: 'Name',
+          type: 'textarea',
+          validation: [
+            {
+              message: 'Fill this textarea',
+              type: 'required',
+            },
+          ],
+          value: 'some content',
+        },
+        submit: {
+          type: 'submit',
+        },
       },
-      submit: {
-        type: 'submit',
-      },
-    });
+      { name: 'some content' },
+    );
     wrapper.unmount();
   });
 
@@ -291,19 +299,22 @@ describe('<Form />', () => {
 
     wrapper.find('form').simulate('submit');
 
-    expect(onSubmit).toHaveBeenCalledWith({
-      name: {
-        label: 'Name',
-        type: 'text',
-        validation: [
-          {
-            message: 'Please choose a username X',
-            type: 'required',
-          },
-        ],
-        value: 'ok value',
+    expect(onSubmit).toHaveBeenCalledWith(
+      {
+        name: {
+          label: 'Name',
+          type: 'text',
+          validation: [
+            {
+              message: 'Please choose a username X',
+              type: 'required',
+            },
+          ],
+          value: 'ok value',
+        },
       },
-    });
+      { name: 'ok value' },
+    );
     wrapper.unmount();
   });
 });
