@@ -1,6 +1,7 @@
 import { Validation } from 'metaforms';
 
 export { default } from './components/Form';
+export * from './interfaces';
 export * from 'metaforms';
 
 export interface GroupFieldProps<Fields> {
@@ -16,7 +17,7 @@ export interface FieldProps<Value> {
   errorMessage?: string;
   validation?: Validation[];
   placeholder?: string;
-  update: (path: string | string[], value: Value) => void;
-  validate: (path: string | string[]) => void;
-  updateAndValidate: (path: string | string[], value: any) => void;
+  update: (path: string, value: Value) => void;
+  validate: (path: string) => void;
+  updateAndValidate: (path: string, value: Value) => void;
 }

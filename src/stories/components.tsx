@@ -95,8 +95,8 @@ export const Checkbox = React.forwardRef((props: FieldProps<boolean>, ref: React
     </div>
   );
 });
-interface SelectProps extends FieldProps<string[]> {
-  options: { value: string; label: string }[];
+interface SelectProps extends FieldProps<string> {
+  options?: { value: string; label?: string }[];
 }
 export const Select = React.forwardRef((props: SelectProps, ref: React.Ref<HTMLSelectElement>) => {
   return (

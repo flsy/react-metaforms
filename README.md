@@ -7,7 +7,7 @@ There is a nice [how to use](https://medium.com/@kolebaba/reactjs-json-based-for
 ## Basic Usage
 
 ```jsx
-import Form, { getFormData, IForm } from 'react-metaforms';
+import Form, { IForm } from 'react-metaforms';
 
 // This could be loaded from server
 const loginForm = {
@@ -28,9 +28,7 @@ const [form, setForm] = React.useState<IForm>(loginForm);
 <Form
   form={form}
   onFormChange={setForm}
-  onSubmit={(submitted) => {
-    const { username } = getFormData(submitted)
-    
+  onSubmit={(submittedForm, { username }) => {
     console.log('username:', username);
   }}
   components={({ name, component, actions }) => {

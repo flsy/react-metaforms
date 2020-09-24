@@ -1,33 +1,18 @@
 import * as React from 'react';
 import {
   shouldComponentFocus,
-  Optional,
-  IForm,
   Field,
   validateForm,
   hasError,
   update,
   validate,
   updateAndValidate,
+  ValueOf,
+  getFormData,
 } from 'metaforms';
+import { FormProps } from '../interfaces';
 
-type ValueOf<T> = T[keyof T];
-
-export type Components<T> = (props: {
-  name: keyof T;
-  component: ValueOf<T>;
-  ref: React.Ref<any>;
-  actions: { update: any; validate: any; updateAndValidate: any };
-}) => Optional<React.ReactNode>;
-
-export type Props<T extends Field> = {
-  onFormChange: (state: IForm<T>) => void;
-  form: IForm<T>;
-  components: Components<T>;
-  onSubmit: (form: IForm<T>) => void;
-};
-
-const Form = <T extends Field>(props: Props<T>) => {
+export default <T extends Field>(props: FormProps<T>) => {
   const inputRefs: { [name: string]: any } | {} = {};
 
   React.useEffect(() => {
@@ -49,36 +34,38 @@ const Form = <T extends Field>(props: Props<T>) => {
 
     props.onFormChange(validated);
     if (!hasError(validated)) {
-      props.onSubmit(validated);
+      props.onSubmit(validated, getFormData(validated));
     }
   };
 
-  const getComponent = ([name, component]: [string, ValueOf<T>]): React.ReactNode => {
-    inputRefs[name] = React.createRef();
+  const getComponent = <F extends Field>([name, component]: [keyof F, ValueOf<F>]): React.ReactNode => {
+    const stringName = name.toString();
+    inputRefs[stringName] = React.createRef();
 
-    if (component.fields) {
-      return Object.entries(component.fields).map(([nestedName, nestedComponent]) => {
-        return getComponent([[name, nestedName], nestedComponent] as any);
-      });
-    }
-
-    return props.components({
-      name,
+    const properties: any = {
+      name: stringName,
       component,
-      ref: inputRefs[name],
+      ref: inputRefs[stringName],
+      groupChildren: component.fields
+        ? Object.entries(component.fields).map(([nestedName, nestedComponent]) => {
+            return getComponent([`${name}.${nestedName}`, nestedComponent]);
+          })
+        : null,
       actions: {
-        update: (path: string | string[], value: ValueOf<T>['value']) => {
-          const updated = update(path, value, props.form);
-          props.onFormChange(updated as any);
+        update: (path: string, value: ValueOf<T>['value']) => {
+          props.onFormChange(update(path.split('.'), value, props.form) as any);
         },
-        validate: (path: string | string[]) => props.onFormChange(validate(path, props.form) as any),
-        updateAndValidate: (path: string | string[], value: ValueOf<T>['value']) =>
-          props.onFormChange(updateAndValidate(path, value, props.form) as any),
+        validate: (path: string) => {
+          props.onFormChange(validate(path.split('.'), props.form) as any);
+        },
+        updateAndValidate: (path: string, value: ValueOf<T>['value']) => {
+          props.onFormChange(updateAndValidate(path.split('.'), value, props.form) as any);
+        },
       },
-    });
+    };
+
+    return props.components(properties);
   };
 
-  return <form onSubmit={onSubmit}>{Object.entries(props.form).map(getComponent as any)}</form>;
+  return <form onSubmit={onSubmit}>{Object.entries(props.form).map(getComponent)}</form>;
 };
-
-export default Form;
