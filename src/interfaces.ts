@@ -29,5 +29,5 @@ export type FormProps<T extends Field> = {
   onFormChange: (form: T) => void;
   form: T;
   components: Components<T>;
-  onSubmit: (form: T, formData: FormData<T>) => void;
+  onSubmit: (submitted: { form: T; formData: FormData<T> }) => void;
 };
