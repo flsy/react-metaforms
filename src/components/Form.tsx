@@ -34,7 +34,7 @@ export default <T extends Field>(props: FormProps<T>) => {
 
     props.onFormChange(validated);
     if (!hasError(validated)) {
-      props.onSubmit(validated, getFormData(validated));
+      props.onSubmit({ form: validated, formData: getFormData(validated) });
     }
   };
 

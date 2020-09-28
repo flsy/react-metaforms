@@ -78,6 +78,10 @@ describe('<Form />', () => {
         label: 'Name',
         value: 'some default value',
       },
+      emptyField: {
+        type: 'text',
+        label: 'Empty ?',
+      },
       submitBtn: {
         label: 'Submit',
         type: 'submit',
@@ -87,8 +91,8 @@ describe('<Form />', () => {
 
     wrapper.find('form').simulate('submit');
 
-    const formData = { name: 'some default value' };
-    expect(onSubmit).toHaveBeenCalledWith(fields, formData);
+    const formData = { name: 'some default value', emptyField: undefined };
+    expect(onSubmit).toHaveBeenCalledWith({ form: fields, formData });
     wrapper.unmount();
   });
 
@@ -148,8 +152,8 @@ describe('<Form />', () => {
 
     wrapper.find('form').simulate('submit');
     expect(onSubmit).toHaveBeenCalledTimes(1);
-    expect(onSubmit).toHaveBeenCalledWith(
-      {
+    expect(onSubmit).toHaveBeenCalledWith({
+      form: {
         name: {
           label: 'Name',
           type: 'checkbox',
@@ -165,8 +169,8 @@ describe('<Form />', () => {
           type: 'submit',
         },
       },
-      { name: true },
-    );
+      formData: { name: true },
+    });
     wrapper.unmount();
   });
 
@@ -206,8 +210,8 @@ describe('<Form />', () => {
 
     wrapper.find('form').simulate('submit');
     expect(onSubmit).toHaveBeenCalledTimes(1);
-    expect(onSubmit).toHaveBeenCalledWith(
-      {
+    expect(onSubmit).toHaveBeenCalledWith({
+      form: {
         name: {
           label: 'Name',
           type: 'textarea',
@@ -223,8 +227,8 @@ describe('<Form />', () => {
           type: 'submit',
         },
       },
-      { name: 'some content' },
-    );
+      formData: { name: 'some content' },
+    });
     wrapper.unmount();
   });
 
@@ -299,8 +303,8 @@ describe('<Form />', () => {
 
     wrapper.find('form').simulate('submit');
 
-    expect(onSubmit).toHaveBeenCalledWith(
-      {
+    expect(onSubmit).toHaveBeenCalledWith({
+      form: {
         name: {
           label: 'Name',
           type: 'text',
@@ -313,8 +317,8 @@ describe('<Form />', () => {
           value: 'ok value',
         },
       },
-      { name: 'ok value' },
-    );
+      formData: { name: 'ok value' },
+    });
     wrapper.unmount();
   });
 });
