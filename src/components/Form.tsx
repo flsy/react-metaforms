@@ -7,8 +7,8 @@ import {
   update,
   validate,
   updateAndValidate,
-  ValueOf,
   getFormData,
+  ValueOf,
 } from 'metaforms';
 import { FormProps } from '../interfaces';
 
@@ -39,6 +39,9 @@ export default <T extends Field>(props: FormProps<T>) => {
   };
 
   const getComponent = <F extends Field>([name, component]: [keyof F, ValueOf<F>]): React.ReactNode => {
+    if (!component) {
+      return null;
+    }
     const stringName = name.toString();
     inputRefs[stringName] = React.createRef();
 
@@ -52,13 +55,13 @@ export default <T extends Field>(props: FormProps<T>) => {
           })
         : null,
       actions: {
-        update: (path: string, value: ValueOf<T>['value']) => {
+        update: (path: string, value: F['value']) => {
           props.onFormChange(update(path.split('.'), value, props.form) as any);
         },
         validate: (path: string) => {
           props.onFormChange(validate(path.split('.'), props.form) as any);
         },
-        updateAndValidate: (path: string, value: ValueOf<T>['value']) => {
+        updateAndValidate: (path: string, value: F['value']) => {
           props.onFormChange(updateAndValidate(path.split('.'), value, props.form) as any);
         },
       },
