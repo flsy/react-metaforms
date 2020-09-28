@@ -36,8 +36,7 @@
     "react-dom": "*"
   },
   "dependencies": {
-    "fputils": "^1.0.12",
-    "metaforms": "^1.0.1",
+    "metaforms": "^1.0.2",
     "react": "^16.*"
   },
   "devDependencies": {
