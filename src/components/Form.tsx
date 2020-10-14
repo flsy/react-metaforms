@@ -70,5 +70,9 @@ export default <T extends Field>(props: FormProps<T>) => {
     return props.components(properties);
   };
 
+  if (!props.form) {
+    return null;
+  }
+
   return <form onSubmit={onSubmit}>{Object.entries(props.form).map(getComponent)}</form>;
 };
