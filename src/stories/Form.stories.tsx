@@ -3,10 +3,10 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { getFormData, IForm } from 'metaforms';
 import { storiesOf } from '@storybook/react';
-import { SelectField, SubmitField, TextField } from './interfaces';
-import { Input, Select, Submit } from './components';
+import { CheckboxField, SelectField, SubmitField, TextField } from './interfaces';
+import { Checkbox, Input, Select, Submit } from './components';
 
-type MyForm = IForm<{ name: TextField; groups: SelectField; submit: SubmitField }>;
+type MyForm = IForm<{ name: TextField; groups: SelectField; sendNewsLetter: CheckboxField; submit: SubmitField }>;
 
 export const myForm: MyForm = {
   name: {
@@ -17,6 +17,10 @@ export const myForm: MyForm = {
   groups: {
     type: 'select',
     options: [{ value: 'first' }, { value: 'second', label: 'Second' }],
+  },
+  sendNewsLetter: {
+    type: 'checkbox',
+    value: false,
   },
   submit: {
     label: 'Submit',
@@ -40,9 +44,11 @@ const FormStory = ({ form }: IProps) => {
     <Form<MyForm>
       form={fields}
       onFormChange={handleFieldChange}
-      onSubmit={(data) => action('submit')(getFormData(data))}
+      onSubmit={({ formData }) => action('submit')(formData)}
       components={({ name, component, ref, actions }) => {
         switch (component.type) {
+          case 'checkbox':
+            return <Checkbox ref={ref} name={name} {...component} {...actions} />;
           case 'select':
             return <Select ref={ref} name={name} {...component} {...actions} />;
           case 'text':

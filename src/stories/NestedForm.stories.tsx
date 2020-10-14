@@ -81,7 +81,7 @@ const FormStory = ({ form }: { form: Form1 }) => {
     <Form<Form1>
       form={fields}
       onFormChange={handleFieldChange}
-      onSubmit={(data, formData) => action('submit')(data, formData)}
+      onSubmit={({ formData }) => action('submit')(formData)}
       components={({ name, component, ref, actions, groupChildren }) => {
         switch (component.type) {
           case 'text':

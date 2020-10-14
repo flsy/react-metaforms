@@ -1,6 +1,6 @@
 import Form from '../export';
 import React from 'react';
-import { getFormData, IForm } from 'metaforms';
+import { FormData, IForm } from 'metaforms';
 import { storiesOf } from '@storybook/react';
 import { CheckboxField, SubmitField, TextField } from './interfaces';
 import { Checkbox, Input, Submit } from './components';
@@ -67,16 +67,16 @@ const WizardStory = () => {
     onFieldsChange(state);
   };
 
-  const onSubmit = (f: IForm<any>) => {
+  const onSubmit = (formData: FormData<Form1>) => {
     let nextStep = step + 1;
 
-    if (getFormData(f).hasAddress === false) {
+    if (formData.hasAddress === false) {
       nextStep = 2;
     }
 
     setStep(nextStep);
     onFieldsChange(fieldConfig[nextStep]);
-    setValues({ ...values, ...getFormData(f) });
+    setValues({ ...values, ...formData });
   };
 
   if (step > 2) {
@@ -93,7 +93,7 @@ const WizardStory = () => {
     <Form<Form1>
       form={fields}
       onFormChange={handleFieldChange}
-      onSubmit={onSubmit}
+      onSubmit={({ formData }) => onSubmit(formData)}
       components={({ name, component, ref, actions }) => {
         switch (component.type) {
           case 'text':
