@@ -48,7 +48,9 @@ export default <T extends Field>(props: FormProps<T>) => {
     const properties: any = {
       name: stringName,
       component,
-      ref: inputRefs[stringName],
+      ref: (el: any) => {
+        inputRefs[stringName].current = el;
+      },
       groupChildren: component.fields
         ? Object.entries(component.fields).map(([nestedName, nestedComponent]) => {
             return getComponent([`${name}.${nestedName}`, nestedComponent]);
