@@ -11,14 +11,25 @@ import {
   ValueOf,
 } from 'metaforms';
 import { FormProps } from '../interfaces';
+import { useRef } from 'react';
+
+const usePrevious = <T extends Field>(value: T) => {
+  const ref = useRef<T>({} as T);
+  React.useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+};
 
 export default <T extends Field>(props: FormProps<T>) => {
   const inputRefs: { [name: string]: any } | {} = {};
+  const prevForm = usePrevious(props.form);
 
   React.useEffect(() => {
-    resolveFocusedField();
-    // eslint-disable-next-line
-  }, []);
+    if (!Object.keys(prevForm).length && Object.keys(props.form).length) {
+      resolveFocusedField();
+    }
+  }, [props.form]);
 
   const resolveFocusedField = () => {
     const focused = shouldComponentFocus(props.form || {});
