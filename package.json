@@ -36,7 +36,7 @@
     "react-dom": "*"
   },
   "dependencies": {
-    "metaforms": "^1.0.5",
+    "metaforms": "^1.0.7",
     "react": "^16.*"
   },
   "devDependencies": {
