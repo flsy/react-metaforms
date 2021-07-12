@@ -1955,6 +1955,11 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@falsy/metacore@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@falsy/metacore/-/metacore-0.0.6.tgz#5488b7e025fcc9c42b48ad87b450b568de0f30eb"
+  integrity sha512-+iWjxwk3O+r6HfJyoYEiCY7OxI0byamx0roBWYQ2/9EcxHotlYscPzAM09L49qmEBbo5jnlsqWpB+zvbVNB1Ug==
+
 "@icons/material@^0.2.4":
   version "0.2.4"
   resolved "https://registry.yarnpkg.com/@icons/material/-/material-0.2.4.tgz#e90c9f71768b3736e76d7dd6783fc6c2afa88bc8"
@@ -6667,10 +6672,10 @@ forwarded@~0.1.2:
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.1.2.tgz#98c23dab1175657b8c0573e8ceccd91b0ff18c84"
   integrity sha1-mMI9qxF1ZXuMBXPozszZGw/xjIQ=
 
-fputils@^1.1.4:
-  version "1.1.6"
-  resolved "https://registry.yarnpkg.com/fputils/-/fputils-1.1.6.tgz#ab1816aeff4a13dde8bb113b2f80d300227ae66e"
-  integrity sha512-c/q/CDzqPCLicHCCCargneBdTMyPShuC5XSNHJAlD3aPatBgeD1QvAWz8ZfifxmE+JhTwFd9Qgs8/rD4agR4Kg==
+fputils@^1.2.4:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/fputils/-/fputils-1.2.4.tgz#238166f85c57550f08f304bbf46854d2ff702ba6"
+  integrity sha512-+9BPayn2sIvO2md27QbZ+0Lve5LTO40P2LEy+yyHsxxTjadgA+qF6CLBXS2d7WeC61WhC84UL0LZ2GTFzLvi+Q==
 
 fragment-cache@^0.2.1:
   version "0.2.1"
@@ -8810,12 +8815,13 @@ merge2@^1.2.3, merge2@^1.3.0:
   resolved "https://registry.yarnpkg.com/merge2/-/merge2-1.4.1.tgz#4368892f885e907455a6fd7dc55c0c9d404990ae"
   integrity sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==
 
-metaforms@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/metaforms/-/metaforms-1.0.7.tgz#d4bf058d1546d525248ca4c0af08de6bcacb4621"
-  integrity sha512-1nCA0iUOrvLtlImQrtKkuR55NNM/O67gTR7/TQSU7H0xrgO+u2MNtIW/8wDsd3i3NhrQKPolYX68zIhGVmU/4A==
+metaforms@^1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/metaforms/-/metaforms-1.0.9.tgz#a13a76ec08cc2a545e9cb1ff58ff4a6d84fa1f7d"
+  integrity sha512-e0UTIeZWvg0kDhGnqnkEcAKVUjzPeO9qTmgTIuE05OP/jiOLo6XnyIyLuGn1J0diPWrqhLHq2LFrE/KpMZsjXA==
   dependencies:
-    fputils "^1.1.4"
+    "@falsy/metacore" "^0.0.6"
+    fputils "^1.2.4"
 
 methods@~1.1.2:
   version "1.1.2"
